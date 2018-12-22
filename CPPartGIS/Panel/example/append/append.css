@@ -1,0 +1,219 @@
+﻿/*时间轴*/
+#timecontainer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    z-index: 121;
+}
+
+div.triggerBar {
+    width: 30px;
+    height: 73px;
+    line-height: 73px;
+    float: left;
+    background-color: rgba(0,0,0,0.5);
+}
+
+    div.triggerBar img {
+        width: 100%;
+        position: relative;
+        top: 10px;
+    }
+
+ul.loadbar {
+    background-color: #fff;
+    list-style: none;
+    float: left;
+    /*margin: 0 1px;*/
+    margin-left: 1px;
+    position: relative;
+}
+
+    ul.loadbar li {
+        float: left;
+        position: relative;
+        width: 20px;
+        height: 11px;
+        margin-left: 1px;
+        /*border-left: 1px solid #111;
+        border-top: 1px solid #111;
+        border-right: 1px solid #333;
+        border-bottom: 1px solid #333;*/
+        background: #E5E5E5;
+    }
+
+        ul.loadbar li span {
+            position: absolute;
+            top: 16px;
+            right: -9px;
+            color: #fff;
+            z-index: 2;
+        }
+
+.bar {
+    background-color: #7AD3D4;
+    width: 0px;
+    height: 11px;
+}
+
+.bbb {
+    background-color: red;
+    width: 0px;
+    height: 11px;
+}
+
+#timezhou .content {
+    width: 100%;
+    height: 60px;
+    border-right: 1px solid #fff;
+    margin-left: 1px;
+    position: absolute;
+    left: -1px;
+    top: 13px;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFF;
+}
+
+    #timezhou .content:first-child {
+        border-left: 1px solid #fff;
+    }
+
+    #timezhou .content div {
+        width: 100%;
+    }
+
+    #timezhou .content .time {
+        height: 25px;
+        line-height: 25px;
+    }
+
+    #timezhou .content .date {
+        border-top: 1px solid #5D6771;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+    }
+
+
+/*空气质量监测物选择*/
+.areaSearch {
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    z-index: 999;
+    color: #515151;
+    font-family: "宋体";
+}
+
+    .areaSearch > ul {
+        overflow: hidden;
+        width: 336px;
+        background: #ffffff;
+        float: left;
+        border: 1px solid #c6c6c6;
+        list-style: none;
+    }
+
+        .areaSearch > ul li {
+            float: left;
+            width: 48px;
+            height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+            .areaSearch > ul li span {
+                display: block;
+                width: 100%;
+                margin-top: 7px;
+                border-right: 1px solid #e7e7e7;
+                font-size: 12px;
+            }
+
+            .areaSearch > ul li:last-child span {
+                border-right: none;
+            }
+
+            .areaSearch > ul li:hover {
+                background: #efefef !important;
+            }
+
+.aqiactive {
+    background: #bbb;
+}
+
+
+/*空气站点和城市点位切换*/
+.areaSearch select {
+    margin: 0 16px;
+    width: 50px;
+    height: 30px;
+    line-height: 22px;
+    padding-left: 4px;
+    box-sizing: border-box;
+    border: 1px solid #c6c6c6;
+    outline: none;
+    -webkit-appearance: none;
+    background: url(img/jt.png) no-repeat right #FFFFFF;
+    background-position-x: 92px;
+}
+
+
+/*右侧预警开关*/
+.rightYj {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    width: 86px;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+    .rightYj li {
+        width: 100%;
+        height: 32px;
+        line-height: 32px;
+        box-sizing: border-box;
+        background-color: rgba(122,122,119,0.8);
+        color: #fff;
+        font-size: 14px;
+        font-family: '宋体';
+        text-align: left;
+        cursor: pointer;
+        padding-left: 7px;
+        margin-bottom: 7px;
+        position: relative;
+        box-shadow: rgba(122,122,119,0.5) 0px 2px inset;
+        border-radius: 2px;
+    }
+
+        .rightYj li.yj span {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: #313130;
+            background-image: url(../img/yujing_moren.png);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            position: absolute;
+            top: 3px;
+            right: 7px;
+        }
+
+            .rightYj li.yj span.active {
+                background-image: url(../img/yujing_dianji.png);
+            }
+
+        .rightYj li.fc, .rightYj li.dzx, .rightYj li.qy {
+            padding-right: 30px;
+            background: url('img/开关1.png') no-repeat 100% 50%;
+            background-color: rgba(122,122,119,0.8);
+        }
+
+            .rightYj li.fc.active, .rightYj li.dzx.active, .rightYj li.qy.active {
+                background: url(img/开关2.png) no-repeat 100% 50%;
+                background-color: rgba(122,122,119,0.8);
+            }

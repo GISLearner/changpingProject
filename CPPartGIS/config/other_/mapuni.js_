@@ -1,0 +1,133 @@
+﻿(function (window, document) {
+    //闭包内的全局变量
+    var obj1 = {};
+
+    var version = "1.0.0",
+    mapuni = function () {
+
+    }
+
+    mapuni.fn = mapuni.prototype = {
+        version: version,
+        constructor: mapuni,
+        init: function (_this, options) {
+            _this.total = parseInt(options.total || 0, 10);
+            _this.pageSize = parseInt(options.len || 10, 10);
+            if ((typeof options.targetId) === "string") {
+                if (options.targetId.indexOf('.') == -1 && options.targetId.indexOf('#') == -1) {
+                    _this.tar = document.getElementById(options.targetId);
+                }
+                else {
+                    _this.tar = document.querySelector(options.targetId);//含.#
+                }
+            } else {
+                _this.tar = options.targetId;
+            }
+
+            obj1.total = _this.total;
+            _this.obj2 = {};
+            _this.obj2.total = _this.total;
+            return _this;
+        },
+        loadTable: function (page) {
+            if (!this.tar || !this.total) {
+                return '';
+            }
+            page = parseInt(page || 1, 10);
+            var html = "<table class='tbale_'>";
+            var start = (page - 1) * this.pageSize + 1;//1 11
+            var end = page * this.pageSize;//10 20
+            end = Math.min(this.total, end);
+            for (var i = start; i <= end; i++) {
+                html += "<tr><td onclick=''>" + i + "</td></tr>";
+            }
+            html += "</table>";
+            this.tar.innerHTML = html;
+            return this;
+        },
+        loadPagination: function (options) {
+            var aaa = this;
+            var html = "<table><tr>";
+            var page = Math.round(this.total / this.pageSize) + 1;
+            for (var i = 0; i < page; i++) {
+                html += "<td>" + (i + 1) + "</td>";
+            }
+            html += "</tr></table>";
+            this.tar.getElementsByClassName("tbale_")[0].innerHTML += html;
+            var d = this.tar.getElementsByClassName("tbale_")[0].getElementsByTagName('td');
+            if (d) {
+                for (var i = 0; i < d.length; i++) {
+                    d[i].onclick = function (e) {
+                        console.log(e.target.innerText);
+                        alert(e.target.innerText + " " + obj1.total + " " + aaa.obj2.total);
+                    }
+                }
+            }
+            alert(obj1.total + " " + this.obj2.total);
+            return this;
+        },
+        loadtest1: function (aaa) {
+
+        }
+
+    }
+
+    mapuni.fn.extend = mapuni.extend = function () {
+        var target, sources;
+        var arg0 = arguments[0];
+        if (arg0.length == 0) return this;
+
+        if (arguments.length == 1) {
+            target = this;
+            sources = [arg0];
+        } else {
+            target = arg0;
+            sources = slice.call(arguments, 1);
+        }
+        for (var i = 0; i < sources.length; i++) {
+            var source = sources[i];
+            for (var key in source) {
+                target[key] = source[key];
+            }
+        }
+        return target;
+    }
+
+    mapuni.fn.init.prototype = mapuni.fn;
+    window.$mapuni = window.mapuni = mapuni;
+})(window, document)
+
+
+$mapuni.extend({
+    timeE: timeF2,
+    set1E: setF2
+});
+
+$mapuni.fn.extend({
+    timeFE: timeF2,
+    setFE: setF2
+});
+
+
+
+//扩展方式1 $.qiaodaima();
+$mapuni.extend({
+    qiaodaima1: function () {
+        console.log('敲代码1');
+    }
+})
+
+//扩展方式2 $(".class").qiaodaima();
+$mapuni.fn.extend({
+    qiaodaima2: function (htmldom) {
+        console.log('敲代码2');
+    }
+});
+
+//扩展方式3同2 $(".class").qiaodaima();
+(function ($) {
+    $.fn.qiaodaima3 = function (htmldom) {
+        console.log('敲代码3');
+    }
+})($mapuni)
+

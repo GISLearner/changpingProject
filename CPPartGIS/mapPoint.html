@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>环境地理信息平台</title>
+    <meta charset="utf-8" />
+    <link href="favicon.ico" rel="shortcut icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+
+    <!--************************* config *************************-->
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script src="config/mapconfig.js"></script>
+    <script src="config/config.js"></script>
+    <script src="config/utils.js"></script>
+
+    <!--************************* CSS *************************-->
+    <!--bootstrap样式-->
+    <link href="Scripts/plugins/bootstrap-2.3.2/css/bootstrap.css" rel="stylesheet" />
+    <!--jquery UI-->
+    <link href="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+    <!--jspanel弹框面板-->
+    <link href="Scripts/plugins/jspanel-2.6.2/jquery.jspanel.min.css" rel="stylesheet" />
+    <link href="Scripts/plugins/animo/animate-animo.min.css" rel="stylesheet" />
+    <link href="Scripts/plugins/minicolors/jquery.minicolors.css" rel="stylesheet" />
+    <link href="Scripts/plugins/poshytip/tip-twitter/tip-twitter.css" rel="stylesheet" />
+
+
+    <!--ArcGIS js API地图样式-->
+    <link rel='Stylesheet' type='text/css' href="http://39.106.156.190/arcgis_js_api/library/3.18/3.18/dijit/themes/tundra/tundra.css" />
+    <link rel='Stylesheet' type='text/css' href="http://39.106.156.190/arcgis_js_api/library/3.18/3.18/esri/css/esri.css" />
+
+    <!--自定义样式-->
+    <link href="css/map.css" rel="stylesheet" />
+    <link href="css/maptype.css" rel="stylesheet" />
+    <link href="css/mapcover.css" rel="stylesheet" />
+    <link href="css/jspanel.css" rel="stylesheet" />
+    <link href="css/scroll.css" rel="stylesheet" />
+    <link href="css/tool.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mapPage.css">
+
+</head>
+<body>
+    <!-- 地图部分 -->
+    <div id="mapdiv">
+        <div id="map">
+        </div>
+        <!-- 经纬度信息 -->
+        <div id="PositionBar"></div>
+    </div>
+
+    <!--右边工具栏-->
+    <div id="toolBarPanel">
+        <ul id="Toolbar">
+            <li id="toolZoomIn" title="放大地图" class=""><img src="img/maptoolbar/zoomin.png"></li>
+            <li id="toolZoomOut" title="缩小地图" class=""><img src="img/maptoolbar/zoomout.png"></li>
+            <li id="toolPan" title="漫游" class="active"><img src="img/maptoolbar/move.png"></li>
+            <li id="toolFullExtent" title="全图"><img src="img/maptoolbar/fullmap.png"></li>
+            <li id="toolMeasure" title="测距" class=""><img src="img/maptoolbar/ceju.png"></li>
+            <li id="toolClear" title="清除" style="border-bottom:none;"><img src="img/maptoolbar/clear.png"></li>
+        </ul>
+    </div>
+
+
+    <!--测距-->
+    <div id="toolMeasure_drop" class="tool_drop" style="display:none;">
+        <ul class="toolPlotting_drop_ul">
+            <li class="tip" title="长度测量" onclick="btn_measure(0)">
+                <img src="img/maptoolbar/长度测量.png" />
+            </li>
+            <li class="tip" title="面积测量" onclick="btn_measure(1)">
+                <img src="img/maptoolbar/面积测量.png" alt="" />
+            </li>
+        </ul>
+    </div>
+	
+	
+	<!--左侧搜索框-->
+	<div id="leftMenue" style="padding: 5px;  position: absolute;left: 10px;top:20px;">
+		<div class="entSearch">
+			<div><input class="entSearch_text" type="text" style="width: 180px;height: 25px;"/></div>
+			<div class="entSearch_btn"   >搜索</div>
+		</div>
+		<div class="entContent" >
+			<ul class="entContent_list" style='list-style:none;'>
+
+            </ul>
+		</div>
+	</div>
+	
+	<!--右侧图层控制-->
+	<div class="layerControl" style="width:260px;position: absolute;right:10px;top:30px;border: solid 1px gray;background-color: #FFFF;">
+		<div class="lc_title" style="width: 260px;height:30px;background-color: #3983FF;line-height: 30px;color:white">
+			<span style="margin-left: 5px;">图层控制</span>
+		</div>
+		<div class="lc_content">
+			<ul style="list-style: none;">
+				<li><label><input class="lc_special lc_river" att="1" type="checkbox">园区专题1</label></li>
+				<li><label><input class="lc_special lc_station" att="0" type="checkbox">园区专题2</label></li>
+			</ul>
+		</div>
+	</div>
+
+
+</body>
+</html>
+<!--jquery UI-->
+<script src="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<!--jspanel弹框面板-->
+<script src="Scripts/plugins/jspanel-2.6.2/jquery.jspanel.min.js"></script>
+<script src="Scripts/plugins/echarts/echarts.js"></script>
+<script src="Scripts/plugins/animo/animo.min.js"></script>
+<script src="Scripts/plugins/poshytip/jquery.poshytip.min.js"></script>
+<script src="Scripts/plugins/minicolors/jquery.minicolors.js"></script>
+
+<!--自定义ArcGIS组件路径-->
+<script type="text/javascript">
+    var dojoConfig = {
+        packages: [
+            { name: 'panel', location: location.pathname.replace(/\/[^/]+$/, "") + '/panel' },
+            { name: 'Scripts', location: location.pathname.replace(/\/[^/]+$/, "") + '/Scripts' },
+            { name: 'GISScripts', location: location.pathname.replace(/\/[^/]+$/, "") + '/Scripts/GISScripts' },
+            { name: 'widgets', location: location.pathname.replace(/\/[^/]+$/, "") + '/Scripts/widgets' },
+            { name: 'plugins', location: location.pathname.replace(/\/[^/]+$/, "") + '/Scripts/plugins' }
+
+        ]
+    };
+</script>
+<!--ArcGIS js API初始化脚本-->
+<script src='http://39.106.156.190/arcgis_js_api/library/3.18/3.18/init.js'></script>
+
+<!--mugis通用方法-->
+<script src="Scripts/GISScripts/mapInit.js"></script>
+<script src="Scripts/GISScripts/mapShowPOI.js"></script>
+<script src="Scripts/GISScripts/mapCityInfo.js"></script>
+<script src="Scripts/GISScripts/poiClassify.js"></script>
+<script src="Scripts/GISScripts/mapClear.js"></script>
+<script src="Scripts/GISScripts/mapZoom.js"></script>
+
+<!--main主方法-->
+<script src="Scripts/mapMain.js"></script>
+<script src="Scripts/mapMenu.js"></script>
+<script src="Scripts/projectPoint.js"></script>

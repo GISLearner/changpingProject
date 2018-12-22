@@ -1,0 +1,55 @@
+﻿/*隐藏*/
+#panelToggleHide {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    cursor: pointer;
+    width: 12px;
+    height: 16px;
+    background: url(../IMG/jspanel/collect.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+/*返回按钮*/
+img.back {
+    width: 20px !important;
+    height: 20px !important;
+    position: absolute !important;
+    top: 4px !important;
+    right: 15px !important;
+    cursor: pointer !important;
+}
+/*关闭按钮*/
+img.close {
+    width: 15px !important;
+    height: 15px !important;
+    position: absolute !important;
+    top: 10px !important;
+    right: 15px !important;
+    cursor: pointer !important;
+}
+/*给面板设置圆角*/
+.jsPanel {
+    border-radius: 8px !important;
+}
+/*隐藏最大最小等一些按钮*/
+.jsPanel-hdr-r div {
+    display: none;
+}
+
+.jsPanel-hdr-r .jsPanel-btn-close, .jsPanel-hdr-r .jsPanel-btn-smallrev {
+    display: block;
+}
+
+.jsPanel-hdr.jsPanel-theme-primary {
+    background-color: #008080 !important;
+}
+
+    .jsPanel-hdr.jsPanel-theme-primary h3 {
+        color: #B2FEFF !important;
+        line-height: 24px !important;
+    }
+
+.jsPanel-content{
+    padding: 5px !important;
+}

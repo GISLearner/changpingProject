@@ -1,0 +1,30 @@
+.entSearch{
+    height:36px;
+}
+.entSearch div{
+ float: left;
+}
+.entSearch_btn{
+    width: 80px;height:34px;background-color: #3684FF;
+    border-radius:2px;line-height: 35px;
+    text-align: center;color:white;cursor: pointer;
+}
+
+.entContent{
+  background-color:white;
+    border-radius:2px;
+    margin-top: 5px;
+}
+.entContent_list{
+    margin-left: 15px;
+}
+.entContent_list li{
+    height:30px; line-height:30px;cursor: pointer;text-align: left;
+    font-size: 13px;
+}
+.entContent_list li:hover{
+    background-color:#D5D5D5 ;
+}
+.zoomTo{
+    display: none;
+}

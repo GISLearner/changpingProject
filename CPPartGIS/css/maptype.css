@@ -1,0 +1,156 @@
+﻿/*切换底图*/
+#mapType {
+    position: absolute;
+    bottom: -5px;
+    right: 0px;
+    height: 80px;
+    cursor: pointer;
+    -webkit-transition-property: width,background-color;
+    transition-property: width,background-color;
+    -webkit-transition-duration: .4s;
+    transition-duration: .4s;
+    width: 110px;
+    background-color: rgba(255,255,255,0);
+    z-index: 100;
+}
+
+    #mapType:hover {
+        width: 203px;
+        /*background-color: #fff;
+        background-color: rgba(142, 134, 134, 0.8);*/
+    }
+
+        #mapType:hover .mapTypeCard {
+            /*border: 2px solid rgba(255,255,255,0);*/
+            background-image: url(../img/mapchange/maptype_small.png);
+        }
+
+            #mapType:hover .mapTypeCard.active {
+                border: 2px solid #3385FF;
+            }
+
+        #mapType:hover .normal {
+            right: 202px;
+        }
+
+        #mapType:hover .satellite, #mapType:hover .earth {
+            right: 106px;
+        }
+
+@media only screen and (-webkit-min-device-pixel-ratio:2),(-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx),(min-resolution:192dpi) {
+    #mapType:hover .mapTypeCard {
+        background-image: url(../img/mapchange/maptype_2x.png);
+    }
+}
+
+#mapType .mapTypeCard {
+    height: 60px;
+    width: 86px;
+    position: absolute;
+    border-radius: 2px;
+    top: 10px;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    border: 2px solid rgba(153,153,153,.42);
+    background: url(../img/mapchange/shadow_6bf0ecd.png) no-repeat 0 0;
+    background-size: 86px 240px;
+    -webkit-transition-property: right,background-image;
+    transition-property: right,background-image;
+    -webkit-transition-duration: .4s;
+    transition-duration: .4s;
+}
+
+    #mapType .mapTypeCard span {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: inline-block;
+        padding: 3px 3px 2px 4px;
+        font-size: 12px;
+        height: 15px;
+        line-height: 12px;
+        color: #FFF;
+        border-top-left-radius: 2px;
+    }
+
+    #mapType .mapTypeCard.active span, #mapType .mapTypeCard:hover span {
+        background-color: #3385FF;
+    }
+
+    #mapType .mapTypeCard:hover {
+        border: 2px solid #3385FF;
+    }
+
+#mapType .normal {
+    z-index: 1;
+    background-image: url(../img/mapchange/DEM.jpg) !important;
+    width: 86px;
+    height: 60px;
+    right: 10px;
+}
+
+    #mapType .normal .switch-box p {
+        margin-left: 20px;
+    }
+
+    #mapType .normal .switch-box input.switch {
+        left: 5px;
+    }
+
+    #mapType .normal:hover .switch-box {
+        visibility: visible;
+    }
+
+#mapType .satellite, #mapType .earth {
+    right: 10px;
+    z-index: 2;
+    background-position: 0 -60px;
+}
+
+    #mapType .satellite:hover .switch-box, #mapType .earth:hover .switch-box {
+        visibility: visible;
+    }
+
+#mapType .earth {
+    background-position: 0 -181px;
+}
+
+#mapType .panorama {
+    z-index: 3;
+    right: 10px;
+    background-image: url(../img/mapchange/maptype_small.png);
+    background-position: 0 -121px;
+    border-left: 2px solid rgba(153,153,153,.6);
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio:2),(-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx),(min-resolution:192dpi) {
+    #mapType .panorama {
+        background-image: url(../img/mapchange/maptype_2x.png);
+    }
+}
+
+#mapType .switch-box {
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    line-height: 22px;
+    color: #fff;
+    background: rgba(0,0,0,.5);
+}
+
+    #mapType .switch-box p {
+        display: inline-block;
+        margin-left: 25px;
+    }
+
+    #mapType .switch-box input.switch {
+        position: absolute;
+        left: 8px;
+        top: 4px;
+        cursor: pointer;
+    }
+
+#mapType div.active {
+    z-index: 20;
+}

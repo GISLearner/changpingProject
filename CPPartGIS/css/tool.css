@@ -1,0 +1,115 @@
+﻿/*工具按钮*/
+#toolBarPanel {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    margin-top: -160px;
+}
+
+    #toolBarPanel #Toolbar {
+        width: 25px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        background: #fff;
+        padding: 8px 3px;
+        margin-bottom: 0px;
+        list-style: none;
+    }
+
+        #toolBarPanel #Toolbar .active {
+            background: #dcf2f5;
+        }
+
+        #toolBarPanel #Toolbar li {
+            height: 25px;
+            line-height: 26px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+        }
+
+
+/*工具下拉弹框统一样式*/
+.tool_drop {
+    position: absolute;
+    background-color: #FFF;
+    border-radius: 5px;
+    border: 1px solid gray;
+    z-index: 120;
+    padding: 5px 5px;
+}
+
+/*通用工具下拉*/
+#toolCYGJ_drop {
+    top: 200px;
+    right: 50px;
+    width: 87px;
+}
+
+/*测量下拉*/
+#toolMeasure_drop {
+    top: 200px;
+    right: 50px;
+    width: 87px;
+}
+
+/*空间查询下拉*/
+#toolSpaceSearch_drop {
+    top: 200px;
+    right: 50px;
+    width: 87px;
+}
+
+/*缓冲查询下拉*/
+#toolBufferSearch_drop {
+    top: 200px;
+    right: 50px;
+    width: 162px;
+}
+
+/*动态标绘下拉*/
+#toolPlotting_drop {
+    top: 140px;
+    right: 50px;
+    width: 200px;
+}
+
+/*动态标绘颜色条样式*/
+.minicolors-theme-default .minicolors-swatch {
+    width: 108px !important;
+    height: 18px;
+}
+
+
+
+/*动态标绘中的按钮统一样式*/
+.toolPlotting_drop_ul {
+    margin: 5px 5px;
+    list-style: none;
+}
+
+    .toolPlotting_drop_ul li {
+        margin: 3px;
+        padding: 0px;
+        float: left;
+        white-space: nowrap;
+        width: 30px;
+        height: 30px;
+        background-color: #f5f5f5;
+        background-repeat: repeat-x;
+        box-shadow: inset 0 0 1px 1px #ffffff;
+        border-radius: 3px 3px 3px 3px;
+        border: 1px solid #a6a6a6;
+        background-image: linear-gradient(top, #fafafa, #ededed);
+        cursor: pointer;
+        text-align: center;
+        line-height: 30px !important;
+        position: relative;
+        vertical-align: middle;
+    }
+
+        .toolPlotting_drop_ul li :hover {
+            border: 1px solid #8c8c8c;
+            background-color: #e8e8e8;
+            background-repeat: repeat-x;
+        }

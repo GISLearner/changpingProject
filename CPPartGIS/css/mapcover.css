@@ -1,0 +1,59 @@
+﻿/*div类型的点状覆盖物*/
+.class_chart {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    z-index: 1;
+    padding: 0;
+}
+
+.aqi_tip_name {
+    height: 19px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-left: none;
+    padding: 0 5px 0 42px;
+    color: #333;
+    line-height: 19px;
+    left: 5px;
+    top: 0;
+    box-shadow: 4px 4px 4px rgba(0,0,0,.4);
+}
+
+.aqi_tip_value {
+    width: 40px;
+    height: 25px;
+    font: 400 12px "宋体";
+    color: #fff;
+    text-align: center;
+    line-height: 21px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    font-size: 12px;
+}
+
+ul.ringreset,
+ul.ringreset li {
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    ul.ringreset li {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+    }
+
+        ul.ringreset li img {
+            margin-top: 15px;
+        }
+
+            ul.ringreset li img:hover {
+                border-radius: 40px;
+                box-shadow: 4px 4px 4px 4px rgba(255,0,0,.4);
+            }

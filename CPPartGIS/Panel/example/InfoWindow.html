@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <!--本页面独有css-->
+    <link rel="stylesheet" type="text/css" href="InfoWindow.css" />
+    <!-- 配置文件 -->
+    <script src="../../Scripts/config/mapconfigUrl.js"></script>
+    <script src="../../Scripts/jquery-1.11.3.js"></script>
+    <script src="../../Scripts/custom/coustomTool.js"></script>
+    <script src="../../Scripts/custom/interface.js"></script>
+    <script src="InfoWindow.js"></script>
+    
+    <script src="json.js"></script>
+</head>
+<body>
+    <div id='div_body' style='visibility:visible'>
+        <div style="border: 0px solid #000; height: 175px">
+            <table id="entInfo">
+                <tr>
+                    <th>
+                        污染源编码：
+                    </th>
+                    <td>
+                        <a id="EntID"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        污染源名称：
+                    </th>
+                    <td>
+                        <a id="EntName" href='javascript:void(0)' style="text-decoration:underline;color:black;" class='entname' target="_blank"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        法人：
+                    </th>
+                    <td>
+                        <a id="EntFR"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        所属区域：
+                    </th>
+                    <td>
+                        <a id="EntRegion"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        污染源地址：
+                    </th>
+                    <td>
+                        <a id="EntAddress"></a>
+                    </td>
+                </tr>
+            </table>
+            <div id="detail">
+                <span><a onclick="openDetailPop()">详细信息>></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="openZXJCPop()">在线监测>></a></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,23 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+}
+
+body, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, a, p, code, form, fieldset, legend, input, button, textarea, blockquote, th, td, hr, img {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    /*background-color: gainsboro;*/
+}
+
+.iframe-page {
+    height: calc(100% - 60px) !important;
+}

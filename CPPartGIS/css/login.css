@@ -1,0 +1,296 @@
+﻿body {
+    background: url(../img/login/bg.png) no-repeat 0 80px;
+    min-width: 1340px;
+    margin: 0 auto;
+    background-size: 100% auto;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei";
+}
+
+li {
+    cursor: pointer;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.logo {
+    height: 80px;
+}
+
+    .logo img {
+        margin-left: 100px;
+        margin-top: 20px;
+    }
+
+.content {
+    height: 520px;
+    position: relative;
+}
+
+    .content .news {
+        display: inline-block;
+        height: 310px;
+        width: 460px;
+        border: 0px solid #6BCBFB;
+        margin-left: 130px;
+        margin-top: 80px;
+        font-size: 14px;
+        font-family: "Microsoft YaHei";
+        color: #fff;
+        position: absolute;
+        top: 100px;
+        left: 130px;
+    }
+
+.news .news_title {
+    width: 460px;
+    height: 30px;
+    line-height: 29px;
+}
+
+    .news .news_title .titles li {
+        background: rgba(250,250,250,0.70);
+        text-align: center;
+        width: 100px;
+        float: left;
+        color: #111;
+        border-top: 1px solid rgba(44,72,85,0.75);
+        border-left: 1px solid rgba(44,72,85,0.75);
+    }
+
+        .news .news_title .titles li.active {
+            color: #fff;
+            background: rgba(44,72,85,0.75);
+            background: rgba(44,72,85,0.75);
+        }
+
+.content .news .news_content {
+    width: 460px;
+    height: 280px;
+    background: rgba(44,72,85,0.75);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-top: 5px;
+}
+
+    .content .news .news_content .contents li {
+        height: 26px;
+        margin-left: 20px;
+        margin-bottom: 5px;
+    }
+
+    .content .news .news_content li .date {
+        float: right;
+        margin-right: 20px;
+    }
+
+.content .login_info {
+    display: inline-block;
+    /*margin-top: 80px;
+    margin-left: 320px;*/
+    width: 320px;
+    height: 350px;
+    border: 1px solid #CCE0DA;
+    background: rgba(250,250,250,0.9);
+    position: absolute;
+    top: 80px;
+    left: 910px;
+}
+
+.content .login_head {
+    width: 320px;
+    height: 56px;
+    background-color: #e7f5f1;
+    border-bottom: 1px solid #CCE0DA;
+    font-family: "Microsoft YaHei";
+    font-size: 20px;
+    color: #6BCBFB;
+    font-weight: bold;
+    text-align: center;
+    line-height: 56px;
+}
+
+.content .user_info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .content .user_info .auto {
+        font-size: 15px;
+        color: #999999;
+        font-family: "Microsoft YaHei";
+    }
+
+#info_name {
+    position: relative;
+}
+
+    #info_name input {
+        position: absolute;
+        top: 1px;
+        left: 60px;
+    }
+
+#info_pwd {
+    position: relative;
+}
+
+    #info_pwd input {
+        position: absolute;
+        top: 1px;
+        left: 60px;
+    }
+
+#login {
+    position: relative;
+}
+
+    #login input {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        width: 280px;
+        height: 40px;
+        border: 0;
+        background-color: rgba(250,250,250,0.1);
+    }
+
+.content .user_info input {
+    border: 0px;
+    width: 239px;
+    height: 37px;
+}
+
+.prompt {
+    margin-top: 30px;
+}
+
+.prompt1 {
+    font-size: 12px;
+    color: #999999;
+    font-family: "Microsoft YaHei";
+}
+
+.prompt2 {
+    font-size: 12px;
+    color: #6BCBFB;
+    font-family: "Microsoft YaHei";
+}
+
+.prompt div {
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+}
+
+.bottom {
+    color: #666666;
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    text-align: center;
+}
+
+/* è°ƒæ•´é—¨æˆ·ä¿¡æ¯æ¡†å’Œç™»é™†æ¡†å±…ä¸­ */
+.content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+    .content .news {
+        left: 10%;
+    }
+
+    .content .login_info {
+        left: 66%;
+    }
+
+
+
+
+
+/*页面顶部*/
+#topMenuTitle {
+    width: 100%;
+    position: absolute;
+    z-index: 200;
+    /*background-color:#008080;*/
+}
+
+    #topMenuTitle .topTitleLogo {
+        float: left;
+        width: 100%;
+        height: 60px;
+        background-size: 100%;
+    }
+
+        #topMenuTitle .topTitleLogo span {
+            color: #111;
+            display: block;
+            font-size: 26px;
+            height: 60px;
+            line-height: 60px;
+            font-weight: bold;
+            padding-left: 30px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+    /*一级菜单*/
+    #topMenuTitle .topMenu {
+        float: right;
+        position: relative;
+        /*top: 20px;*/
+        right: 20px;
+    }
+
+        #topMenuTitle .topMenu li {
+            float: left;
+            /*margin-left: 15px;*/
+            width: 80px;
+            height: 60px;
+            background-color: #008080;
+            text-align: center;
+            /*border-radius:50%;*/
+            cursor: pointer;
+        }
+
+            #topMenuTitle .topMenu li.active {
+                background-color: cadetblue;
+            }
+
+            #topMenuTitle .topMenu li:hover {
+                background-color: cadetblue;
+            }
+
+            #topMenuTitle .topMenu li div {
+                width: 25px;
+                height: 25px;
+                display: inline-block;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                margin-top: 5px;
+                border-radius: 50%;
+            }
+            /*#topMenuTitle .topMenu li >div:hover{
+	animation-delay: 0.1s;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}*/
+            #topMenuTitle .topMenu li > span {
+                display: inline-block;
+                width: 60px;
+                font-family: 宋体 Regular;
+                font-size: 14px;
+                color: #fff;
+                /*position:relative;
+  top:-3px;*/
+            }

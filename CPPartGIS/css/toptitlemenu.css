@@ -1,0 +1,93 @@
+﻿/*页面顶部标题和菜单按钮*/
+#topTitleMenu {
+    width: 100%;
+    position: absolute;
+    z-index: 200;
+    background-color: #008080;
+}
+    /*标题样式*/
+    #topTitleMenu #topTitle {
+        float: left;
+        width: 350px;
+        height: 60px;
+        background-size: 100%;
+    }
+
+        /*类型1(带文字的图片)*/
+        #topTitleMenu #topTitle img {
+            margin-top: 10px;
+        }
+
+        /*类型2(zhb图片加文字)*/
+        #topTitleMenu #topTitle span {
+            display: block;
+            height: 46px;
+            line-height: 46px;
+            color: #fff;
+            font-size: 26px;
+            /*font-weight: bold;*/
+        }
+
+        #topTitleMenu #topTitle span {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            #topTitleMenu #topTitle span img {
+            }
+
+
+
+    /*一级菜单按钮样式*/
+    #topTitleMenu .topMenu {
+        float: right;
+        position: relative;
+        /*top: 20px;*/
+        right: 20px;
+    }
+
+        #topTitleMenu .topMenu li {
+            float: left;
+            /*margin-left: 15px;*/
+            width: 80px;
+            height: 60px;
+            background-color: #008080;
+            text-align: center;
+            /*border-radius:50%;*/
+            cursor: pointer;
+            list-style: none;
+        }
+
+            #topTitleMenu .topMenu li.active {
+                background-color: cadetblue;
+            }
+
+            #topTitleMenu .topMenu li:hover {
+                background-color: cadetblue;
+            }
+
+            #topTitleMenu .topMenu li div {
+                width: 25px;
+                height: 25px;
+                display: inline-block;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                margin-top: 5px;
+                border-radius: 50%;
+            }
+            /*#topTitleMenu .topMenu li >div:hover{
+	animation-delay: 0.1s;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}*/
+            #topTitleMenu .topMenu li > span {
+                display: inline-block;
+                width: 60px;
+                font-family: 宋体 Regular;
+                font-size: 14px;
+                color: #fff;
+                /*position:relative;
+  top:-3px;*/
+            }
