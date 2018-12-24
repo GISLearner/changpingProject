@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -73,33 +73,85 @@
             </li>
         </ul>
     </div>
-	
-	
-	<!--左侧搜索框-->
-	<div id="leftMenue" style="padding: 5px;  position: absolute;left: 10px;top:20px;">
-		<div class="entSearch">
-			<div><input class="entSearch_text" type="text" style="width: 180px;height: 25px;"/></div>
-			<div class="entSearch_btn"   >搜索</div>
-		</div>
-		<div class="entContent" >
-			<ul class="entContent_list" style='list-style:none;'>
 
+
+    <!--左侧搜索框-->
+    <div id="leftMenue" style="padding: 5px;  position: absolute;left: 30px;top:50px;">
+        <div class="entSearch">
+            <div>
+                <input class="entSearch_text" type="text" style="width: 200px;height: 30px;border-radius: 0px;" />
+            </div>
+            <div class="entSearch_btn" id="btnSearchNormal">  
+                <img src="img/icon/search.png" />
+                搜索
+            </div>
+            <div class="entSearch_btn" id="btnSearchAdvanced">
+                <img src="img/icon/set.png" />
+                高级
+            </div>
+        </div>
+
+        <div id="panelResult" class="panel"> 
+            <table class="table table-hover " style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>名称</th>
+                        <th>类型</th>
+                    </tr>
+                </thead> 
+                <tr>
+                    <td>1</td>
+                    <td>某某企业</td>
+                    <td>企业</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>某某建筑</td>
+                    <td>建筑</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>某某分园区</td>
+                    <td>分园区</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="panelCondition" class="panel">
+            <ul  class="conditionUl">
+                <li>
+                    <img src="img/icon/beijing.png" style="background:#428bca;" />
+                    分园区
+                </li>
+                <li> 
+                    <img src="img/icon/ent.png"  style="background:#5cb85c;" />
+                    企业
+                </li>
+                <li> 
+                    <img src="img/icon/build.png"  style="background:#f0ad4e;" />
+                    建筑
+                </li>
+                <li> 
+                    <img src="img/icon/park.png"  style="background:#d9534f;" />
+                    配套设施
+                </li>
             </ul>
-		</div>
-	</div>
-	
-	<!--右侧图层控制-->
-	<div class="layerControl" style="width:260px;position: absolute;right:10px;top:30px;border: solid 1px gray;background-color: #FFFF;">
-		<div class="lc_title" style="width: 260px;height:30px;background-color: #3983FF;line-height: 30px;color:white">
-			<span style="margin-left: 5px;">图层控制</span>
-		</div>
-		<div class="lc_content">
-			<ul style="list-style: none;">
-				<li><label><input class="lc_special lc_river" att="1" type="checkbox">园区专题1</label></li>
-				<li><label><input class="lc_special lc_station" att="0" type="checkbox">园区专题2</label></li>
-			</ul>
-		</div>
-	</div>
+        </div>
+    </div>
+
+    <!--右侧图层控制-->
+    <div class="layerControl" style="width:260px;position: absolute;right:10px;top:30px;border: solid 1px gray;background-color: #FFFF;">
+        <div class="lc_title" style="width: 260px;height:30px;background-color: #3983FF;line-height: 30px;color:white">
+            <span style="margin-left: 5px;">图层控制</span>
+        </div>
+        <div class="lc_content">
+            <ul style="list-style: none;">
+                <li><label><input class="lc_special lc_river" att="1" type="checkbox">园区专题1</label></li>
+                <li><label><input class="lc_special lc_station" att="0" type="checkbox">园区专题2</label></li>
+            </ul>
+        </div>
+    </div>
 
 
 </body>
@@ -141,3 +193,5 @@
 <script src="Scripts/mapMain.js"></script>
 <script src="Scripts/mapMenu.js"></script>
 <script src="Scripts/projectPoint.js"></script>
+
+<script src="Scripts/main.js"></script>
