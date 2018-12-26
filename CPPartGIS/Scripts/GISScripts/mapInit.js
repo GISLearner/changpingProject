@@ -124,39 +124,39 @@ mugis.mapInit = {
 				var dLayer = new mapAPI.ArcGISDynamicMapServiceLayer(mapconfig.vectorMapServerUrl, {
 					id: "baseMap_VEC"
 				});
-				var infoTemplate1 = new mapAPI.InfoTemplate("${BZMC}", "<div>名称：${BZMC}</div><div>地址：${DZ}</div><div>街道名称：${SSZJ}</div>");
-				var infoTemplate2 = new mapAPI.InfoTemplate("${类型}", "<div>名称：${类型}</div>");
-				var infoTemplate3 = new mapAPI.InfoTemplate("${QLR}", "<div>企业名称：${QLR}</div><div>土地性质：${TDXZ}</div><div>类别代码名称：${LBDMMC}</div>");
-				var infoTemplate4 = new mapAPI.InfoTemplate("${BZMC}", "<div>名称：${BZMC}<div>地址：${DZ}</div><div>街道名称：${SSZJ}</div>");
-				var infoTemplate5 = new mapAPI.InfoTemplate("${类型}", "<div>名称：${类型}</div>");
-				var infoTemplate6 = new mapAPI.InfoTemplate("${QLR}", "<div>企业名称：${QLR}</div><div>土地性质：${TDXZ}</div><div>类别代码名称：${LBDMMC}</div>");
-				var infoTemplates = {
-					0: {
-						infoTemplate: infoTemplate1,
-						layerUrl: null
-					},
-					1: {
-						infoTemplate: infoTemplate2,
-						layerUrl: null
-					},
-					2: {
-						infoTemplate: infoTemplate3,
-						layerUrl: null
-					},
-					3: {
-						infoTemplate: infoTemplate4,
-						layerUrl: null
-					},
-					4: {
-						infoTemplate: infoTemplate5,
-						layerUrl: null
-					},
-					5: {
-						infoTemplate: infoTemplate6,
-						layerUrl: null
-					}
-				};
-				dLayer.setInfoTemplates(infoTemplates);
+// 				var infoTemplate1 = new mapAPI.InfoTemplate("${BZMC}", "<div>名称：${BZMC}</div><div>地址：${DZ}</div><div>街道名称：${SSZJ}</div>");
+// 				var infoTemplate2 = new mapAPI.InfoTemplate("${类型}", "<div>名称：${类型}</div>");
+// 				var infoTemplate3 = new mapAPI.InfoTemplate("${QLR}", "<div>企业名称：${QLR}</div><div>土地性质：${TDXZ}</div><div>类别代码名称：${LBDMMC}</div>");
+// 				var infoTemplate4 = new mapAPI.InfoTemplate("${BZMC}", "<div>名称：${BZMC}<div>地址：${DZ}</div><div>街道名称：${SSZJ}</div>");
+// 				var infoTemplate5 = new mapAPI.InfoTemplate("${类型}", "<div>名称：${类型}</div>");
+// 				var infoTemplate6 = new mapAPI.InfoTemplate("${QLR}", "<div>企业名称：${QLR}</div><div>土地性质：${TDXZ}</div><div>类别代码名称：${LBDMMC}</div>");
+// 				var infoTemplates = {
+// 					0: {
+// 						infoTemplate: infoTemplate1,
+// 						layerUrl: null
+// 					},
+// 					1: {
+// 						infoTemplate: infoTemplate2,
+// 						layerUrl: null
+// 					},
+// 					2: {
+// 						infoTemplate: infoTemplate3,
+// 						layerUrl: null
+// 					},
+// 					3: {
+// 						infoTemplate: infoTemplate4,
+// 						layerUrl: null
+// 					},
+// 					4: {
+// 						infoTemplate: infoTemplate5,
+// 						layerUrl: null
+// 					},
+// 					5: {
+// 						infoTemplate: infoTemplate6,
+// 						layerUrl: null
+// 					}
+// 				};
+// 				dLayer.setInfoTemplates(infoTemplates);
 				map.addLayer(dLayer);
 
 				/*显示经纬度*/

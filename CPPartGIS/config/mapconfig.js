@@ -32,16 +32,6 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		vectorMapServerUrl: "http://39.106.156.190:6080/arcgis/rest/services/cp_parks/MapServer",
 		rasterMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 		imgMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
-		riverMapUrl: "http://39.106.156.190:6080/arcgis/rest/services/RiverMap/MapServer",
-		ajaxUrl: "http://47.94.164.226:8092/project/getProjectCount",
-		ajaxUrl_path: "http://47.94.164.226:8092/prospectingPathGps/getProspectingPathGpsList",
-		ajaxUrl_project: "http://47.94.164.226:8092/prospectingCheckpoint/getCheckpointById",
-		ajaxUrl_project2:"http://47.94.164.226:8092/project/getProjectListInfo",
-		startIcon: "",
-		endIcon: "",
-		jiaoyinIcon: "",
-		// projectIcon: "http://127.0.0.1:8848/GISPage/img/points/point.png",
-		projectIcon: "http://39.106.156.190/gis/img/points/point.png",
 
 		//几何服务地址
 		geometryServer: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer",
@@ -61,34 +51,66 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 			//地图加载的默认参数layer,zoom level,center...
 		},
 	
-		infoContentConfig : [
+		layerInfoConfigs : [
 			{
-				fieldLabel:"项目名称",
-				fieldName:"projectName"
+				layerId:"0",
+				layerCode:"architectureLayer",
+				nameField:"BZMC",
+				pointIcon:"img/icon/build.png",
+				fieldInfos:[
+					{
+						fieldLabel:"名称",
+						fieldName:"BZMC"
+					},
+					{
+						fieldLabel:"地址",
+						fieldName:"DZ"
+					},
+					{
+						fieldLabel:"街道名称",
+						fieldName:"SSZJ"
+					}
+				]
 			},
 			{
-				fieldLabel:"所属省",
-				fieldName:"projectProvinceName"
+				layerId:"1",
+				layerCode:"suppfaciliLayer",
+				nameField:"类型",
+				pointIcon:"img/icon/park.png",
+				fieldInfos:[
+					{
+						fieldLabel:"类型",
+						fieldName:"类型"
+					}
+				]
 			},
 			{
-				fieldLabel:"所属市",
-				fieldName:"projectCityName"
-			},
-			{
-				fieldLabel:"项目描述",
-				fieldName:"projectDescribe"
-			},
-			{
-				fieldLabel:"项目启动日期",
-				fieldName:"projectRunStart"
-			},
-			{
-				fieldLabel:"项目结束日期",
-				fieldName:"projectRunEnd"
-			},
-			{
-				fieldLabel:"项目类型",
-				fieldName:"projectTypeName"
+				layerId:"5",
+				layerCode:"entLandLayer",
+				nameField:"SYDW",
+				pointIcon:"",
+				fieldInfos:[
+					{
+						fieldLabel:"企业名称",
+						fieldName:"SYDW"
+					},
+					{
+						fieldLabel:"土地性质",
+						fieldName:"TDXZ"
+					},
+					{
+						fieldLabel:"土地性质",
+						fieldName:"TDXZ"
+					},
+					{
+						fieldLabel:"用地类别",
+						fieldName:"LYLB"
+					},
+					{
+						fieldLabel:"备注",
+						fieldName:"BZ"
+					}
+				]
 			}
 		]
 

@@ -3,29 +3,35 @@
 		initMenu();
 		initMap();
 	}
-
-	mugis.dataBaseQuery = function(ajaxUrl, dataObj, resultFunction, resultParam) {
-		$.ajax({
-			type: "POST",
-			url: ajaxUrl,
-			contentType: 'application/json',
-			data: JSON.stringify(dataObj),
-			dataType: 'json',
-			async: true,
-			success: function(data) {
-				if (resultParam != null && resultParam != "") {
-					resultFunction(data, resultParam);
-				} else {
-					resultFunction(data);
-				}
-			},
-			error: function(msg) {
-				alert(msg.responseText);
+	
+	//属性查询
+	mugis.layerAttSearch = function(layerId, searchWhere, geo,resultFunction, resultParam) {
+		var queryTask = new mapAPI.QueryTask(mapconfig.vectorMapServerUrl + "/" + layerId);
+		var query = new mapAPI.Query();
+		query.outFields = ["*"];
+		if(geo){
+			query.geometry = geo;
+		}
+		query.where = searchWhere;
+		query.returnGeometry = true;
+		queryTask.execute(query,function(e){
+			if(resultParam){
+				resultFunction(e,resultParam);
+			}else{
+				resultFunction(e);
 			}
-		});
+		},function(error){
+			console.log(error);
+		})
 	}
+	
 	//初始化地图
 	function initMap(){
+		mapconfig.layerInfoConfigs.forEach(function(info){
+			var lId = info.layerCode;
+			var gLayer = new mapAPI.GraphicsLayer({id:lId});
+			map.addLayer(gLayer);
+		})
 	}
 
 	//初始化页面
@@ -37,6 +43,20 @@
 		})
 		$(".entSearch_btn").click(function() {
 			searchEnt();
+		})
+	}
+	
+	//查询企业信息
+	function searchEnt(){
+		var text = $("#leftMenue .entSearch_text").val();
+		var lyrConfigs = mapconfig.layerInfoConfigs;
+		lyrConfigs.forEach(function(item){
+			var layerWhere = item.nameField + " like '%" + text + "%'";
+			mugis.layerAttSearch(item.layerId,layerWhere,null,function(e,params){
+				console.log(e);
+				console.log(params);
+				addFeaToMap(e,params);
+			},item)
 		})
 	}
 	
@@ -52,21 +72,28 @@
 	}
 	
 	//地图添加项目点位
-	function addPtToMap(item,gLayer){
-		console.log("经度是：" + item.projectLongitude + ";纬度是：" + item.projectLatitude);
-		var point = new mapAPI.Point(item.projectLongitude,item.projectLatitude,map.spatialrefrence);
-		var pms = new mapAPI.PictureMarkerSymbol(mapconfig.projectIcon,20,30);
-		var infoWin = mapAPI.InfoTemplate("${projectName}",getInfoContent(item));
-		var gra = new mapAPI.Graphic(point,pms,item,infoWin);
-		gLayer.add(gra);
+	function addFeaToMap(e,feaConfig){
+		var features = e.features;
+		if(features.length == 0) return;
+		var fms;
+		var fields = e.fields;
+		var lId = feaConfig.layerCode;
+		var gLayer = map.getLayer(lId);
+		if(e.geometryType == "esriGeometryPoint"){
+			fms = new mapAPI.PictureMarkerSymbol(feaConfig.pointIcon,24,24);
+		}
+		var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}",getInfoContent(fields));
+		features.forEach(function(fea){
+			var gra = new mapAPI.Graphic(fea.geometry,fms,fea.attributes,infoWin);
+			gLayer.add(gra);
+		})
 	}
 	
 	//获取气泡信息
-	function getInfoContent(item){
+	function getInfoContent(fields){
 		var contentHtml = "<div class=\"infodiv\"><table>";
-		mapconfig.infoContentConfig.forEach(function(cfig){
-			// contentHtml += "<tr><td>" + cfig.fieldLabel + "：${" + cfig.fieldName + "}</td></tr>";
-			contentHtml += "<tr><td>" + cfig.fieldLabel + "：" + item[cfig.fieldName] + "</td></tr>";
+		fields.forEach(function(field){
+			contentHtml += "<tr><td>" + field.alias + "：${" + field.name + "}</td></tr>";
 		})
 		contentHtml += "</table></div>";
 		return contentHtml;
