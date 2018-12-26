@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,7 +16,7 @@
 
     <!--************************* CSS *************************-->
     <!--bootstrap样式-->
-    <link href="Scripts/plugins/bootstrap-2.3.2/css/bootstrap.css" rel="stylesheet" />
+    <link href="Scripts/plugins/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" />
     <!--jquery UI-->
     <link href="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
     <!--jspanel弹框面板-->
@@ -78,8 +78,8 @@
     <!--左侧搜索框-->
     <div id="leftMenue" style="padding: 5px;  position: absolute;left: 30px;top:50px;">
         <div class="entSearch">
-            <div>
-                <input class="entSearch_text" type="text" style="width: 200px;height: 30px;border-radius: 0px;" />
+            <div style="height:40px;">
+                <input class="entSearch_text" type="text" style="width: 250px;height: 100%;border-radius: 0px;" />
             </div>
             <div class="entSearch_btn" id="btnSearchNormal">  
                 <img src="img/icon/search.png" />
@@ -120,23 +120,81 @@
 
         <div id="panelCondition" class="panel">
             <ul  class="conditionUl">
-                <li>
+                <li id="li_park" class="cond_select">
                     <img src="img/icon/beijing.png" style="background:#428bca;" />
                     分园区
                 </li>
-                <li> 
+                <li id="li_ent"> 
                     <img src="img/icon/ent.png"  style="background:#5cb85c;" />
                     企业
                 </li>
-                <li> 
+                <li id="li_build"> 
                     <img src="img/icon/build.png"  style="background:#f0ad4e;" />
                     建筑
                 </li>
-                <li> 
+                <li id="li_fac"> 
                     <img src="img/icon/park.png"  style="background:#d9534f;" />
                     配套设施
                 </li>
             </ul>
+            <div style="padding:10px;"> 
+                <form class="form-horizontal" id="form_cod"> 
+                    <div class="form-group" id="cod_name">
+                        <label for="inputEmail3" class="col-sm-3 control-label">名称</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="请输入名称">
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_landarea">
+                        <label for="inputEmail3" class="col-sm-3 control-label">用地面积</label>
+                        <div class="col-sm-9">
+                                <input type="email" class="form-control" id="" placeholder="用地面积">-
+                                <input type="email" class="form-control" id="" placeholder="用地面积">
+                        </div>
+                        
+                    </div>
+                    <div class="form-group" id="cod_buildarea">
+                        <label for="inputEmail3" class="col-sm-3 control-label">建筑面积</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="建筑面积">-
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="建筑面积">
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_usetype">
+                        <label for="inputEmail3" class="col-sm-3 control-label">利用类型</label>
+                        <div class="col-sm-9">
+                            <select id="disabledSelect" class="form-control">
+                                <option>类型一</option>
+                                <option>类型二</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="cod_buildtype">
+                        <label for="inputEmail3" class="col-sm-3 control-label">建筑类型</label>
+                        <div class="col-sm-9">
+                            <select id="disabledSelect" class="form-control">
+                                <option>类型一</option>
+                                <option>类型二</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_factype">
+                        <label for="inputEmail3" class="col-sm-3 control-label">设施类型</label>
+                        <div class="col-sm-9">
+                            <select id="disabledSelect" class="form-control">
+                                <option>类型一</option>
+                                <option>类型二</option>
+                            </select>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
