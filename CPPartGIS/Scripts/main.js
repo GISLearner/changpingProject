@@ -182,7 +182,8 @@ var app = {
     },
     //切换地图
     switchMap(type) {
-
+        $(".mapContainer").hide();
+        $("#map_" + type).show();
     }
 }
 
