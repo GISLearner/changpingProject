@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,6 +17,7 @@
     <!--************************* CSS *************************-->
     <!--bootstrap样式-->
     <link href="Scripts/plugins/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <link href="Scripts/plugins/bootstraptable-1.8.1/bootstrap-table.css" rel="stylesheet" />
     <!--jquery UI-->
     <link href="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
     <!--jspanel弹框面板-->
@@ -101,47 +102,25 @@
         </div>
 
         <div id="panelResult" class="panel">
-            <table class="table table-hover " style="width:100%;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>名称</th>
-                        <th>类型</th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td>1</td>
-                    <td>某某企业</td>
-                    <td>企业</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>某某建筑</td>
-                    <td>建筑</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>某某分园区</td>
-                    <td>分园区</td>
-                </tr>
+            <table class="sdataTable table table-hover">
             </table>
         </div>
 
         <div id="panelCondition" class="panel">
             <ul class="conditionUl">
-                <li id="li_park" class="cond_select">
+                <li id="li_park" status="fyq" class="cond_select">
                     <img src="img/icon/beijing.png" style="background:#428bca;" />
                     分园区
                 </li>
-                <li id="li_ent">
+                <li id="li_ent" status="qy">
                     <img src="img/icon/ent.png" style="background:#5cb85c;" />
                     企业
                 </li>
-                <li id="li_build">
+                <li id="li_build" status="jz">
                     <img src="img/icon/build.png" style="background:#f0ad4e;" />
                     建筑
                 </li>
-                <li id="li_fac">
+                <li id="li_fac" status="ptss">
                     <img src="img/icon/park.png" style="background:#d9534f;" />
                     配套设施
                 </li>
@@ -160,7 +139,6 @@
                             <input type="email" class="form-control" id="txt_landarea_1" placeholder="km²">-
                             <input type="email" class="form-control" id="txt_landarea_2" placeholder="km²">
                         </div>
-
                     </div>
                     <div class="form-group" id="cod_buildarea">
                         <label for="inputEmail3" class="col-sm-3 control-label">建筑面积</label>
@@ -173,8 +151,13 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">利用类型</label>
                         <div class="col-sm-9">
                             <select id="select_usetype" class="form-control">
-                                <option>类型一</option>
-                                <option>类型二</option>
+                                <option value="一类工业用地">一类工业用地</option>
+                                <option value="教育科研设计用地">教育科研设计用地</option>
+                                <option value="公园绿地"> 公园绿地</option>
+                                <option value="行政办公用地">行政办公用地</option>
+                                <option value="商业金融用地">商业金融用地</option>
+                                <option value="住宅混合公建用地">住宅混合公建用地</option>
+                                <option value="">其它</option>
                             </select>
                         </div>
                     </div>
@@ -183,8 +166,11 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">建筑类型</label>
                         <div class="col-sm-9">
                             <select id="select_buildtype" class="form-control">
-                                <option>类型一</option>
-                                <option>类型二</option>
+                                <option value="办公楼">办公楼</option>
+                                <option value="配套附属用房">配套附属用房</option>
+                                <option value="厂房">厂房</option>
+                                <option value="库房">库房</option>
+                                <option value="">其它</option>
                             </select>
                         </div>
                     </div>
@@ -192,8 +178,11 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">设施类型</label>
                         <div class="col-sm-9">
                             <select id="select_factype" class="form-control">
-                                <option>类型一</option>
-                                <option>类型二</option>
+                                <option value="热交换站">热交换站</option>
+                                <option value="变电站">变电站</option>
+                                <option value="学校">学校</option>
+                                <option value="医院">医院</option>
+                                <option value="">其它</option>
                             </select>
                         </div>
                     </div>
@@ -373,12 +362,13 @@
 </html>
 <!--jquery UI-->
 <script src="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<!--bootStrap Table-->
+<script src="Scripts/plugins/bootstraptable-1.8.1/bootstrap.min.js"></script>
+<script src="Scripts/plugins/bootstraptable-1.8.1/bootstrap-table.js"></script>
+<script src="Scripts/plugins/bootstraptable-1.8.1/bootstrap-table-zh-CN.min.js"></script>
 <!--jspanel弹框面板-->
 <script src="Scripts/plugins/jspanel-3.11.1/jquery.jspanel.min.js"></script>
 <script src="Scripts/plugins/echarts/echarts.js"></script>
-<script src="Scripts/plugins/animo/animo.min.js"></script>
-<script src="Scripts/plugins/poshytip/jquery.poshytip.min.js"></script>
-<script src="Scripts/plugins/minicolors/jquery.minicolors.js"></script>
 
 <!--自定义ArcGIS组件路径-->
 <script type="text/javascript">
@@ -407,6 +397,5 @@
 <!--main主方法-->
 <script src="Scripts/mapMain.js"></script>
 <script src="Scripts/mapMenu.js"></script>
-<script src="Scripts/projectPoint.js"></script>
-
+<script src="Scripts/tools.js"></script>
 <script src="Scripts/main.js"></script>

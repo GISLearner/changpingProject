@@ -103,7 +103,7 @@ mugis.mapInit = {
 				esriConfig.defaults.geometryService = mapconfig.geometryServer;
 				esriConfig.defaults.extent = mapconfig.extent;
 				esriConfig.defaults.hotLayerList = mapconfig.hotLayerList;
-
+				var spatialReference = new SpatialReference({wkt:'PROJCS["北京地方坐标系",GEOGCS["GCS_Beijing_1954",DATUM["D_Beijing_1954",SPHEROID["Krasovsky_1940",6378245.0,298.3]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",300000.0],PARAMETER["Central_Meridian",116.3502518],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",39.86576603],UNIT["Meter",1.0]]'});
 
 				//Popup
 				var popup = new Popup({
@@ -113,12 +113,13 @@ mugis.mapInit = {
 				domClass.add(popup.domNode, "light");
 
 				//默认地图范围
-				// mapinfo.initExtent = new esri.geometry.Extent(mapconfig.extent);
-
+				mapinfo.initExtent = new esri.geometry.Extent(mapconfig.extent);
+				mapinfo.initExtent.setSpatialReference(spatialReference);
 				//加载天地图
 				mapinfo.map = map = new esri.Map("map", {
 					logo: false,
-					slider: false
+					slider: false,
+					extent:mapinfo.initExtent
 				});
 				// _this.addTDTBaseMap("baseMap_VEC");
 				var dLayer = new mapAPI.ArcGISDynamicMapServiceLayer(mapconfig.vectorMapServerUrl, {
@@ -161,7 +162,9 @@ mugis.mapInit = {
 
 				/*显示经纬度*/
 				dojo.connect(map, "onMouseMove", function(event) {
-					$("#PositionBar").html("坐标x:" + event.mapPoint.x.toFixed(3) + "     坐标y:" + event.mapPoint.y.toFixed(3));
+					if(event.mapPoint.x && event.mapPoint.y){
+						$("#PositionBar").html("坐标x:" + event.mapPoint.x.toFixed(3) + "     坐标y:" + event.mapPoint.y.toFixed(3));
+					}
 				});
 
 				/*地图比例尺*/

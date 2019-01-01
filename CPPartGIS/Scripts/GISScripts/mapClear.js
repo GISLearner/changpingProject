@@ -1,4 +1,4 @@
-﻿//清除地图覆盖物
+//清除地图覆盖物
 mugis.mapClear = {
     //清除地图所有图层、标注和事件
     clearAll: function () {
@@ -33,7 +33,6 @@ mugis.mapClear = {
                 var layer = mapinfo.map.getLayer(array[i]);
                 if (layer) {
                     layer.clear();
-                    mapinfo.map.removeLayer(layer);
                 }
             }
         }
@@ -51,20 +50,7 @@ mugis.mapClear = {
                 var layer = mapinfo.map.getLayer(layerName);
                 if (layer) {
                     layer.clear();
-                    mapinfo.map.removeLayer(layer);
                 }
-            }
-
-            var scaleLayers = mapinfo.map.getLayersVisibleAtScale();
-            var arrayScaleLayers = Array();
-            for (var i = 0; i < scaleLayers.length; i++) {
-                arrayScaleLayers.push(scaleLayers[i]);
-            }
-            for (var i = 0; i < arrayScaleLayers.length; i++) {
-                if (arrayScaleLayers[i].id.indexOf('baseMap') > -1) {
-                    continue;
-                }
-                mapinfo.map.removeLayer(arrayScaleLayers[i]);
             }
 
         }

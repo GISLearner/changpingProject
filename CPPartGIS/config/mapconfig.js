@@ -40,10 +40,10 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 
 		//地图范围
 		extent: {
-			"xmin": 488485.1466894255,
-			"ymin": 335718.66197623423,
-			"xmax": 492472.51385740034,
-			"ymax": 338242.192606966
+			"xmin": 473417.7160750002,
+			"ymin": 322911.70690729236,
+			"xmax": 512964.8352250002,
+			"ymax": 340393.00539728464
 		},
 
 		//地图加载
@@ -53,14 +53,20 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 	
 		layerInfoConfigs : [
 			{
-				layerId:"0",
+				layerId:"1",
 				layerCode:"architectureLayer",
-				nameField:"BZMC",
-				pointIcon:"img/icon/build.png",
+				layerType:"建筑",
+				nameField:"CQDW",//名称字段
+				ydmjField:"ZJZMJ",//用地面积字段
+				jzmjField:"DXJSMJ",//建筑面积字段
+				typeField:"FWLX",//建筑类型字段
+				idField:"FID",//唯一ID
+				searchStatus:"jz",
+				pointIcon:"img/points/jianzhu.png",
 				fieldInfos:[
 					{
 						fieldLabel:"名称",
-						fieldName:"BZMC"
+						fieldName:"CQDW"
 					},
 					{
 						fieldLabel:"地址",
@@ -73,10 +79,15 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 				]
 			},
 			{
-				layerId:"1",
+				layerId:"3",
 				layerCode:"suppfaciliLayer",
+				layerType:"配套设施",
 				nameField:"类型",
-				pointIcon:"img/icon/park.png",
+				ydmjField:"Shape_Area",//用地面积字段
+				typeField:"类型",//设施类型字段
+				idField:"FID",//唯一ID
+				searchStatus:"ptss",
+				pointIcon:"img/points/sheshi.png",
 				fieldInfos:[
 					{
 						fieldLabel:"类型",
@@ -85,14 +96,52 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 				]
 			},
 			{
-				layerId:"5",
+				layerId:"0",
 				layerCode:"entLandLayer",
-				nameField:"SYDW",
+				layerType:"企业",
+				nameField:"QLR",
+				ydmjField:"Shape_Area",//用地面积字段
+				typeField:"LBDMMC",//利用类型字段
+				idField:"FID",//唯一ID
+				searchStatus:"qy",
+				pointIcon:"img/points/qiye.png",
+				fieldInfos:[
+					{
+						fieldLabel:"企业名称",
+						fieldName:"QLR"
+					},
+					{
+						fieldLabel:"土地性质",
+						fieldName:"TDXZ"
+					},
+					{
+						fieldLabel:"土地性质",
+						fieldName:"TDXZ"
+					},
+					{
+						fieldLabel:"用地类别",
+						fieldName:"LYLB"
+					},
+					{
+						fieldLabel:"备注",
+						fieldName:"BZ"
+					}
+				]
+			},
+			{
+				layerId:"4",
+				layerCode:"subPark",
+				layerType:"分园区",
+				nameField:"FYQMC",//名称
+				ydmjField:"Shape_Area",//用地面积字段
+				idField:"FID",//唯一ID
+				geoType:"polygon",
+				searchStatus:"fyq",
 				pointIcon:"",
 				fieldInfos:[
 					{
 						fieldLabel:"企业名称",
-						fieldName:"SYDW"
+						fieldName:"QLR"
 					},
 					{
 						fieldLabel:"土地性质",
@@ -112,7 +161,31 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 					}
 				]
 			}
-		]
+		],
+		layerSearchColumns:[
+			{
+				field:"data_id",
+				title:"#",
+				width:20
+			},
+			{
+				field:"data_name",
+				title:"名称",
+				width:150
+			},
+			{
+				field:"data_type",
+				title:"类型",
+				width:60
+			},
+			{
+				field:"FID",
+				title:"FID",
+				visible:false,
+				width:60
+			}
+		],
+		highLightIcon:"img/hotpoint/hong.gif"
 
 	};
 
