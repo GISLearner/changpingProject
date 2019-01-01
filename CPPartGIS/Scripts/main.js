@@ -139,6 +139,7 @@ var app = {
 	},
 	//查询企业信息
 	searchEnt() {
+		$(".sdataTable").html();
 		var text = $("#leftMenue .entSearch_text").val();
 		var lyrConfigs = mapconfig.layerInfoConfigs;
 		var searchCount = 0;
@@ -153,7 +154,7 @@ var app = {
 						height: 300,
 						width: 400,
 						onClickRow:function(e){
-							app.clickRow(e,params);
+							app.clickRow(e,{layerId:e.layerId,idField:"FID"});
 						}
 					}
 					mugis.initTable(".sdataTable", mapconfig.layerSearchColumns, searchData, options);
@@ -193,6 +194,7 @@ var app = {
 				dataObj[columns[1]["field"]] = att[feaConfig.nameField];
 				dataObj[columns[2]["field"]] = feaConfig.layerType;
 				dataObj[feaConfig.idField] = att[feaConfig.idField];
+				dataObj["layerId"] = feaConfig.layerId;
 				searchData.push(dataObj);
 			}
 			if(searchData2){

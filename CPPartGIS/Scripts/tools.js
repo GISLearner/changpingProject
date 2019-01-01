@@ -1,6 +1,7 @@
 $(function(){
 	//表格初始化
 	mugis.initTable = function(ele,columns,datas,options){
+		$(ele).bootstrapTable('destroy'); 
 		var tableParams = {
 			columns:columns,
 			data:datas,
@@ -17,7 +18,7 @@ $(function(){
 				tableParams.onClickRow = options.onClickRow;
 			}
 		}
-		$(ele).bootstrapTable(tableParams)
+		$(ele).bootstrapTable(tableParams);
 	}
 	//属性查询
 	mugis.layerAttSearch = function(layerId, searchWhere, geo,resultFunction, resultParam) {

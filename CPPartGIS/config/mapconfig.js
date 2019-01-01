@@ -183,6 +183,12 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 				title:"FID",
 				visible:false,
 				width:60
+			},
+			{
+				field:"layerId",
+				title:"layerId",
+				visible:false,
+				width:60
 			}
 		],
 		highLightIcon:"img/hotpoint/hong.gif"
