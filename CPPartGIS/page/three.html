@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Use three.js from an external renderer - 4.8</title>
+
+    
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .esri-ui-top-left {
+            display:none !important;
+        }
+    </style>
+
+   
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+    <div style="position:absolute;bottom:20px;">
+        <input type="button" value="x+" onclick="modelSet('x',0.05)"/>
+        <input type="button" value="x-" onclick="modelSet('x', -0.05)"/>
+        <input type="button" value="y+" onclick="modelSet('y', 0.05)"/>
+        <input type="button" value="y-" onclick="modelSet('y', -0.05)"/>
+        <input type="button" value="z+" onclick="modelSet('z', 0.05)"/>
+        <input type="button" value="z-" onclick="modelSet('z', -0.05)"/>
+        <div id="tip" style="background:white;">
+
+        </div>
+    </div>
+
+    <script src="three.min.js"></script>
+    <script src="MTLLoader.js"></script>
+    <script src="OBJLoader.js"></script>
+     
+    <link rel="stylesheet" href="http://39.106.156.190/arcgis_js_v48_api/esri/css/main.css">
+    <script src="http://39.106.156.190/arcgis_js_v48_api/init.js"></script>
+     
+    <script>
+        var view, _this = {
+            d3obj: null,
+            models:[],
+        };
+
+        require([
+          "esri/Map",
+          "esri/views/SceneView",
+          "esri/views/3d/externalRenderers",
+          "esri/geometry/SpatialReference",
+          "esri/request",
+          "dojo/domReady!"
+        ],
+        function (
+          Map,
+          SceneView,
+          externalRenderers,
+          SpatialReference,
+          esriRequest
+        ) {
+
+            // Create a map
+            //////////////////////////////////////////////////////////////////////////////////////
+            var map = new Map({
+                basemap: "hybrid",
+                ground: "world-elevation"
+            });
+
+            // Create a SceneView
+            //////////////////////////////////////////////////////////////////////////////////////
+            view = new SceneView({
+                container: "viewDiv",
+                map: map,
+                viewingMode: "global",
+                camera: {
+                    position: {
+                        x: 116.22616024310921,
+                        y: 40.195854216054504,
+                        z: 250,
+                        spatialReference: { wkid: 4326 }
+                    },
+                    heading: 50,
+                    tilt: 65
+                },
+            });
+            view.when(function () { 
+                LoadObj({
+                    gra: [{
+                        geometry: {
+                            x: 116.23426024310921,
+                            y: 40.199254216054504, 
+                        },
+                        attributes: {
+                            objurl: "data/build.obj",
+                            scale: 1,
+                            rotation_x: 0.63,
+                            rotation_y: -2.8,
+                            rotation_z: -0.35,
+                            z: 67//-250
+                        }
+                    }]
+                })
+            })
+            
+        });
+
+        function LoadObj(ParaJson) {
+            require([
+                    "esri/Map",
+                    "esri/views/SceneView",
+                    "esri/views/3d/externalRenderers",
+                    "esri/geometry/SpatialReference",
+                    "esri/request",
+                    "dojo/domReady!",
+            ],
+                function (
+                    Map,
+                    SceneView,
+                    externalRenderers,
+                    SpatialReference,
+                    esriRequest
+                ) {
+                    var issExternalRenderer = {
+                        renderer: null, // three.js renderer
+                        camera: null, // three.js camera
+                        scene: null, // three.js scene
+
+                        ambient: null, // three.js ambient light source
+                        sun: null, // three.js sun light source
+                        models: [], // ISS model
+                        issScale: 40000, // scale for the iss model
+                        issMaterial: new THREE.MeshLambertMaterial({ color: 0xe03110 }), // material for the ISS model
+                        imgMaterial: null, // material for the ISS model
+                        cameraPositionInitialized: false, // we focus the view on the ISS once we receive our first data point
+                        positionHistory: [], // all ISS positions received so far
+
+                        markerMaterial: null, // material for the markers left by the ISS
+                        markerGeometry: null, // geometry for the markers left by the ISS
+
+                        /**
+                         * Setup function, called once by the ArcGIS JS API.
+                         */
+                        setup: function (context) {
+
+                            // initialize the three.js renderer
+                            //////////////////////////////////////////////////////////////////////////////////////
+                            this.renderer = new THREE.WebGLRenderer({
+                                context: context.gl,
+                                premultipliedAlpha: false
+                            });
+                            this.renderer.setPixelRatio(window.devicePixelRatio);
+                            this.renderer.setViewport(0, 0, view.width, view.height);
+
+                            // prevent three.js from clearing the buffers provided by the ArcGIS JS API.
+                            this.renderer.autoClearDepth = false;
+                            this.renderer.autoClearStencil = false;
+                            this.renderer.autoClearColor = false;
+
+                            // The ArcGIS JS API renders to custom offscreen buffers, and not to the default framebuffers.
+                            // We have to inject this bit of code into the three.js runtime in order for it to bind those
+                            // buffers instead of the default ones.
+                            var originalSetRenderTarget = this.renderer.setRenderTarget.bind(this.renderer);
+                            this.renderer.setRenderTarget = function (target) {
+                                originalSetRenderTarget(target);
+                                if (target == null) {
+                                    context.bindRenderTarget();
+                                }
+                            }
+
+                            // setup the three.js scene
+                            ///////////////////////////////////////////////////////////////////////////////////////
+
+                            this.scene = new THREE.Scene();
+
+                            // setup the camera
+                            this.camera = new THREE.PerspectiveCamera();
+
+                            // setup scene lighting
+                            this.ambient = new THREE.AmbientLight(0xffffff, 1);
+                            this.scene.add(this.ambient);
+                            this.sun = new THREE.DirectionalLight(0xffffff, 1);
+                            this.sun.position.set(40, -60, -10);
+                            this.scene.add(this.sun);
+
+                            // setup markers
+                            this.markerGeometry = new THREE.SphereBufferGeometry(12 * 1000, 16, 16);
+                            this.markerMaterial = new THREE.MeshBasicMaterial({ color: 0xe03110, transparent: true, opacity: 0.75 });
+
+                            // texture
+                            var manager = new THREE.LoadingManager();
+                            manager.onProgress = function (item, loaded, total) {
+                                console.log(item, loaded, total);
+                            };
+                            var textureLoader = new THREE.TextureLoader(manager);
+                            var loader = new THREE.OBJLoader(THREE.DefaultLoadingManager);
+
+                            for (var i = 0; i < ParaJson.gra.length; i++) {
+                                (function (i,_this) { 
+                                    var point = ParaJson.gra[i];
+                                    var posEst = [point.geometry.x, point.geometry.y, point.attributes.z];
+                                    var issMaterial = ""; 
+                                    var issMeshUrl = point.attributes.objurl;
+                                    var issScale = point.attributes.scale;
+                                    var rotation_x = point.attributes.rotation_x;
+                                    var rotation_y = point.attributes.rotation_y;
+                                    var rotation_z = point.attributes.rotation_z; 
+                                    issMaterial = issMeshUrl.replace("obj", "mtl");
+                                    var rootPath = issMeshUrl.replace(issMeshUrl.split("/")[issMeshUrl.split("/").length - 1], "");
+                                    //rootPath = "http://localhost:8011/lp3ddata/";
+                                    var mtlLoader = new THREE.MTLLoader();
+                                    mtlLoader.crossOrigin = "Anonymous";
+                                    mtlLoader.load(issMaterial, function (materials) {
+                                        for (var i in materials.materialsInfo) {
+                                            if (materials.materialsInfo[i].map_d)
+                                                materials.materialsInfo[i].map_d = rootPath + materials.materialsInfo[i].map_d.replace("\\", "/");
+                                            if (materials.materialsInfo[i].map_ka)
+                                                materials.materialsInfo[i].map_ka = rootPath + materials.materialsInfo[i].map_ka.replace("\\", "/");
+                                            if (materials.materialsInfo[i].map_kd)
+                                                materials.materialsInfo[i].map_kd = rootPath + materials.materialsInfo[i].map_kd.replace("\\", "/");
+                                        }
+                                        materials.preload();
+                                        loader.crossOrigin = "Anonymous";
+                                        loader.load(issMeshUrl, function (object3d) {
+                                            console.log(issMeshUrl + " is loaded.");
+                                            var iss = object3d;
+                                            //iss.traverse(function (child) {
+                                            //    if (child instanceof THREE.Mesh) {
+                                            //        //child.material = this.issMaterial;
+                                            //        //child.material.map = imgMaterial;
+                                            //    }
+                                            //});
+
+                                            iss.scale.set(issScale, issScale, issScale);
+                                            iss.rotation.set(rotation_x, rotation_y, rotation_z);
+
+                                            var renderPos = [0, 0, 0];
+                                            externalRenderers.toRenderCoordinates(view, posEst, 0, SpatialReference.WGS84, renderPos, 0, 1);
+                                            iss.position.set(renderPos[0], renderPos[1], renderPos[2]);
+                                            _this.models.push(iss);
+                                            _this.scene.add(iss);
+                                        }.bind(_this), undefined, function (error) {
+                                            console.error("Error loading ISS mesh. ", error);
+                                        });
+                                        loader.setMaterials(materials);
+                                    });
+
+                                    //loader.load(issMeshUrl, function (object3d) {
+                                    //    console.log(issMeshUrl + " is loaded.");
+                                    //    var iss = object3d;
+                                    //    iss.traverse(function (child) {
+                                    //        if (child instanceof THREE.Mesh) {
+                                    //            console.log(child.name);
+                                    //            //var randomMaterial = new THREE.MeshLambertMaterial({ color: Math.floor(Math.random() * 0xffffff) });
+                                    //            //var randomMaterial = new THREE.MeshLambertMaterial({ color: 0xE8E66E });
+                                    //            //child.material = randomMaterial;
+                                    //            //child.material.map = randomMaterial;
+                                    //        }
+                                    //    });
+
+                                    //    iss.scale.set(issScale, issScale, issScale);
+                                    //    iss.rotation.set(rotation_x, rotation_y, rotation_z);
+
+                                    //    var renderPos = [0, 0, 0];
+                                    //    externalRenderers.toRenderCoordinates(view, posEst, 0, SpatialReference.WGS84, renderPos, 0, 1);
+                                    //    iss.position.set(renderPos[0], renderPos[1], renderPos[2]);
+                                    //    _this.models.push(iss);
+                                    //    _this.scene.add(iss);
+                                    //}.bind(_this), undefined, function (error) {
+                                    //    console.error("Error loading ISS mesh. ", error);
+                                    //});
+
+
+                                })(i,this)
+                            }
+
+                            // create the horizon model
+                            var mat = new THREE.MeshBasicMaterial({ color: 0x2194ce });
+                            mat.transparent = true;
+                            mat.opacity = 0.5;
+                            this.region = new THREE.Mesh(
+                                new THREE.TorusBufferGeometry(2294 * 1000, 100 * 1000, 16, 64),
+                                mat
+                            );
+                            //this.scene.add(this.region);
+
+
+                            // start querying the ISS position
+                            //this.queryISSPosition();
+
+                            // cleanup after ourselfs
+                            context.resetWebGLState();
+                        },
+
+                        render: function (context) {
+
+                            // update camera parameters
+                            ///////////////////////////////////////////////////////////////////////////////////
+                            var cam = context.camera;
+
+                            this.camera.position.set(cam.eye[0], cam.eye[1], cam.eye[2]);
+                            this.camera.up.set(cam.up[0], cam.up[1], cam.up[2]);
+                            this.camera.lookAt(new THREE.Vector3(cam.center[0], cam.center[1], cam.center[2]));
+
+                            // Projection matrix can be copied directly
+                            this.camera.projectionMatrix.fromArray(cam.projectionMatrix);
+
+                            // draw the scene
+                            /////////////////////////////////////////////////////////////////////////////////////////////////////
+                            this.renderer.resetGLState();
+                            this.renderer.render(this.scene, this.camera);
+
+                            // as we want to smoothly animate the ISS movement, immediately request a re-render
+                            externalRenderers.requestRender(view);
+
+                            // cleanup
+                            context.resetWebGLState();
+                        },
+
+                    }
+                    _this.d3obj = issExternalRenderer;
+                    // register the external renderer
+                    externalRenderers.add(view, issExternalRenderer);
+
+                })
+        }
+
+        function modelSet(r,v) { 
+            _this.d3obj.models[0].rotation[r] += v;
+            document.getElementById("tip").innerHTML =
+                  "x:" + _this.d3obj.models[0].rotation.x
+                + "y:" + _this.d3obj.models[0].rotation.y
+                + "z:" + _this.d3obj.models[0].rotation.z;
+        }
+    </script>
+</body>
+
+</html>
