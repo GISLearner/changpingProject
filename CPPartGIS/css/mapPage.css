@@ -200,7 +200,7 @@
 }
 
 .speciallayerUl li img {
-	background: #d9534f;
+	background: #0a9df6;
 	border-radius: 20px;
 	padding: 5px;
 	width: 40px;
@@ -208,6 +208,13 @@
 }
     .speciallayerUl li:hover {
         font-weight:600;
+    }
+
+.speciallayer_select {
+    font-weight:600;
+}
+    .speciallayer_select img {
+        background: #d9534f !important;
     }
 
 /*¹¤¾ß²Ëµ¥*/
@@ -230,4 +237,8 @@
 .toolUl li:hover {
 	/*background:#ddecfb;*/
 	border-bottom: solid 1px #ccc;
+}
+
+.jsPanel-content {
+    overflow:auto !important;
 }

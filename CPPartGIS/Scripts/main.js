@@ -75,7 +75,9 @@ var app = {
 			}
 			app.curMenu = menu;
 			if (menu == 'clear') {
-				alert("地图清空！");
+			    tool_draw_clear();
+			    map.setMapCursor("default");
+			    mugis.mapClear.clearAll();
 			} else {
 				$("#panel_" + menu).show();
 			}
@@ -95,10 +97,10 @@ var app = {
 			var tool = e.currentTarget.dataset.target;
 			switch (tool) {
 				case "area":
-					alert('面积测量');
+				    btn_measure(1);
 					break;
 				case "dist":
-					alert('距离测量');
+				    btn_measure(0);
 					break;
 				case "mark":
 					alert('地图标注');
@@ -120,8 +122,11 @@ var app = {
 		})
 
 	    //专题点击事件
-		$(".speciallayerUl li").click(function (e) { 
+		$(".speciallayerUl li").click(function (e) {
+		    debugger;
 		    var special = e.currentTarget.dataset.target.split('_')[1];
+		    $(".speciallayerUl li").removeClass("speciallayer_select");
+		    $(e.currentTarget).addClass("speciallayer_select");
 		    switch (special) {
 		        case "11":
 		            alert("所选企业用地面积为100km²");
@@ -318,7 +323,7 @@ var app = {
 	//高级查询显示结果列表
 	showAdvanceResult(columns, data, searchConfig) {
 	    var _this = this;
-		var tablestr = "<div class='advanceTable' style='max-height:400px;'></div>";
+		var tablestr = "<div class='advanceTable'></div>";
 		app.resultPanel = $.jsPanel({
 			headerTitle: "查询结果",
 			position: "left-bottom 30 -30",
