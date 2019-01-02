@@ -78,6 +78,7 @@ var app = {
 			    tool_draw_clear();
 			    map.setMapCursor("default");
 			    mugis.mapClear.clearAll();
+			    $(".speciallayerUl li").removeClass("speciallayer_select");
 			} else {
 				$("#panel_" + menu).show();
 			}
