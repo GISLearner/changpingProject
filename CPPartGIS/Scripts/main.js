@@ -59,8 +59,8 @@ var app = {
 		//搜索按钮
 		$("#btn_Search").click(function() {
 			var _this = this;
-			if (this.resultPanel) {
-				this.resultPanel.close();
+			if (app.resultPanel) {
+				app.resultPanel.close();
 			}
 			app.advanceSearch();
 		})
@@ -319,13 +319,13 @@ var app = {
 	showAdvanceResult(columns, data, searchConfig) {
 	    var _this = this;
 		var tablestr = "<div class='advanceTable' style='max-height:400px;'></div>";
-		this.resultPanel = $.jsPanel({
+		app.resultPanel = $.jsPanel({
 			headerTitle: "查询结果",
 			position: "left-bottom 30 -30",
 			theme: "primary",
 			content: tablestr,
 			onclosed: function () {
-				_this.resultPanel = null;
+				app.resultPanel = null;
 			},
 			callback: function () {
 				var options = {
