@@ -48,8 +48,8 @@ var app = {
 		})
 
 		//类型选择
-		$(".conditionUl li").click(function(e) {
-			$(".conditionUl li").removeClass("cond_select");
+		$("#panelCondition .conditionUl li").click(function (e) {
+		    $("#panelCondition .conditionUl li").removeClass("cond_select");
 			$(e.currentTarget).addClass("cond_select");
 			app.curCod = e.currentTarget.id.split("_")[1];
 			app.searchStatus = $(this).attr("status");
@@ -103,19 +103,41 @@ var app = {
 				case "mark":
 					alert('地图标注');
 					break;
-				case "park":
-					alert('园区');
+			    case "park": 
+				    app.showTree();
 					break;
 				default:
 
 			}
 			$("#panel_tool").hide();
+			app.curMenu = null;
 		})
 
 		//地图主题切换
 		$(".themeUl li").click(function(e) {
 			var theme = e.currentTarget.dataset.target;
 			app.switchMap(theme);
+		})
+
+	    //专题点击事件
+		$(".speciallayerUl li").click(function (e) { 
+		    var special = e.currentTarget.dataset.target.split('_')[1];
+		    switch (special) {
+		        case "11":
+		            alert("所选企业用地面积为100km²");
+		            break;
+		        case "12":
+		            alert("所选建筑用地面积为100km²");
+		            break;
+		        case "21":
+		            //缓冲分析
+		            break;
+		        case "22":
+		            app.statLand();
+		            break;
+		        default:
+
+		    }
 		})
 	},
 	//设置搜索条件
@@ -294,14 +316,15 @@ var app = {
 		}, searchConfig)
 	},
 	//高级查询显示结果列表
-	showAdvanceResult(columns,data,searchConfig){
+	showAdvanceResult(columns, data, searchConfig) {
+	    var _this = this;
 		var tablestr = "<div class='advanceTable' style='max-height:400px;'></div>";
 		this.resultPanel = $.jsPanel({
 			headerTitle: "查询结果",
 			position: "left-bottom 30 -30",
 			theme: "primary",
 			content: tablestr,
-			close: function() {
+			onclosed: function () {
 				_this.resultPanel = null;
 			},
 			callback: function () {
@@ -358,6 +381,203 @@ var app = {
 			var gLayer = map.getLayer(lId);
 			gLayer.clear();
 		})
+	},
+    //土地利用统计
+	statLand() {
+	    var _this = this;
+	    var chartStr = '<div id="statPanel" style="height:500px;">'
+        +'<ul class="conditionUl">'
+        +'    <li id="li_area" style="height: 36px;line-height: 36px;text-align:center;" class="cond_select" >'
+         +'       地块面积'
+        +'    </li>'
+        +'    <li id="li_nums" style="height: 36px;line-height: 36px;text-align:center;">'
+        +'        地块数量'
+        +'    </li> '
+        +'</ul>'
+        +'<div id="chart_area" class="chart_panel" style="height:350px;width:100%;">'
+        +'    地块面积图'
+        +'</div>'
+        +'<div id="chart_nums" class="chart_panel" style="height:350px;width:100%;display:none;">'
+        +'    地块数量图'
+        +'</div>'
+        +'</div>';
+	    if (this.statPanel) {
+	        this.statPanel.close();
+	    }
+	    this.statPanel = $.jsPanel({
+	        headerTitle: "土地利用情况 统计结果",
+	        position: "right-bottom -30 -30",
+	        theme: "primary",
+	        panelSize: '470 450',
+	        content: chartStr,
+	        onclosed: function () {
+	            _this.statPanel = null;
+	        },
+	        callback: function () { 
+	            app.chartInit("chart_area","地块面积");
+	        }
+	    });
+
+	    $("#statPanel .conditionUl li").click(function (e) { 
+	        var target = e.currentTarget.id.split("_")[1];
+	        $("#statPanel .conditionUl li").removeClass("cond_select");
+	        $(e.currentTarget).addClass("cond_select");
+
+	        $("#statPanel .chart_panel").hide();  
+	        $("#chart_" + target).show(); 
+	        app.chartInit("chart_" + target, e.currentTarget.textContent.trim());
+	    })
+	},
+    //生成图表
+	chartInit(id,title) {
+	    var data = [{
+	        value: 3661,
+	        name: '<10w'
+	    }, {
+	        value: 5713,
+	        name: '10w-50w'
+	    }, {
+	        value: 9938,
+	        name: '50w-100w'
+	    }, {
+	        value: 17623,
+	        name: '100w-500w'
+	    }, {
+	        value: 3299,
+	        name: '>500w'
+	    }];
+	    option = {
+	        backgroundColor: '#fff',
+	        title: {
+	            text: title,
+	            //subtext: '2016年',
+	            x: 'center',
+	            y: 'center',
+	            textStyle: {
+	                fontWeight: 'normal',
+	                fontSize: 16
+	            }
+	        },
+	        tooltip: {
+	            show: true,
+	            trigger: 'item',
+	            formatter: "{b}: {c} ({d}%)"
+	        },
+	        legend: {
+	            orient: 'horizontal',
+	            bottom: '0%',
+	            data: ['<10w', '10w-50w', '50w-100w', '100w-500w', '>500w']
+	        },
+	        series: [{
+	            type: 'pie',
+	            selectedMode: 'single',
+	            radius: ['25%', '58%'],
+	            color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67'],
+
+	            label: {
+	                normal: {
+	                    position: 'inner',
+	                    formatter: '{d}%',
+
+	                    textStyle: {
+	                        color: '#fff',
+	                        fontWeight: 'bold',
+	                        fontSize: 14
+	                    }
+	                }
+	            },
+	            labelLine: {
+	                normal: {
+	                    show: false
+	                }
+	            },
+	            data: data
+	        }, {
+	            type: 'pie',
+	            radius: ['58%', '83%'],
+	            itemStyle: {
+	                normal: {
+	                    color: '#F2F2F2'
+	                },
+	                emphasis: {
+	                    color: '#ADADAD'
+	                }
+	            },
+	            label: {
+	                normal: {
+	                    position: 'inner',
+	                    formatter: '{c}家',
+	                    textStyle: {
+	                        color: '#777777',
+	                        fontWeight: 'bold',
+	                        fontSize: 14
+	                    }
+	                }
+	            },
+	            data: data
+	        }]
+	    };
+	    var myChart = echarts.init(document.getElementById(id));
+	    myChart.setOption(option);
+	},
+    //园区树结构
+	showTree() {
+	    var _this = this;
+	    var treeStr = '<div id="treePanel"><ul id="treeUl" class="ztree"></ul></div>';
+	    var zTreeObj;
+	    var setting = {
+	        callback: {
+	            onClick: function (treeId, target, treeNode) { 
+	                console.log(treeNode.name);
+	            }
+	        }
+	    };
+	    var zNodes = [
+            {
+                name: "昌平园区",
+                open: true,
+                children: [
+                  { name: "北汽福田" },
+                  { name: "生命科学园" },
+                  { name: "国际信息园" },
+                  { name: "宏福科技园" },
+                  { name: "北七家工业园" },
+                  { name: "巩华城" },
+                  { name: "流村工业园" },
+                  { name: "未来科学城" },
+                  { name: "三一光电园" },
+                  { name: "西区" },
+                  { name: "国家工程创新基地" },
+                  { name: "北农科技园" },
+                  { name: "矿大科技园" },
+                  { name: "马池口产业基地" },
+                  { name: "南口工业园" },
+                  { name: "未来科学城成果转化基地" },
+                  { name: "东区" },
+                  { name: "小汤山农业展示基地" },
+                  { name: "百善产业园" },
+                  { name: "阳坊工业园" },
+                  { name: "珠江产业园" }
+                ]
+            }, 
+	    ];
+	    if (this.treePanel) {
+	        this.treePanel.close(); 
+	    }
+	    this.treePanel = $.jsPanel({
+	        headerTitle: "分园区",
+	        position: "right-bottom -30 -30",
+	        theme: "primary",
+	        panelSize: '470 450',
+	        content: treeStr,
+	        onclosed: function () { 
+	            _this.treePanel = null;
+	        },
+	        callback: function () {
+	            zTreeObj = $.fn.zTree.init($("#treeUl"), setting, zNodes);
+	        }
+	    }); 
+	     
 	}
 }
 

@@ -25,7 +25,7 @@
     <link href="Scripts/plugins/animo/animate-animo.min.css" rel="stylesheet" />
     <link href="Scripts/plugins/minicolors/jquery.minicolors.css" rel="stylesheet" />
     <link href="Scripts/plugins/poshytip/tip-twitter/tip-twitter.css" rel="stylesheet" />
-
+    <link href="Scripts/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
 
     <!--ArcGIS js API地图样式-->
     <link rel='Stylesheet' type='text/css' href="http://39.106.156.190/arcgis_js_api/library/3.18/3.18/dijit/themes/tundra/tundra.css" />
@@ -275,59 +275,59 @@
             <div style="float:left;width:94%;">
                 <div id="special_special" class="special_itmes">
                     <ul class="speciallayerUl">
-                        <li>
+                        <li data-target="special_0">
                             <img src="img/icon/z_icon.png" /><br />
                             腾笼换鸟
                         </li>
-                        <li>
+                        <li data-target="special_1">
                             <img src="img/icon/z_icon.png" /><br />
                             新建楼宇
                         </li>
-                        <li>
+                        <li data-target="special_2">
                             <img src="img/icon/z_icon.png" /><br />
                             一级开发项目
                         </li>
-                        <li>
+                        <li data-target="special_3">
                             <img src="img/icon/z_icon.png" /><br />
                             低效用地
                         </li>
-                        <li>
+                        <li data-target="special_4">
                             <img src="img/icon/z_icon.png" /><br />
                             重点项目
                         </li>
-                        <li>
+                        <li data-target="special_5">
                             <img src="img/icon/z_icon.png" /><br />
                             城区规划
                         </li>
-                        <li>
+                        <li data-target="special_6">
                             <img src="img/icon/z_icon.png" /><br />
                             土地限制
                         </li>
-                        <li>
+                        <li data-target="special_7">
                             <img src="img/icon/z_icon.png" /><br />
                             现状利用
                         </li>
                     </ul>
                 </div>
                 <div id="special_stat" class="special_itmes" style="display:none;">
-                    <div class="special_title">统计</div>
+                    <div class="special_title">&nbsp;统计</div>
                     <ul class="speciallayerUl" style="height:100px;">
-                        <li style="width:120px;">
+                        <li style="width:120px;" data-target="special_11">
                             <img src="img/icon/z_icon.png" /><br />
                             企业用地面积
                         </li>
-                        <li>
+                        <li data-target="special_12">
                             <img src="img/icon/z_icon.png" /><br />
                             建筑用地面积
                         </li>
                     </ul>
-                    <div class="special_title">分析</div>
-                    <ul class="speciallayerUl">
+                    <div class="special_title">&nbsp;分析</div>
+                    <ul class="speciallayerUl" data-target="special_21">
                         <li style="width:120px;">
                             <img src="img/icon/z_icon.png" /><br />
                             地块周边配套设施
                         </li>
-                        <li>
+                        <li data-target="special_22">
                             <img src="img/icon/z_icon.png" /><br />
                             土地利用情况
                         </li>
@@ -357,7 +357,9 @@
         </div>
     </div>
 
+    
 
+    
 </body>
 </html>
 <!--jquery UI-->
@@ -369,6 +371,7 @@
 <!--jspanel弹框面板-->
 <script src="Scripts/plugins/jspanel-3.11.1/jquery.jspanel.min.js"></script>
 <script src="Scripts/plugins/echarts/echarts.js"></script>
+<script src="Scripts/plugins/zTree_v3/jquery.ztree.core-3.5.js"></script>
 
 <!--自定义ArcGIS组件路径-->
 <script type="text/javascript">
