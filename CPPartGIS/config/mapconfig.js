@@ -29,7 +29,7 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		defaultImageUrl: rootPath + "IMG",
 
 		/*地图服务地址(矢量、栅格DEM，影像)*/
-		vectorMapServerUrl: "http://39.106.156.190:6080/arcgis/rest/services/cp_parks/MapServer",
+		vectorMapServerUrl: "http://61.50.135.114:6080/arcgis/rest/services/cp/cp_parks/MapServer",
 		rasterMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 		imgMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 

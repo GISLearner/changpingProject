@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>Extrude building footprints based on real world heights - 4.8</title>
- 
-    <link rel="stylesheet" href="http://39.106.156.190/arcgis_js_v48_api/esri/css/main.css">
-    <script src="http://39.106.156.190/arcgis_js_v48_api/init.js"></script>
+     <script>
+         var lgis_API = "http://61.50.135.114:4057/arcgis_js_v48_api/";
+     </script>
+    <link rel="stylesheet" href="http://61.50.135.114:4057/arcgis_js_v48_api/esri/css/main.css">
+    <script src="http://61.50.135.114:4057/arcgis_js_v48_api/init.js"></script>
 
     <style>
         html,
@@ -129,7 +131,7 @@
 
       // Set the renderer on the layer
       var buildingsLayer = new FeatureLayer({
-          url: "http://39.106.156.190:6080/arcgis/rest/services/cp_parks/MapServer/7",
+          url: "http://61.50.135.114:6080/arcgis/rest/services/cp_parks/MapServer/7",
         renderer: renderer,
         popupTemplate: { // autocasts as new PopupTemplate()
           title: "{DESCLU}",

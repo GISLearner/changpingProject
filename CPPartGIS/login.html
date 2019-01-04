@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>系统登陆</title>
+    <title>昌平园区地理信息系统</title>
     <style>
         html, body {
             width: 100%;
@@ -110,7 +110,7 @@
         <div style="padding-bottom:60px;">
             <div id="areaTitle" style="position:absolute;margin-left:100px;">
                 <span class="zonghedl">
-                    地理信息系统
+                    昌平园区地理信息系统
                 </span>
             </div>
 
@@ -136,7 +136,13 @@
 
     <script>
         function loginIn() {
-            window.location.href = 'mapPoint.html';
+            var name = document.getElementById('userName').value;
+            var pwd = document.getElementById('passWord').value;
+            if (name == "admin" & pwd == "admin") {
+                window.location.href = 'mapPoint.html';
+            } else {
+                alert("用户名密码输入错误！");
+            }
         }
     </script>
 </body>
