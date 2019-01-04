@@ -99,9 +99,9 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 				layerId:"0",
 				layerCode:"entLandLayer",
 				layerType:"企业",
-				nameField:"TDQLR",
-				ydmjField:"JZZMJ",//用地面积字段
-				typeField:"GHMC",//利用类型字段
+				nameField:"QLR",
+				ydmjField:"Shape_Area",//用地面积字段
+				typeField:"LBDMMC",//利用类型字段
 				idField:"FID",//唯一ID
 				searchStatus:"qy",
 				pointIcon:"img/points/qiye.png",
@@ -133,7 +133,7 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 				layerCode:"subPark",
 				layerType:"分园区",
 				nameField:"FYQMC",//名称
-				ydmjField:"MJGQ",//用地面积字段
+				ydmjField:"Shape_Area",//用地面积字段
 				idField:"FID",//唯一ID
 				geoType:"polygon",
 				searchStatus:"fyq",
