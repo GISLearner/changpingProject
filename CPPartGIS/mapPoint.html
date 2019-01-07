@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>环境地理信息平台</title>
+    <title>昌平园区地理信息系统</title>
     <meta charset="utf-8" />
     <link href="favicon.ico" rel="shortcut icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
-
+    <script>
+        var lgis_API = "http://61.50.135.114:4057/arcgis_js_v322_api/";
+    </script>
     <!--************************* config *************************-->
     <script src="Scripts/jquery-3.3.1.js"></script>
     <script src="config/mapconfig.js"></script>
@@ -16,19 +18,20 @@
 
     <!--************************* CSS *************************-->
     <!--bootstrap样式-->
-    <link href="Scripts/plugins/bootstrap-2.3.2/css/bootstrap.css" rel="stylesheet" />
+    <link href="Scripts/plugins/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <link href="Scripts/plugins/bootstraptable-1.8.1/bootstrap-table.css" rel="stylesheet" />
     <!--jquery UI-->
     <link href="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
     <!--jspanel弹框面板-->
-    <link href="Scripts/plugins/jspanel-2.6.2/jquery.jspanel.min.css" rel="stylesheet" />
+    <link href="Scripts/plugins/jspanel-3.11.1/jquery.jspanel.min.css" rel="stylesheet" />
     <link href="Scripts/plugins/animo/animate-animo.min.css" rel="stylesheet" />
     <link href="Scripts/plugins/minicolors/jquery.minicolors.css" rel="stylesheet" />
     <link href="Scripts/plugins/poshytip/tip-twitter/tip-twitter.css" rel="stylesheet" />
-
+    <link href="Scripts/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
 
     <!--ArcGIS js API地图样式-->
-    <link rel='Stylesheet' type='text/css' href="http://39.106.156.190/arcgis_js_api/library/3.18/3.18/dijit/themes/tundra/tundra.css" />
-    <link rel='Stylesheet' type='text/css' href="http://39.106.156.190/arcgis_js_api/library/3.18/3.18/esri/css/esri.css" />
+    <link rel='Stylesheet' type='text/css' href="http://61.50.135.114:4057/arcgis_js_v322_api/dijit/themes/tundra/tundra.css" />
+    <link rel='Stylesheet' type='text/css' href="http://61.50.135.114:4057/arcgis_js_v322_api/esri/css/esri.css" />
 
     <!--自定义样式-->
     <link href="css/map.css" rel="stylesheet" />
@@ -42,11 +45,20 @@
 </head>
 <body>
     <!-- 地图部分 -->
-    <div id="mapdiv">
+    <div id="map_normal" class="mapContainer">
         <div id="map">
         </div>
         <!-- 经纬度信息 -->
         <div id="PositionBar"></div>
+    </div>
+    <div id="map_solid" class="mapContainer" style="display:none;">
+        <iframe src="page/solid.html" style="width:100%;height:100%;border:none;"></iframe>
+    </div>
+    <div id="map_pano" class="mapContainer" style="display:none;text-align:center;padding: 30%;">
+        功能规划中，敬请期待~~~
+    </div>
+    <div id="map_three" class="mapContainer" style="display:none;">
+        <iframe src="page/three.html" style="width:100%;height:100%;border:none;"></iframe>
     </div>
 
     <!--右边工具栏-->
@@ -73,45 +85,295 @@
             </li>
         </ul>
     </div>
-	
-	
-	<!--左侧搜索框-->
-	<div id="leftMenue" style="padding: 5px;  position: absolute;left: 10px;top:20px;">
-		<div class="entSearch">
-			<div><input class="entSearch_text" type="text" style="width: 200px;height: 25px;"/></div>
-			<div class="entSearch_btn"   >搜索</div>
-		</div>
-		<div class="entContent" >
-			<ul class="entContent_list" style='list-style:none;'>
 
+
+    <!--左侧搜索框-->
+    <div id="leftMenue" style="padding: 5px;  position: absolute;left: 30px;top:50px;">
+        <div class="entSearch">
+            <div style="height:40px;">
+                <input class="entSearch_text" type="text" style="width: 250px;height: 100%;border-radius: 0px;" />
+            </div>
+            <div class="entSearch_btn" id="btnSearchNormal">
+                <img src="img/icon/search.png" />
+                搜索
+            </div>
+            <div class="entSearch_btn" id="btnSearchAdvanced">
+                <img src="img/icon/set.png" />
+                高级
+            </div>
+        </div>
+
+        <div id="panelResult" class="panel">
+            <table class="sdataTable table table-hover">
+            </table>
+        </div>
+
+        <div id="panelCondition" class="panel">
+            <ul class="conditionUl">
+                <li id="li_park" status="fyq" class="cond_select">
+                    <img src="img/icon/beijing.png" style="background:#428bca;" />
+                    分园区
+                </li>
+                <li id="li_ent" status="qy">
+                    <img src="img/icon/ent.png" style="background:#5cb85c;" />
+                    企业
+                </li>
+                <li id="li_build" status="jz">
+                    <img src="img/icon/build.png" style="background:#f0ad4e;" />
+                    建筑
+                </li>
+                <li id="li_fac" status="ptss">
+                    <img src="img/icon/park.png" style="background:#d9534f;" />
+                    配套设施
+                </li>
             </ul>
-		</div>
-	</div>
-	
-	<!--右侧图层控制-->
-	<div class="layerControl" style="width:260px;position: absolute;right:10px;top:30px;border: solid 1px gray;background-color: #FFFF;">
-		<div class="lc_title" style="width: 260px;height:30px;background-color: #3983FF;line-height: 30px;color:white">
-			<span style="margin-left: 5px;">图层控制</span>
-		</div>
-		<div class="lc_content">
-			<ul style="list-style: none;">
-				<li><label><input class="lc_special lc_river" att="1" type="checkbox">园区专题1</label></li>
-				<li><label><input class="lc_special lc_station" att="0" type="checkbox">园区专题2</label></li>
-			</ul>
-		</div>
-	</div>
+            <div style="padding:10px;">
+                <form class="form-horizontal" id="form_cod">
+                    <div class="form-group" id="cod_name">
+                        <label for="inputEmail3" class="col-sm-3 control-label">名称</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txt_name" placeholder="请输入名称">
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_landarea">
+                        <label for="inputEmail3" class="col-sm-3 control-label">用地面积</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txt_landarea_1" value="0" placeholder="km²">-
+                            <input type="text" class="form-control" id="txt_landarea_2" value="10000000" placeholder="km²">
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_buildarea">
+                        <label for="inputEmail3" class="col-sm-3 control-label">建筑面积</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txt_buildarea_1" value="0" placeholder="km²">-
+                            <input type="text" class="form-control" id="txt_buildarea_2" value="10000000" placeholder="km²">
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_usetype">
+                        <label for="inputEmail3" class="col-sm-3 control-label">利用类型</label>
+                        <div class="col-sm-9">
+                            <select id="select_usetype" class="form-control">
+                                <option value="一类工业用地">一类工业用地</option>
+                                <option value="教育科研设计用地">教育科研设计用地</option>
+                                <option value="公园绿地"> 公园绿地</option>
+                                <option value="行政办公用地">行政办公用地</option>
+                                <option value="商业金融用地">商业金融用地</option>
+                                <option value="住宅混合公建用地">住宅混合公建用地</option>
+                                <option value="">其它</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-group" id="cod_buildtype">
+                        <label for="inputEmail3" class="col-sm-3 control-label">建筑类型</label>
+                        <div class="col-sm-9">
+                            <select id="select_buildtype" class="form-control">
+                                <option value="办公楼">办公楼</option>
+                                <option value="配套附属用房">配套附属用房</option>
+                                <option value="厂房">厂房</option>
+                                <option value="库房">库房</option>
+                                <option value="">其它</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="cod_factype">
+                        <label for="inputEmail3" class="col-sm-3 control-label">设施类型</label>
+                        <div class="col-sm-9">
+                            <select id="select_factype" class="form-control">
+                                <option value="热交换站">热交换站</option>
+                                <option value="变电站">变电站</option>
+                                <option value="学校">学校</option>
+                                <option value="医院">医院</option>
+                                <option value="">其它</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <input type="button" class="btn btn-primary" id="btn_Search" value="查询" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!--右侧图层控制-->
+    <div class="layerControl" style="width:260px;position: absolute;right:10px;top:30px;border: solid 1px gray;background-color: #FFF;display:none;">
+        <div class="lc_title" style="width: 260px;height:30px;background-color: #3983FF;line-height: 30px;color:white">
+            <span style="margin-left: 5px;">图层控制</span>
+        </div>
+        <div class="lc_content">
+            <ul style="list-style: none;">
+                <li><label><input class="lc_special lc_river" att="1" type="checkbox">园区专题1</label></li>
+                <li><label><input class="lc_special lc_station" att="0" type="checkbox">园区专题2</label></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="rithMenu" style="padding: 5px;  position: absolute;right: 30px;top:50px;width:470px;">
+        <div>
+            <ul class="menuUl">
+                <li data-target="theme">
+                    <img src="img/icon/theme.png">主题
+                </li>
+                <li>
+                    <img src="img/icon/line_bg.png">
+                </li>
+                <li data-target="special">
+                    <img src="img/icon/z_icon.png">
+                    专题
+                    <img src="img/icon/arrow_top_icon.png">
+                </li>
+                <li>
+                    <img src="img/icon/line_bg.png">
+                </li>
+                <li data-target="tool">
+                    <img src="img/icon/g_icon.png">
+                    工具
+                    <img src="img/icon/arrow_top_icon.png">
+                </li>
+                <li>
+                    <img src="img/icon/line_bg.png">
+                </li>
+                <li data-target="clear">
+                    <img src="img/icon/q_icon.png">清理
+                </li>
+                <li>
+                    <img src="img/icon/line_bg.png">
+                </li>
+                <li>
+                    <img src="img/icon/user.png">
+                </li>
+            </ul>
+        </div>
+        <div id="panel_theme" class="panel_menu">
+            <ul class="themeUl">
+                <li data-target="normal">
+                    <img src="img/icon/t_map.png" /><br />
+                    标准地图
+                </li>
+                <li data-target="solid">
+                    <img src="img/icon/t_3d.png" /><br />
+                    电子立体图
+                </li>
+                <li data-target="pano">
+                    <img src="img/icon/t_quan.png" /><br />
+                    全景展示
+                </li>
+                <li data-target="three">
+                    <img src="img/icon/t_model.png" /><br />
+                    实景三维
+                </li>
+            </ul>
+        </div>
+        <div id="panel_special" class="panel_menu" style="height:242px;">
+            <div style="float:left;width:6%;">
+                <ul class="specialUl">
+                    <li data-target="special" class="special_select">专题图层</li>
+                    <li data-target="stat">统计分析</li>
+                </ul>
+            </div>
+            <div style="float:left;width:94%;">
+                <div id="special_special" class="special_itmes">
+                    <ul class="speciallayerUl">
+                        <li data-target="special_0">
+                            <img src="img/icon/z_icon.png" /><br />
+                            腾笼换鸟
+                        </li>
+                        <li data-target="special_1">
+                            <img src="img/icon/z_icon.png" /><br />
+                            新建楼宇
+                        </li>
+                        <li data-target="special_2">
+                            <img src="img/icon/z_icon.png" /><br />
+                            一级开发项目
+                        </li>
+                        <li data-target="special_3">
+                            <img src="img/icon/z_icon.png" /><br />
+                            低效用地
+                        </li>
+                        <li data-target="special_4">
+                            <img src="img/icon/z_icon.png" /><br />
+                            重点项目
+                        </li>
+                        <li data-target="special_5">
+                            <img src="img/icon/z_icon.png" /><br />
+                            城区规划
+                        </li>
+                        <li data-target="special_6">
+                            <img src="img/icon/z_icon.png" /><br />
+                            土地限制
+                        </li>
+                        <li data-target="special_7">
+                            <img src="img/icon/z_icon.png" /><br />
+                            现状利用
+                        </li>
+                    </ul>
+                </div>
+                <div id="special_stat" class="special_itmes" style="display:none;">
+                    <div class="special_title">&nbsp;统计</div>
+                    <ul class="speciallayerUl" style="height:100px;">
+                        <li style="width:120px;" data-target="special_11">
+                            <img src="img/icon/z_icon.png" /><br />
+                            企业用地面积
+                        </li>
+                        <li data-target="special_12">
+                            <img src="img/icon/z_icon.png" /><br />
+                            建筑用地面积
+                        </li>
+                    </ul>
+                    <div class="special_title">&nbsp;分析</div>
+                    <ul class="speciallayerUl" data-target="special_21">
+                        <li style="width:120px;">
+                            <img src="img/icon/z_icon.png" /><br />
+                            地块周边配套设施
+                        </li>
+                        <li data-target="special_22">
+                            <img src="img/icon/z_icon.png" /><br />
+                            土地利用情况
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="panel_tool" class="panel_menu" style="background:inherit;box-shadow:inherit;">
+            <ul class="toolUl">
+                <li data-target="area">
+                    <img src="img/icon/icon_03.png" />
+                    面积测量
+                </li>
+                <li data-target="dist">
+                    <img src="img/icon/icon_01.png" />
+                    距离测量
+                </li>
+                <li data-target="mark">
+                    <img src="img/icon/icon_02.png" />
+                    地图标注
+                </li>
+                <li data-target="park">
+                    <img src="img/icon/icon_04.png" />
+                    园区定位
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    
+
+    
 </body>
 </html>
 <!--jquery UI-->
 <script src="Scripts/plugins/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<!--bootStrap Table-->
+<script src="Scripts/plugins/bootstraptable-1.8.1/bootstrap.min.js"></script>
+<script src="Scripts/plugins/bootstraptable-1.8.1/bootstrap-table.js"></script>
+<script src="Scripts/plugins/bootstraptable-1.8.1/bootstrap-table-zh-CN.min.js"></script>
 <!--jspanel弹框面板-->
-<script src="Scripts/plugins/jspanel-2.6.2/jquery.jspanel.min.js"></script>
+<script src="Scripts/plugins/jspanel-3.11.1/jquery.jspanel.min.js"></script>
 <script src="Scripts/plugins/echarts/echarts.js"></script>
-<script src="Scripts/plugins/animo/animo.min.js"></script>
-<script src="Scripts/plugins/poshytip/jquery.poshytip.min.js"></script>
-<script src="Scripts/plugins/minicolors/jquery.minicolors.js"></script>
+<script src="Scripts/plugins/zTree_v3/jquery.ztree.core-3.5.js"></script>
 
 <!--自定义ArcGIS组件路径-->
 <script type="text/javascript">
@@ -127,7 +389,8 @@
     };
 </script>
 <!--ArcGIS js API初始化脚本-->
-<script src='http://39.106.156.190/arcgis_js_api/library/3.18/3.18/init.js'></script>
+
+<script src='http://61.50.135.114:4057/arcgis_js_v322_api/'></script>
 
 <!--mugis通用方法-->
 <script src="Scripts/GISScripts/mapInit.js"></script>
@@ -140,4 +403,5 @@
 <!--main主方法-->
 <script src="Scripts/mapMain.js"></script>
 <script src="Scripts/mapMenu.js"></script>
-<script src="Scripts/projectPoint.js"></script>
+<script src="Scripts/tools.js"></script>
+<script src="Scripts/main.js"></script>

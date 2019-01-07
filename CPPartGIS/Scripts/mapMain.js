@@ -21,7 +21,7 @@ function initMapCallback() {
     //initQuanXian();
     ////初始化mark权限遮盖层
     //mapRegion.hightLightUserMarkRegion(regionCodeSub_QX);
-	initPage();
+	app.init();
     initToolBar();
 }
 
@@ -58,7 +58,8 @@ function initToolBar() {
     };
     //全图
     document.getElementById("toolFullExtent").onclick = function () {
-        mugis.mapZoom.setFullExtent();
+        //mugis.mapZoom.setFullExtent();
+		map.setExtent(mapinfo.initExtent);
     };
     //清除
     document.getElementById("toolClear").onclick = function () {
@@ -82,49 +83,6 @@ function initToolBar() {
         }
         $(this).addClass("active").siblings().removeClass("active");
     };
-
-
-
-    //构建滑块控件
-    $("#slider").slider({
-        max: 100,
-        min: 0,
-        value: 100,
-        slide: function (event, ui) {
-            $("#sp_slidervalue").text(ui.value);
-        }
-    });
-    //构建数字选择器
-    $(".spinner").spinner({
-        max: 100,
-        min: 1,
-        numberFormat: "n"
-    });
-    //构建提示框
-    $('.tip').poshytip({
-        className: 'tip-twitter',
-        showTimeout: 1,
-        alignTo: 'target',
-        alignX: 'center',
-        offsetY: 8,
-        alignY: 'bottom',
-        allowTipHover: false,
-        fade: false,
-        slide: false
-    });
-    //构建颜色选择器
-    $(".colorpicker").minicolors({
-        defaultValue: "#ff0000",
-        change: function (hex, opacity) {
-            if (!hex) {
-                return;
-            }
-            else {
-
-                $(this).parent().find(".minicolors-swatch").css("background-color", hex);
-            }
-        }
-    });
 }
 
 
