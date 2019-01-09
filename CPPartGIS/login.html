@@ -135,6 +135,13 @@
     </div>
 
     <script>
+        document.onkeydown = function (e) {
+            var ev = document.all ? window.event : e;
+            if (ev.keyCode == 13) {
+                loginIn();
+            }
+        }
+
         function loginIn() {
             var name = document.getElementById('userName').value;
             var pwd = document.getElementById('passWord').value;

@@ -158,6 +158,18 @@ var app = {
 					$(cods[i]).show();
 				}
 			}
+		} 
+	    //面积单位切换
+		if (app.curCod == "build") {
+		    $("#txt_landarea_1").attr('placeholder', "m²");
+		    $("#txt_landarea_2").attr('placeholder', "m²");
+		    $("#txt_buildarea_1").attr('placeholder', "m²");
+		    $("#txt_buildarea_2").attr('placeholder', "m²");
+		} else {
+		    $("#txt_landarea_1").attr('placeholder', "公顷");
+		    $("#txt_landarea_2").attr('placeholder', "公顷");
+		    $("#txt_buildarea_1").attr('placeholder', "公顷");
+		    $("#txt_buildarea_2").attr('placeholder', "公顷");
 		}
 	},
 	//切换地图
