@@ -325,6 +325,7 @@ var app = {
 			}
 		});
 	},
+    //查询结果
 	showAdvanceResult1() {
 	    $("#resultPanel").show();
 	    $(".resultUI li").click(function (e) {
@@ -335,6 +336,7 @@ var app = {
 	        $("#resultPanel").hide();
 	    })
 	},
+    //详细信息
 	showDeatilInfo(id) {
 	    $("#detailPanel").show();
 	    var html = "查询结果：" + id;
