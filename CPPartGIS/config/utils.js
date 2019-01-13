@@ -75,7 +75,6 @@
 				callback(searchBlock);
 			})
 			$("." + searchBlock.drawClass).click(function() {
-				alert(searchBlock.drawClass);
 				darwCallback(searchBlock.drawClass);
 			})
 		}
@@ -85,11 +84,10 @@
 		tools: {
 			selectFormat: function(layerConfig) {
 				var searchConfig = layerConfig.searchField;
-				var selectHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + searchConfig.fieldName +
-					'">' +
+				var selectHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' 
+				+ searchConfig.fieldName +'">' +
 					searchConfig.fieldlabel + '：</label><div class="col-sm-9"><select class="' + layerConfig.defaultClass + ' ' +
-					layerConfig.divClass +
-					'">';
+					layerConfig.divClass + '">';
 				var options = layerConfig.selectOptions;
 				var optionHtml = "";
 				options.forEach(function(option) {

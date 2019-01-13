@@ -26,7 +26,9 @@ var app = {
 		    $("#searchPage").load("page/search.html", function () { 
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
-					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(config){
+					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
+						alert(drawEvent);
+					},function(config){
 						console.log(configStr);
 					})
 				})
