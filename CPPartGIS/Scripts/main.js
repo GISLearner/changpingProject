@@ -5,7 +5,11 @@ var app = {
 	curSearch: null,
 	searchStatus:"fyq",
 	init() {
-	    //初始化地图
+	   layerConfigs.forEach(function(searchItem){
+			 $("." + searchItem).setSearchBlock(searchItem,function(config){
+				 console.log(configStr);
+			 })
+		 }))
 
 		//查询结果图层
 		mapconfig.layerInfoConfigs.forEach(function(info) {

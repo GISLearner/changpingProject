@@ -1,4 +1,4 @@
-﻿
+
 //utils通用方法入口
 (function (window, document) {
 
@@ -55,4 +55,84 @@
 
     utils.fn.init.prototype = utils.fn;
     window.$utils = window.utils = utils;
+	
+	//模块通用方法
+	$.fn.extend({
+		setSearchBlock: function(searchBlock, callback) {
+			var searchItems = searchBlock.group;
+			var searchContentHtml = '<form class="form-horizontal">';
+			searchItems.forEach(function(searchItem) {
+				var funName = searchItem.itemFunction;
+				searchContentHtml += $.tools[funName](searchItem);
+			})
+			var btnHtml = $.tools.buttonFormat(searchBlock.btnClass);
+			searchContentHtml += btnHtml;
+			searchContentHtml += '</form>';
+			$(this).html(searchContentHtml);
+			$("." + searchBlock.btnClass).click(function() {
+				callback(searchBlock);
+			})
+		}
+	})
+	
+	$.extend({
+		tools: {
+			selectFormat: function(layerConfig) {
+				var searchConfig = layerConfig.searchField;
+				var selectHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + searchConfig.fieldName +
+					'">' +
+					searchConfig.fieldlabel + '：</label><div class="col-sm-9"><select class="' + layerConfig.defaultClass +
+					layerConfig.divClass +
+					'">';
+				var options = layerConfig.selectOptions;
+				var optionHtml = "";
+				options.forEach(function(option) {
+					optionHtml += '<option value="' + option.value + '">' + option.label + "</option>";
+				})
+				optionHtml += "</select></div></div>";
+				return selectHtml + optionHtml;
+			},
+			textFormat: function(layerConfig) {
+				var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
+				numHtml += '<input type="text" class="form-control' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
+				numHtml += '</div></div>';
+				return numHtml;
+			},
+			numFormat: function(layerConfig) {
+				var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
+				numHtml += '<input type="text" class="form-control' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
+				numHtml += '</div></div>';
+				return numHtml;
+			},
+			buttonFormat: function(buttonClass) {
+				var buttonHtml =
+					'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary' +
+					buttonClass + '" value="查询" />';
+				buttonHtml += '</div></div>';
+				return buttonHtml;
+			}
+		},
+		common: {
+			layerAttSearch: function(layerId, searchWhere, geo, resultFunction, resultParam) {
+				var queryTask = new mapAPI.QueryTask(mapconfig.vectorMapServerUrl + "/" + layerId);
+				var query = new mapAPI.Query();
+				query.outFields = ["*"];
+				if (geo) {
+					query.geometry = geo;
+				}
+				query.where = searchWhere;
+				query.returnGeometry = true;
+				queryTask.execute(query, function(e) {
+					if (resultParam) {
+						resultFunction(e, resultParam);
+					} else {
+						resultFunction(e);
+					}
+				}, function(error) {
+					console.log(error);
+				})
+			}
+		}
+	})
+	
 })(window, document)

@@ -1,8 +1,7 @@
-﻿
+
 //菜单按钮操作
 $(function () {
-    //做地址操作控制
-    var url = window.location.href;
+	
 });
 
 /**

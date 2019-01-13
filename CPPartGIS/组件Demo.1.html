@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<div class="componenet" style="width: 100px;height: 30px;background: red;"></div>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		
+		$.fn.extend({
+			layerSearch:function(option,callback){
+				var html = '<input type="button" value="测试" class="' + option.className + '">';
+				$(this).append(html);
+				$("." + option.className).click(function(){
+					callback(option.result);
+				})
+			}
+		})
+		
+		
+		$(".componenet").layerSearch({className:"test",result:"result"},function(text){
+			funConfig["test"]();
+		})
+		
+		var funConfig = {
+			test:function(){
+				alert("test");
+			}
+		}
+		
+		
+		
+		
+	</script>
+</body>
+</html>
