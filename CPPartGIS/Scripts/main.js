@@ -24,12 +24,12 @@ var app = {
 		    app.curCod = e.currentTarget.dataset.target; 
 		    $("#searchPage").show();
 		    $("#searchPage").load("page/search.html", function () { 
-		        app.setCondition();
-						layerConfigs.forEach(function(searchItem){
-							$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(config){
-								console.log(configStr);
-							})
-						})
+		        app.setCondition(); 
+				layerConfigs.forEach(function(searchItem){
+					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(config){
+						console.log(configStr);
+					})
+				})
 		    });
 		})
 	    //点击右侧工具栏
@@ -136,7 +136,7 @@ var app = {
 	    $("#panelCondition .conditionUl li").removeClass("cond_select");
 	    $("#cnd_" + app.curCod).addClass("cond_select");
 	     
-		$(".form-group").hide();
+	    $(".former").hide();
 		$("#content_" + app.curCod).show();
 	},
 	//切换地图

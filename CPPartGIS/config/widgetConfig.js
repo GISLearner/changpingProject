@@ -1,6 +1,6 @@
 var layerConfigs = [{
 	divContentClass:"content_cltd",
-	btnClass:" cljz_btn",
+	btnClass:"cljz_btn",
 	layerId:"",
 	group:[
 		{
