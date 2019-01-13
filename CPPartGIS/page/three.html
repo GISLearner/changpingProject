@@ -16,6 +16,9 @@
         .esri-ui-top-left {
             display:none !important;
         }
+        .esri-attribution {
+            display:none;
+        }
     </style>
 
    
@@ -23,7 +26,7 @@
 
 <body>
     <div id="viewDiv"></div>
-    <div style="position:absolute;bottom:20px;">
+    <div style="position:absolute;bottom:20px;display:none;">
         <input type="button" value="x+" onclick="modelSet('x',0.05)"/>
         <input type="button" value="x-" onclick="modelSet('x', -0.05)"/>
         <input type="button" value="y+" onclick="modelSet('y', 0.05)"/>

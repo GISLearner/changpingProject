@@ -49,10 +49,10 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
         copyrightText: "Copyright &copy; 2018-{now} 中科宇图科技股份有限公司 All rights reserved.",
 
         conds: {
-            park: "name,landarea",
-            ent: "name,landarea,usetype",
-            build: "name,landarea,buildarea,buildtype",
-            fac: "name,landarea,factype"
+            park: "name,landarea,buildtype,extent",
+            ent: "name,landarea,usetype,extent",
+            build: "name,landarea,buildarea,buildtype,extent",
+            fac: "name,landarea,factype,extent"
         }
     };
 })();

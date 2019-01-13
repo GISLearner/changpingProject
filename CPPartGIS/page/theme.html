@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div id="panel_theme" style="margin-top:1em;">
+        <ul class="themeUl">
+            <li data-target="normal">
+                <img src="img/icon/t_map.png" /><br />
+                标准地图
+            </li>
+            <li data-target="solid">
+                <img src="img/icon/t_3d.png" /><br />
+                电子立体图
+            </li>
+            <li data-target="pano">
+                <img src="img/icon/t_quan.png" /><br />
+                全景展示
+            </li>
+            <li data-target="three">
+                <img src="img/icon/t_model.png" /><br />
+                实景三维
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        //地图主题切换
+        $(".themeUl li").click(function (e) {
+            var theme = e.currentTarget.dataset.target;
+            app.switchMap(theme);
+            $("#rightPage").hide();
+        })
+    </script>
+</body>
+</html>

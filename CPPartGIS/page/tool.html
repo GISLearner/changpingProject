@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+        .toolerUl {
+            border-bottom: solid 1px #ccc;
+            padding-bottom: 1em;
+            padding-left:1em;
+            list-style: none;
+            height: 7em;
+        }
+
+            .toolerUl li {
+                float: left;
+                text-align: center;
+                margin-right: 2em;
+            }
+
+        p {
+            padding-left: 1em;
+            font-weight:600;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-top:1em;">
+        <p>地图工具</p>
+        <ul class="toolerUl">
+            <li data-target="area">
+                <img src="img/icon/icon_03.png" /><br />
+                面积测量
+            </li>
+            <li data-target="dist">
+                <img src="img/icon/icon_01.png" /><br />
+                距离测量
+            </li>
+            <!--<li data-target="mark">
+                <img src="img/icon/icon_02.png" /><br />
+                地图标注
+            </li>
+            <li data-target="park">
+                <img src="img/icon/icon_04.png" /><br />
+                园区定位
+            </li>-->
+        </ul>
+        <p>统计</p>
+        <ul class="toolerUl">
+            <li data-target="entArea">
+                <img src="img/icon/icon_03.png" /><br />
+                企业用地面积
+            </li>
+            <li data-target="buildArea">
+                <img src="img/icon/icon_01.png" /><br />
+                建筑用地面积
+            </li> 
+        </ul>
+        <p>分析</p>
+        <ul class="toolerUl">
+            <li data-target="landPark">
+                <img src="img/icon/icon_03.png" /><br />
+                地块配套设施
+            </li>
+            <li data-target="landUse">
+                <img src="img/icon/icon_01.png" /><br />
+                土地利用情况
+            </li> 
+        </ul>
+
+    </div>
+
+    <script>
+         
+        //工具菜单
+        $(".toolerUl li").click(function (e) {
+            $("#rightPage").hide();
+            var tool = e.currentTarget.dataset.target;
+            switch (tool) {
+                case "area":
+                    btn_measure(1);
+                    break;
+                case "dist":
+                    btn_measure(0);
+                    break;
+                case "mark":
+                    alert('地图标注');
+                    break;
+                case "park":
+                    app.showTree();
+                    break;
+                default:
+                    alert(tool);
+                    break;
+            }
+            $("#panel_tool").hide();
+            app.curMenu = null;
+        })
+    </script>
+</body>
+</html>

@@ -23,13 +23,17 @@
         .esri-ui-top-left, .esri-ui-corner {
             display: none !important;
         }
+
+        .esri-attribution {
+            display: none;
+        }
     </style>
 
     <script>
         //配置--建筑物图层
-        var layerURL = "http://61.50.135.114:6080/arcgis/rest/services/cp/cp_parks/MapServer/12";
+        var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/%E6%98%8C%E5%B9%B3%E5%9B%AD%E6%8B%9B%E5%95%86%E5%BC%95%E8%B5%84/MapServer/9";
         //配置--层数字段
-        var csFeild = "cs";
+        var csFeild = "JZGD";
 
 
         require([
@@ -129,10 +133,10 @@
                         stops: [
                         {
                             value: 1,  // features where < 10% of the pop in poverty
-                            size: 10  // will be extruded by this height in meters
+                            size: 1  // will be extruded by this height in meters
                         },
                         {
-                            value: 10,  // features where > 50% of the pop in poverty
+                            value: 100,  // features where > 50% of the pop in poverty
                             size: 100  // will be extruded by this height in meters
                         }]
                     }
@@ -144,19 +148,55 @@
                 url: layerURL,
                 renderer: renderer,
                 popupTemplate: { // autocasts as new PopupTemplate()
-                    title: "{DESCLU}",
+                    title: "{JZWMC}",
                     content: [{
                         type: "fields",
-                        fieldInfos: [{
-                            fieldName: "ADDRESS",
-                            label: "Address"
-                        }, {
-                            fieldName: "DESCLU",
-                            label: "Type"
-                        }, {
-                            fieldName: "ELEVATION",
-                            label: "Height"
-                        }]
+                        fieldInfos: [
+                            {
+                                fieldName: "JZGD",
+                                label: "建筑高度"
+                            },
+                            {
+                                fieldName: "CQDW",
+                                label: "产权单位"
+                            },
+                            {
+                                fieldName: "ZDMJ",
+                                label: "占地面积（平方米）"
+                            }, 
+                            {
+                                fieldName: "ZJZMJ",
+                                label: "总建筑面积（平方米）"
+                            },
+                            {
+                                fieldName: "DSJZMJ",
+                                label: "地上建筑面积（平方米）"
+                            },
+                            {
+                                fieldName: "DXJZMJ",
+                                label: "地下建筑面积（平方米）"
+                            },
+                            {
+                                fieldName: "FWLX",
+                                label: "房屋类型"
+                            },
+                            {
+                                fieldName: "FWCS",
+                                label: "房屋层数"
+                            },
+                            {
+                                fieldName: "CQZS",
+                                label: "产权证书"
+                            },
+                            {
+                                fieldName: "FWGYQK",
+                                label: "房屋共有情况"
+                            },
+                            {
+                                fieldName: "FWGHYT",
+                                label: "房屋规划用途"
+                            }
+                        ]
                     }]
                 },
                 outFields: ["*"],

@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    
+</head>
+<body>
+    <div style="height:50px;width:100%;padding:10px 0;">
+        <div style="width:10%;float:left;" id="back">
+            <img src="img/icon/back.png" style="width:30px;"/>
+        </div> 
+        <input class="entSearch_text" type="text" style="width: 85%;height: 30px;border-radius: 0px;float:left;" placeholder="关键字搜索"/>
+    </div>
+    <div id="panelCondition" >
+        <ul class="conditionUl">
+            <li id="li_park" status="fyq" class="cond_select">
+                <!--<img src="../img/icon/beijing.png" style="background:#428bca;" />-->
+                存量土地
+            </li>
+            <li id="li_ent" status="qy">
+                <!--<img src="../img/icon/ent.png" style="background:#5cb85c;" />-->
+                存量建筑
+            </li>
+            <li id="li_build" status="jz">
+                <!--<img src="../img/icon/build.png" style="background:#f0ad4e;" />-->
+                拟建项目
+            </li>
+            <li id="li_fac" status="ptss">
+                <!--<img src="../img/icon/park.png" style="background:#d9534f;" />-->
+                土地供应
+            </li>
+        </ul>
+        <div style="padding:10px;">
+            <form class="form-horizontal" id="form_cod">  
+                <div class="form-group" id="cod_usetype">
+                    <label for="inputEmail3" class="col-sm-3 control-label">利用类型</label>
+                    <div class="col-sm-9">
+                        <select id="select_usetype" class="form-control">
+                            <option value="一类工业用地">一类工业用地</option>
+                            <option value="教育科研设计用地">教育科研设计用地</option>
+                            <option value="公园绿地"> 公园绿地</option>
+                            <option value="行政办公用地">行政办公用地</option>
+                            <option value="商业金融用地">商业金融用地</option>
+                            <option value="住宅混合公建用地">住宅混合公建用地</option>
+                            <option value="">其它</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="cod_buildtype">
+                    <label for="inputEmail3" class="col-sm-3 control-label">建筑类型</label>
+                    <div class="col-sm-9">
+                        <select id="select_buildtype" class="form-control">
+                            <option value="办公楼">办公楼</option>
+                            <option value="配套附属用房">配套附属用房</option>
+                            <option value="厂房">厂房</option>
+                            <option value="库房">库房</option>
+                            <option value="">其它</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="cod_factype">
+                    <label for="inputEmail3" class="col-sm-3 control-label">设施类型</label>
+                    <div class="col-sm-9">
+                        <select id="select_factype" class="form-control">
+                            <option value="热交换站">热交换站</option>
+                            <option value="变电站">变电站</option>
+                            <option value="学校">学校</option>
+                            <option value="医院">医院</option>
+                            <option value="">其它</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="cod_extent">
+                    <label for="inputEmail3" class="col-sm-3 control-label">地图范围</label>
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="button" class="btn btn-primary" id="btn_Extent" value="设置地理范围" style="width:100%;" />
+                        <p>默认使用当前视图下地图范围</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="button" class="btn btn-primary" id="btn_Search" value="查询" style="width:100%;"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        //返回
+        $("#back").click(function () {
+            $("#searchPage").hide();
+        })
+         
+		//类型选择
+		$("#panelCondition .conditionUl li").click(function (e) {
+		    $("#panelCondition .conditionUl li").removeClass("cond_select");
+			$(e.currentTarget).addClass("cond_select");
+			app.curCod = e.currentTarget.id.split("_")[1];
+			app.searchStatus = $(this).attr("status");
+			app.setCondition();
+		})
+
+		//范围按钮
+		$("#btn_Extent").click(function () { 
+		    $("#searchPage").hide(); 
+		})
+
+		//搜索按钮
+		$("#btn_Search").click(function () { 
+		    $("#searchPage").hide();
+		    //app.advanceSearch(); 
+		    app.showAdvanceResult1();
+		})
+
+    </script>
+</body>
+</html>

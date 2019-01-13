@@ -5,7 +5,8 @@ var app = {
 	curSearch: null,
 	searchStatus:"fyq",
 	init() {
-		//初始化地图
+	    //初始化地图
+
 		//查询结果图层
 		mapconfig.layerInfoConfigs.forEach(function(info) {
 			var lId = info.layerCode;
@@ -19,6 +20,27 @@ var app = {
 				id: "highLightLayer"
 		});
 		map.addLayer(hLayer);
+
+	    //点击搜索
+		$("#homeSearch").click(function (e) {
+		    $("#searchPage").show();
+		    $("#searchPage").load("page/search.html");
+		})
+	    //点击右侧工具栏
+		$("#toolUser").click(function (e) {
+		    window.location.href = "login.html";
+		})
+		$("#toolTheme").click(function (e) {
+		    $("#rightPage").show();
+		    $("#rightCont").load("page/theme.html");
+		})
+		$("#tooler").click(function (e) {
+		    $("#rightPage").show();
+		    $("#rightCont").load("page/tool.html");
+		})
+		$("#rightBack").click(function () {
+		    $("#rightPage").hide();
+		})
 
 		//输入框搜索
 		$(".entSearch_text").keydown(function(e) {
@@ -45,24 +67,6 @@ var app = {
 			app.setCondition();
 			app.curSearch = "Advanced";
 			app.searchStatus = "fyq";
-		})
-
-		//类型选择
-		$("#panelCondition .conditionUl li").click(function (e) {
-		    $("#panelCondition .conditionUl li").removeClass("cond_select");
-			$(e.currentTarget).addClass("cond_select");
-			app.curCod = e.currentTarget.id.split("_")[1];
-			app.searchStatus = $(this).attr("status");
-			app.setCondition();
-		})
-
-		//搜索按钮
-		$("#btn_Search").click(function() {
-			var _this = this;
-			if (app.resultPanel) {
-				app.resultPanel.close();
-			}
-			app.advanceSearch();
 		})
 
 		//右侧菜单点击
@@ -93,34 +97,8 @@ var app = {
 			$("#special_" + item).show();
 		})
 
-		//工具菜单
-		$(".toolUl li").click(function(e) {
-			var tool = e.currentTarget.dataset.target;
-			switch (tool) {
-				case "area":
-				    btn_measure(1);
-					break;
-				case "dist":
-				    btn_measure(0);
-					break;
-				case "mark":
-					alert('地图标注');
-					break;
-			    case "park": 
-				    app.showTree();
-					break;
-				default:
 
-			}
-			$("#panel_tool").hide();
-			app.curMenu = null;
-		})
-
-		//地图主题切换
-		$(".themeUl li").click(function(e) {
-			var theme = e.currentTarget.dataset.target;
-			app.switchMap(theme);
-		})
+		
 
 	    //专题点击事件
 		$(".speciallayerUl li").click(function (e) {
@@ -354,6 +332,25 @@ var app = {
 				mugis.initTable(".advanceTable", columns, data,options);
 			}
 		});
+	},
+	showAdvanceResult1() {
+	    $("#resultPanel").show();
+	    $(".resultUI li").click(function (e) {
+	        var id = e.currentTarget.dataset.target;
+	        app.showDeatilInfo(id);
+	    })
+	    $('#resultPanel img').click(function () {
+	        $("#resultPanel").hide();
+	    })
+	},
+	showDeatilInfo(id) {
+	    $("#detailPanel").show();
+	    var html = "查询结果：" + id;
+	    $("#infoPanel").html(html);
+
+	    $('#detailPanel img').click(function () {
+	        $("#detailPanel").hide();
+	    })
 	},
 	//查询表格单行点击回调函数
 	clickRow(e,searchConfig){

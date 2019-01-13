@@ -22,7 +22,7 @@ function initMapCallback() {
     ////初始化mark权限遮盖层
     //mapRegion.hightLightUserMarkRegion(regionCodeSub_QX);
 	app.init();
-    initToolBar();
+    //initToolBar();
 }
 
 

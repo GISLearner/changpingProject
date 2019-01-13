@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>昌平园区地理信息系统</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>中关村昌平园</title>
     <style>
         html, body {
             width: 100%;
@@ -49,8 +50,7 @@
             position: absolute;
             left: 0;
             right: 0;
-            top: -400px;
-            bottom: 0;
+            top: 3em; 
             margin: auto;
             height: 40px;
             text-align: center;
@@ -60,14 +60,15 @@
         .page-container {
             left: 0;
             right: 0;
-            top: 0;
+            top: 4em;
             bottom: 0;
             margin: auto;
-            width: 409px;
+            width: 90%;
             height: 324px;
             position: absolute;
             background: url(img/login/kuang_bg.png) no-repeat;
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../img/kuang_bg.png",sizingMethod="noscale");
+            border-radius: 10px;
         }
 
         #submit {
@@ -99,31 +100,34 @@
         .form {
             position: relative;
             width: 305px;
-            margin: 4px auto 0 auto;
+            margin: 2em auto 0 auto;
             text-align: center;
         }
     </style>
 </head>
-<body style="background-image:url(img/login/login_bg_3.jpg);background-size:100%;">
+<body style="background-image:url(img/login/login_bg_3.jpg);">
     <div>
-        <img style="max-width:400px;position:absolute;margin-left:50px;margin-top:5px;float:right" src="img/logo/PartLogo.png" />
+        <div>
+            <img style="max-width:70%;position:absolute;margin:auto;top:3em;left:15%;" src="img/logo/PartLogo.png" />
+        </div> 
         <div style="padding-bottom:60px;">
         	<!-- <div id="areaTitle" style="position:absolute;margin-left:100px;">
         		<span class="zonghedl">
         			昌平园区地理信息系统
         		</span>
         	</div> -->
-
-            <div class="zonghedl loginTitle">系统登陆</div>
+             
             <div class="page-container">
                 <div class="form">
                     <div>
-                        <input type="text" name="username" id="userName" autocomplete="off" class="userName" placeholder="请输入用户名" autocomplete="off" />
+                        <input type="text" name="username" id="userName" autocomplete="off" class="userName" placeholder="请输入用户名" autocomplete="off" value="admin"/>
                     </div>
                     <div>
-                        <input type="password" id="passWord" name="password" autocomplete="off" class="password" placeholder="请输入密码" oncontextmenu="return false" onpaste="return false" />
+                        <input type="password" id="passWord" name="password" autocomplete="off" class="password" placeholder="请输入密码" oncontextmenu="return false" onpaste="return false" value="admin"/>
                     </div>
                     <button id="submit" type="button" onclick="loginIn()">登陆</button>
+                    <!--<a href="api3.html" style="font-size:1.5em;">3.x</a>
+                    <a href="api4.html" style="font-size:1.5em;">4.x</a>-->
                 </div>
             </div>
         </div>
@@ -146,7 +150,7 @@
             var name = document.getElementById('userName').value;
             var pwd = document.getElementById('passWord').value;
             if (name == "admin" & pwd == "admin") {
-                window.location.href = 'mapPoint.html';
+                window.location.href = 'index.html';
             } else {
                 alert("用户名密码输入错误！");
             }

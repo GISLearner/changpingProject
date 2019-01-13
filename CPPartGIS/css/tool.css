@@ -1,17 +1,11 @@
 ﻿/*工具按钮*/
 #toolBarPanel {
     position: absolute;
-    top: 50%;
-    right: 8px;
-    margin-top: -160px;
+    top: 10%;
+    right: 8px; 
 }
 
-    #toolBarPanel #Toolbar {
-        width: 25px;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        background: #fff;
-        padding: 8px 3px;
+    #toolBarPanel #Toolbar {   
         margin-bottom: 0px;
         list-style: none;
     }
@@ -20,14 +14,17 @@
             background: #dcf2f5;
         }
 
-        #toolBarPanel #Toolbar li {
-            height: 25px;
-            line-height: 26px;
+        #toolBarPanel #Toolbar li { 
             text-align: center;
             cursor: pointer;
-            border-bottom: 1px solid #ccc;
+            border: 1px solid #ccc;
+            background: #fff;
+            margin-bottom:0.5em;
+            padding:0.5em;
         }
-
+            #toolBarPanel #Toolbar li img {
+                width:1.5em;
+            }
 
 /*工具下拉弹框统一样式*/
 .tool_drop {
