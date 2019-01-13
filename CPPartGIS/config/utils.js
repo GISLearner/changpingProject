@@ -106,7 +106,7 @@
 			},
 			buttonFormat: function(buttonClass) {
 				var buttonHtml =
-					'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary' +
+					'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary ' +
 					buttonClass + '" value="查询" />';
 				buttonHtml += '</div></div>';
 				return buttonHtml;
