@@ -58,20 +58,25 @@
 	
 	//模块通用方法
 	$.fn.extend({
-		setSearchBlock: function(searchBlock, callback) {
+		setSearchBlock: function(searchBlock, darwCallback,callback) {
 			var searchItems = searchBlock.group;
 			var searchContentHtml = '<form class="form-horizontal">';
 			searchItems.forEach(function(searchItem) {
 				var funName = searchItem.itemFunction;
 				searchContentHtml += $.tools[funName](searchItem);
 			})
-			var btnHtml = $.tools.buttonFormat(searchBlock.btnClass,"查询");
 			var drawHtml = $.tools.buttonFormat(searchBlock.drawClass,"设置地理范围");
+			var btnHtml = $.tools.buttonFormat(searchBlock.btnClass,"查询");
+			searchContentHtml += drawHtml;
 			searchContentHtml += btnHtml;
 			searchContentHtml += '</form>';
 			$(this).html(searchContentHtml);
 			$("." + searchBlock.btnClass).click(function() {
 				callback(searchBlock);
+			})
+			$("." + searchBlock.drawClass).click(function() {
+				alert(searchBlock.drawClass);
+				darwCallback(searchBlock.drawClass);
 			})
 		}
 	})
