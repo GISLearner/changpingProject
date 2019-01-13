@@ -65,7 +65,8 @@
 				var funName = searchItem.itemFunction;
 				searchContentHtml += $.tools[funName](searchItem);
 			})
-			var btnHtml = $.tools.buttonFormat(searchBlock.btnClass);
+			var btnHtml = $.tools.buttonFormat(searchBlock.btnClass,"查询");
+			var drawHtml = $.tools.buttonFormat(searchBlock.drawClass,"范围查询");
 			searchContentHtml += btnHtml;
 			searchContentHtml += '</form>';
 			$(this).html(searchContentHtml);
@@ -104,10 +105,10 @@
 				numHtml += '</div></div>';
 				return numHtml;
 			},
-			buttonFormat: function(buttonClass) {
+			buttonFormat: function(buttonClass,btnLabel) {
 				var buttonHtml =
-					'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary' +
-					buttonClass + '" value="查询" />';
+					'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary ' +
+					buttonClass + '" value="' + btnLabel + '" />';
 				buttonHtml += '</div></div>';
 				return buttonHtml;
 			}

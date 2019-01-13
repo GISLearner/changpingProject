@@ -1,6 +1,7 @@
 var layerConfigs = [{
 	divContentClass:"content_cltd",
 	btnClass:"cljz_btn",
+	drawClass:"cljz_draw",
 	layerId:"",
 	group:[
 		{
@@ -118,7 +119,8 @@ var layerConfigs = [{
 	]
 },{
 	divContentClass:"content_cltd",
-	btnClass:" cltd_btn",
+	btnClass:"cltd_btn",
+	drawClass:"cltd_draw",
 	layerId:"",
 	group:[
 		{
@@ -246,7 +248,8 @@ var layerConfigs = [{
 	]
 },{
 	divContentClass:"content_njxm",
-	btnClass:" njxm_btn",
+	btnClass:"njxm_btn",
+	drawClass:"njxm_draw",
 	layerId:"",
 	group:[
 		{
@@ -366,7 +369,8 @@ var layerConfigs = [{
 	]
 },{
 	divContentClass:"content_tdgy",
-	btnClass:" tdgy_btn",
+	btnClass:"tdgy_btn",
+	drawClass:"tdgy_draw",
 	layerId:"",
 	group:[
 		{
