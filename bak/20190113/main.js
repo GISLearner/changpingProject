@@ -26,10 +26,16 @@ var app = {
 		    $("#searchPage").load("page/search.html", function () { 
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
+<<<<<<< HEAD
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
 						alert(drawEvent);
 					},function(config){
 						console.log(configStr);
+=======
+					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(config){
+					    //console.log(configStr);
+					    app.drawStart();
+>>>>>>> daf3bd9354f070052fc57e1225c32926198036d9
 					})
 				})
 		    });
@@ -584,6 +590,11 @@ var app = {
 	        }
 	    }); 
 	     
+	},
+    //绘制范围
+	drawStart() {
+	    $("#searchPage").hide();
+
 	}
 }
 

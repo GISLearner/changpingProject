@@ -33,3 +33,6 @@
 	padding: 5px;
 	height: 30px;
 }
+#panelCondition .btn {
+    width:100%;
+}
