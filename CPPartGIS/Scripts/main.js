@@ -27,10 +27,10 @@ var app = {
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
-						alert(drawEvent);
+					    //alert(drawEvent);
+					    app.drawStart();//你在这个方法里加下绘制功能 ？？？
 					},function(config){
-					    //console.log(configStr);
-					    app.drawStart();
+					    //console.log(configStr); 
 					})
 				})
 		    });
