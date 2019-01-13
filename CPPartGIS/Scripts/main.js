@@ -1,5 +1,5 @@
 var app = {
-	curCod: 'park',
+	curCod: '',
 	resultPanel: null,
 	curMenu: null,
 	curSearch: null,
@@ -22,13 +22,17 @@ var app = {
 		map.addLayer(hLayer);
 
 	    //点击搜索
-		$("#homeSearch").click(function (e) {
+		$("#homeSearch li").click(function (e) {
+		    app.curCod = e.currentTarget.dataset.target; 
 		    $("#searchPage").show();
-		    $("#searchPage").load("page/search.html");
+		    $("#searchPage").load("page/search.html", function () { 
+		        app.setCondition();
+		    });
 		})
 	    //点击右侧工具栏
-		$("#toolUser").click(function (e) {
-		    window.location.href = "login.html";
+		$("#toolUser").click(function (e) { 
+		    $("#rightPage").show();
+		    $("#rightCont").load("page/user.html"); 
 		})
 		$("#toolTheme").click(function (e) {
 		    $("#rightPage").show();
@@ -126,29 +130,11 @@ var app = {
 	},
 	//设置搜索条件
 	setCondition() {
-		var item = config.conds[app.curCod];
-		var cods = $("#form_cod")[0].children;
-		for (var i in cods) {
-			if (cods[i].id) {
-				$(cods[i]).hide();
-				var ctl = cods[i].id.split("_")[1];
-				if (item.indexOf(ctl) > -1) {
-					$(cods[i]).show();
-				}
-			}
-		} 
-	    //面积单位切换
-		if (app.curCod == "build") {
-		    $("#txt_landarea_1").attr('placeholder', "m²");
-		    $("#txt_landarea_2").attr('placeholder', "m²");
-		    $("#txt_buildarea_1").attr('placeholder', "m²");
-		    $("#txt_buildarea_2").attr('placeholder', "m²");
-		} else {
-		    $("#txt_landarea_1").attr('placeholder', "公顷");
-		    $("#txt_landarea_2").attr('placeholder', "公顷");
-		    $("#txt_buildarea_1").attr('placeholder', "公顷");
-		    $("#txt_buildarea_2").attr('placeholder', "公顷");
-		}
+	    $("#panelCondition .conditionUl li").removeClass("cond_select");
+	    $("#cnd_" + app.curCod).addClass("cond_select");
+	     
+		$(".form-group").hide();
+		$("#content_" + app.curCod).show();
 	},
 	//切换地图
 	switchMap(type) {

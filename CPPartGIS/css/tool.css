@@ -1,13 +1,15 @@
 ﻿/*工具按钮*/
 #toolBarPanel {
     position: absolute;
-    top: 10%;
+    top: 5%;
     right: 8px; 
 }
 
     #toolBarPanel #Toolbar {   
         margin-bottom: 0px;
         list-style: none;
+        padding:0px;
+        border: 1px solid #ccc;
     }
 
         #toolBarPanel #Toolbar .active {
@@ -17,9 +19,8 @@
         #toolBarPanel #Toolbar li { 
             text-align: center;
             cursor: pointer;
-            border: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
             background: #fff;
-            margin-bottom:0.5em;
             padding:0.5em;
         }
             #toolBarPanel #Toolbar li img {
@@ -109,4 +110,20 @@
             border: 1px solid #8c8c8c;
             background-color: #e8e8e8;
             background-repeat: repeat-x;
+        }
+
+
+
+
+.searchBar {
+    list-style:none;
+    padding:0px;
+    margin:0px;
+}
+    .searchBar li {
+        border-bottom:solid 1px #ccc;
+        padding:0.4em 0.2em;
+    }
+        .searchBar li img {
+            width:30px;
         }
