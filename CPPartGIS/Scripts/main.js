@@ -9,7 +9,7 @@ var app = {
 			 $("." + searchItem).setSearchBlock(searchItem,function(config){
 				 console.log(configStr);
 			 })
-		 }))
+		 })
 
 		//查询结果图层
 		mapconfig.layerInfoConfigs.forEach(function(info) {
