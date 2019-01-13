@@ -78,8 +78,7 @@
             view.when(function () {
                 queryBuild();
             })
-            view.on('pointer-up', function (evt) {
-                debugger;
+            view.on('pointer-up', function (evt) { 
                 queryBuild();
             });
 
@@ -109,8 +108,7 @@
                 query.outFields = ["*"];
                 query.geometry = polygon;
 
-                layer.queryFeatures(query).then(function (results) {
-                    debugger;
+                layer.queryFeatures(query).then(function (results) { 
                     showBuild(results.features, results.fields);
                 });
             }
