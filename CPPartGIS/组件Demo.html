@@ -17,11 +17,11 @@
 		<input value="setSearchBlock" type="button" onclick="setSearchBlock()" />
 		<script src="Scripts/jquery-3.3.1.js"></script>
 		<script type="text/javascript">
-			var searchConfigs = [{
-				dataType: "cljz",
-				btnClass: " cljz_btn",
+			var layerConfigs = [{
+				divContentClass: "content_cltd",
+				btnClass: "cljz_btn",
+				drawClass: "cljz_draw",
 				layerId: "",
-				layerIdName:"",
 				group: [{
 						searchType: "list",
 						itemFunction: "selectFormat",
@@ -136,8 +136,9 @@
 					}
 				]
 			}, {
-				dataType: "cltd",
-				btnClass: " cltd_btn",
+				divContentClass: "content_cltd",
+				btnClass: "cltd_btn",
+				drawClass: "cltd_draw",
 				layerId: "",
 				group: [{
 					searchType: "list",
@@ -262,8 +263,9 @@
 					}
 				}]
 			}, {
-				dataType: "njxm",
-				btnClass: " njxm_btn",
+				divContentClass: "content_njxm",
+				btnClass: "njxm_btn",
+				drawClass: "njxm_draw",
 				layerId: "",
 				group: [{
 						searchType: "list",
@@ -381,8 +383,9 @@
 					}
 				]
 			}, {
-				dataType: "tdgy",
-				btnClass: " tdgy_btn",
+				divContentClass: "content_tdgy",
+				btnClass: "tdgy_btn",
+				drawClass: "tdgy_draw",
 				layerId: "",
 				group: [{
 						searchType: "list",
@@ -550,19 +553,19 @@
 					},
 					textFormat: function(layerConfig) {
 						var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
-						numHtml += '<input type="text" class="form-control' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
+						numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
 						numHtml += '</div></div>';
 						return numHtml;
 					},
 					numFormat: function(layerConfig) {
 						var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
-						numHtml += '<input type="text" class="form-control' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
+						numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
 						numHtml += '</div></div>';
 						return numHtml;
 					},
 					buttonFormat: function(buttonClass) {
 						var buttonHtml =
-							'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary' +
+							'<div class="form-group"><div class="col-sm-offset-3 col-sm-9"><input type="button" class="btn btn-primary ' +
 							buttonClass + '" value="查询" />';
 						buttonHtml += '</div></div>';
 						return buttonHtml;

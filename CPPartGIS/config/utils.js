@@ -66,7 +66,7 @@
 				searchContentHtml += $.tools[funName](searchItem);
 			})
 			var btnHtml = $.tools.buttonFormat(searchBlock.btnClass,"查询");
-			var drawHtml = $.tools.buttonFormat(searchBlock.drawClass,"范围查询");
+			var drawHtml = $.tools.buttonFormat(searchBlock.drawClass,"设置地理范围");
 			searchContentHtml += btnHtml;
 			searchContentHtml += '</form>';
 			$(this).html(searchContentHtml);
@@ -82,7 +82,7 @@
 				var searchConfig = layerConfig.searchField;
 				var selectHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + searchConfig.fieldName +
 					'">' +
-					searchConfig.fieldlabel + '：</label><div class="col-sm-9"><select class="' + layerConfig.defaultClass +
+					searchConfig.fieldlabel + '：</label><div class="col-sm-9"><select class="' + layerConfig.defaultClass + ' ' +
 					layerConfig.divClass +
 					'">';
 				var options = layerConfig.selectOptions;
@@ -95,13 +95,13 @@
 			},
 			textFormat: function(layerConfig) {
 				var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
-				numHtml += '<input type="text" class="form-control' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
+				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
 				numHtml += '</div></div>';
 				return numHtml;
 			},
 			numFormat: function(layerConfig) {
 				var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
-				numHtml += '<input type="text" class="form-control' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
+				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
 				numHtml += '</div></div>';
 				return numHtml;
 			},
