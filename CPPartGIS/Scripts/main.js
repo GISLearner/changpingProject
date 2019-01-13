@@ -5,12 +5,6 @@ var app = {
 	curSearch: null,
 	searchStatus:"fyq",
 	init() {
-	   layerConfigs.forEach(function(searchItem){
-			 $("." + searchItem).setSearchBlock(searchItem,function(config){
-				 console.log(configStr);
-			 })
-		 })
-
 		//查询结果图层
 		mapconfig.layerInfoConfigs.forEach(function(info) {
 			var lId = info.layerCode;
@@ -31,6 +25,11 @@ var app = {
 		    $("#searchPage").show();
 		    $("#searchPage").load("page/search.html", function () { 
 		        app.setCondition();
+						layerConfigs.forEach(function(searchItem){
+							$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(config){
+								console.log(configStr);
+							})
+						})
 		    });
 		})
 	    //点击右侧工具栏

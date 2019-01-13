@@ -1,5 +1,5 @@
 var layerConfigs = [{
-	dataType:"cljz",
+	divContentClass:"content_cltd",
 	btnClass:" cljz_btn",
 	layerId:"",
 	group:[
@@ -117,7 +117,7 @@ var layerConfigs = [{
 		}
 	]
 },{
-	dataType:"cltd",
+	divContentClass:"content_cltd",
 	btnClass:" cltd_btn",
 	layerId:"",
 	group:[
@@ -245,7 +245,7 @@ var layerConfigs = [{
 		}
 	]
 },{
-	dataType:"njxm",
+	divContentClass:"content_njxm",
 	btnClass:" njxm_btn",
 	layerId:"",
 	group:[
@@ -365,7 +365,7 @@ var layerConfigs = [{
 		}
 	]
 },{
-	dataType:"tdgy",
+	divContentClass:"content_tdgy",
 	btnClass:" tdgy_btn",
 	layerId:"",
 	group:[
