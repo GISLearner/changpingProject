@@ -27,7 +27,8 @@ var app = {
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(config){
-						console.log(configStr);
+					    //console.log(configStr);
+					    app.drawStart();
 					})
 				})
 		    });
@@ -582,6 +583,11 @@ var app = {
 	        }
 	    }); 
 	     
+	},
+    //绘制范围
+	drawStart() {
+	    $("#searchPage").hide();
+
 	}
 }
 
