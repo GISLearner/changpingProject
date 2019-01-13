@@ -1,8 +1,10 @@
 var layerConfigs = [{
-	divContentClass:"content_cltd",
+	divContentClass:"content_cljz",
 	btnClass:"cljz_btn",
 	drawClass:"cljz_draw",
-	layerId:"",
+	layerId:"4",
+	nameField:"LYMC",
+	lId:"layer_cljz",
 	group:[
 		{
 			searchType:"list",
@@ -121,7 +123,9 @@ var layerConfigs = [{
 	divContentClass:"content_cltd",
 	btnClass:"cltd_btn",
 	drawClass:"cltd_draw",
-	layerId:"",
+	layerId:"5",
+	lId:"layer_cltd",
+	nameField:"XMMC",
 	group:[
 		{
 			searchType:"list",
@@ -155,7 +159,7 @@ var layerConfigs = [{
 			divClass:"cltd_ydmj",
 			searchField:{
 				fieldlabel:"用地面积（公顷）",
-				fieldName:"TDMJ"
+				fieldName:"YDMJ"
 			},
 			selectOptions:[{
 				label:"全部",
@@ -250,7 +254,9 @@ var layerConfigs = [{
 	divContentClass:"content_njxm",
 	btnClass:"njxm_btn",
 	drawClass:"njxm_draw",
-	layerId:"",
+	layerId:"6",
+	lId:"layer_njxm",
+	nameField:"XMMC",
 	group:[
 		{
 			searchType:"list",
@@ -371,7 +377,9 @@ var layerConfigs = [{
 	divContentClass:"content_tdgy",
 	btnClass:"tdgy_btn",
 	drawClass:"tdgy_draw",
-	layerId:"",
+	layerId:"7",
+	lId:"layer_tdgy",
+	nameField:"XMMC",
 	group:[
 		{
 			searchType:"list",

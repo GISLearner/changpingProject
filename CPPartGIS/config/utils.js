@@ -72,7 +72,22 @@
 			searchContentHtml += '</form>';
 			$(this).html(searchContentHtml);
 			$("." + searchBlock.btnClass).click(function() {
-				callback(searchBlock);
+				var qWhere = "1=1";
+				var layerId = searchBlock.layerId;
+				searchItems.forEach(function(searchItem) {
+					var searchField = searchItem.searchField.fieldName;
+					var seachValue = $("." + searchItem.divClass).val();
+					if(seachValue != ""){
+						if(searchItem.searchType == "numList"){
+							var searchValues = seachValue.split("-");
+							qWhere += " and " + searchField + ">" + searchValues[0] + " and " + searchField + " < " + searchValues[1];
+						}else{
+							qWhere += " and " + searchField + " like '%" + seachValue + "%'";
+						}
+					}
+					
+				})
+				callback(layerId,qWhere,searchBlock);
 			})
 			$("." + searchBlock.drawClass).click(function() {
 				darwCallback(searchBlock.drawClass);
@@ -97,15 +112,19 @@
 				return selectHtml + optionHtml;
 			},
 			textFormat: function(layerConfig) {
-				var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
-				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
-				numHtml += '</div></div>';
+				var searchConfig = layerConfig.searchField;
+				var numHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + 
+				+ searchConfig.fieldName +'">' + searchConfig.fieldlabel + '：</label><div class="col-sm-offset-3 col-sm-9">';
+				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="' 
+				+ searchConfig.fieldlabel + '搜索">' + '</div></div>';
 				return numHtml;
 			},
 			numFormat: function(layerConfig) {
-				var numHtml = '<div class="form-group"><div class="col-sm-offset-3 col-sm-9">';
-				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
-				numHtml += '</div></div>';
+				var searchConfig = layerConfig.searchField;
+				var numHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + 
+				+ searchConfig.fieldName +'">' + searchConfig.fieldlabel + '：</label><div class="col-sm-offset-3 col-sm-9">';
+				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="' 
+				+ searchConfig.fieldlabel + '搜索">' + '</div></div>';
 				return numHtml;
 			},
 			buttonFormat: function(buttonClass,btnLabel) {

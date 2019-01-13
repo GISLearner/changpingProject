@@ -6,8 +6,8 @@ var app = {
 	searchStatus:"fyq",
 	init() {
 		//查询结果图层
-		mapconfig.layerInfoConfigs.forEach(function(info) {
-			var lId = info.layerCode;
+		layerConfigs.forEach(function(info) {
+			var lId = info.lId;
 			var gLayer = new mapAPI.GraphicsLayer({
 				id: lId
 			});
@@ -23,12 +23,25 @@ var app = {
 		$("#homeSearch li").click(function (e) {
 		    app.curCod = e.currentTarget.dataset.target; 
 		    $("#searchPage").show();
+		    $("#resultPanel").hide();
 		    $("#searchPage").load("page/search.html", function () { 
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
 					    //app.drawStart();
-					},function(config){; 
+					},function(layerId,qWhere,searchConfig){
+							//清楚图层
+							layerConfigs.forEach(function(info) {
+								var lId = info.lId;
+								var gLayer = new mapAPI.GraphicsLayer({
+									id: lId
+								});
+								gLayer.clear();
+							})
+							$.common.layerAttSearch(layerId,qWhere,null,function(e,params){
+								app.addFeaToMap(e,params);
+								console.log(e);
+							},searchConfig)
 					    $("#searchPage").hide();
 					    app.showAdvanceResult1();
 					})
@@ -147,87 +160,35 @@ var app = {
 		$(".mapContainer").hide();
 		$("#map_" + type).show();
 	},
-	//查询企业信息
-	searchEnt() {
-		$(".sdataTable").html();
-		var text = $("#leftMenue .entSearch_text").val();
-		var lyrConfigs = mapconfig.layerInfoConfigs;
-		var searchCount = 0;
-		var searchData = []; //查询结果
-		app.layerClear();
-		lyrConfigs.forEach(function(item) {
-			var layerWhere = item.nameField + " like '%" + text + "%'";
-			mugis.layerAttSearch(item.layerId, layerWhere, null, function(e, params) {
-				app.addFeaToMap(e, params, searchData);
-				if (searchCount == lyrConfigs.length - 1) {
-					var options = {
-						height: 300,
-						width: 400,
-						onClickRow:function(e){
-							app.clickRow(e,{layerId:e.layerId,idField:"FID"});
-						}
-					}
-					mugis.initTable(".sdataTable", mapconfig.layerSearchColumns, searchData, options);
-					$("#panelResult").css("display", "block");
-					$("#panelResult").show();
-				}
-				searchCount++;
-			}, item)
-		})
-	},
 	//地图添加项目点位
-	addFeaToMap(e, feaConfig, searchData) {
-		var searchDataObj = {};
+	addFeaToMap(e, feaConfig) {
 		var features = e.features;
 		if (features.length == 0) return;
 		var fms;
 		var fields = e.fields;
-		var lId = feaConfig.layerCode;
+		var lId = feaConfig.lId;
 		var gLayer = map.getLayer(lId);
 		if (e.geometryType == "esriGeometryPoint") {
 			fms = new mapAPI.PictureMarkerSymbol(feaConfig.pointIcon, 24, 24);
 		}else if(e.geometryType == "esriGeometryPolygon"){
 			fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,    
 			new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_DASHDOT,    
-			new mapAPI.Color([255,0,0]), 2),new mapAPI.Color([255,255,0,0.25]));
+			new mapAPI.Color([0,255,0]), 2),new mapAPI.Color([255,255,0,0.25]));
 		}
 		var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
 		var i = 0;
-		var searchData2 = [];
+		var resultul = '<ul class="resultUI">';
 		features.forEach(function(fea) {
 			var gra = new mapAPI.Graphic(fea.geometry, fms, fea.attributes, infoWin);
 			var att = fea.attributes;
-			var columns = mapconfig.layerSearchColumns;
-			var dataObj = {};
-			if(searchData){
-				dataObj[columns[0]["field"]] = i.toString();
-				dataObj[columns[1]["field"]] = att[feaConfig.nameField];
-				dataObj[columns[2]["field"]] = feaConfig.layerType;
-				dataObj[feaConfig.idField] = att[feaConfig.idField];
-				dataObj["layerId"] = feaConfig.layerId;
-				searchData.push(dataObj);
-			}
-			if(searchData2){
-				searchData2.push(att);
-			}
+			var resultName = att[feaConfig.nameField];
+			resultul += '<li data-target="' + att.OBJECTID + '">' +  resultName + '</li>';
 			gLayer.add(gra);
 			i++;
 		})
-		
-		//返回查询结果
-		var columns = [];
-		fields.forEach(function(field){
-			var fieldObj = {
-				field:field.name,
-				title:field.alias
-			}
-			columns.push(fieldObj);
-		})
-		searchDataObj = {
-			columns:columns,
-			data:searchData2
-		}
-		return searchDataObj;
+		resultul += "</ul>"; 
+		$(".resultUI").html(resultul);
+		app.layerZoom(features);
 	},
 	//获取气泡信息
 	getInfoContent(fields) {
@@ -237,71 +198,6 @@ var app = {
 		})
 		contentHtml += "</table></div>";
 		return contentHtml;
-	},
-	//高级查询
-	advanceSearch(){
-		app.layerClear();
-		var name = $("#txt_name").val();
-		var landarea_1 = $("#txt_landarea_1").val();
-		var landarea_2 = $("#txt_landarea_2").val();
-		var buildarea_1 = $("#txt_buildarea_1").val();
-		var buildarea_2 = $("#txt_buildarea_2").val();
-		var qWhere = "";
-		var searchConfig;
-		if(app.searchStatus == "fyq"){
-			mapconfig.layerInfoConfigs.forEach(function(cfg){
-				if(cfg.searchStatus == app.searchStatus){
-					searchConfig = cfg;
-					qWhere = searchConfig.nameField + " like '%" + name + "%' and " + 
-					searchConfig.ydmjField + " >= " + landarea_1 + " and " + 
-					searchConfig.ydmjField + " <= " + landarea_2;
-				}
-			})
-		}else if(app.searchStatus == "jz"){
-			mapconfig.layerInfoConfigs.forEach(function(cfg){
-				if(cfg.searchStatus == app.searchStatus){
-					searchConfig = cfg;
-					var buildtype = $("#select_buildtype").val();
-					qWhere = searchConfig.nameField + " like '%" + name + "%' and " + 
-					searchConfig.typeField + " = '" + buildtype + "' and " + 
-					searchConfig.ydmjField + " >= " + landarea_1 + " and " + 
-					searchConfig.ydmjField + " <= " + landarea_2 + " and " + 
-					searchConfig.jzmjField + " >= " + buildarea_1 + " and " + 
-					searchConfig.jzmjField + " <= " + buildarea_2;
-				}
-			})
-			
-		}else if(app.searchStatus == "qy"){
-			mapconfig.layerInfoConfigs.forEach(function(cfg){
-				if(cfg.searchStatus == app.searchStatus){
-					searchConfig = cfg;
-					var usetype = $("#select_usetype").val();
-					qWhere = searchConfig.nameField + " like '%" + name + "%' and " + 
-					searchConfig.typeField + " = '" + usetype + "' and " + 
-					searchConfig.ydmjField + " >= " + landarea_1 + " and " + 
-					searchConfig.ydmjField + " <= " + landarea_2;
-				}
-			})
-			
-		}else if(app.searchStatus == "ptss"){
-			mapconfig.layerInfoConfigs.forEach(function(cfg){
-				if(cfg.searchStatus == app.searchStatus){
-					searchConfig = cfg;
-					var factype = $("#select_factype").val();
-					qWhere = searchConfig.nameField + " like '%" + name + "%' and " + 
-					searchConfig.typeField + " = '" + factype + "' and " + 
-					searchConfig.ydmjField + " >= " + landarea_1 + " and " + 
-					searchConfig.ydmjField + " <= " + landarea_2;
-				}
-			})
-		}
-		
-		mugis.layerAttSearch(searchConfig.layerId, qWhere, null, function(e, params) {
-			var searchDataObj = app.addFeaToMap(e, params, null);
-			if(searchDataObj){
-				app.showAdvanceResult(searchDataObj.columns,searchDataObj.data,params);
-			}
-		}, searchConfig)
 	},
 	//高级查询显示结果列表
 	showAdvanceResult(columns, data, searchConfig) {
@@ -325,6 +221,32 @@ var app = {
 			}
 		});
 	},
+	layerZoom(features){
+		var xmin = 999999999999,xmax = 0,ymin=999999999999,ymax=0;
+		features.forEach(function(feature){
+			var geo = feature.geometry;
+			geo.prototype = mapAPI.Polygon.prototype;
+			var pExtent = geo.getExtent();
+			if(pExtent.xmin < xmin){
+				xmin = pExtent.xmin;
+			}
+			if(pExtent.ymin < ymin){
+				ymin = pExtent.ymin;
+			}
+			if(pExtent.xmax > xmax){
+				xmax = pExtent.xmax;
+			}
+			if(pExtent.ymax > ymax){
+				ymax = pExtent.ymax;
+			}
+		})
+		var spatialReference = new mapAPI.SpatialReference({wkt:'PROJCS["北京地方坐标系",GEOGCS["GCS_Beijing_1954",DATUM["D_Beijing_1954",SPHEROID["Krasovsky_1940",6378245.0,298.3]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",300000.0],PARAMETER["Central_Meridian",116.3502518],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",39.86576603],UNIT["Meter",1.0]]'});
+
+		var newExtent = new mapAPI.Extent(xmin,ymin,xmax,ymax);
+		newExtent.setSpatialReference(spatialReference);
+		map.setExtent(newExtent);
+	},
+	
     //查询结果
 	showAdvanceResult1() {
 	    $("#resultPanel").show();

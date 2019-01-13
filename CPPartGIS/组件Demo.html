@@ -519,6 +519,7 @@
 					}
 				]
 			}]
+		var layerUrl = "http://39.105.40.172:6080/arcgis/rest/services/昌平园招商引资/MapServer";
 		</script>
 		<script type="text/javascript">
 			
@@ -563,17 +564,21 @@
 						return selectHtml + optionHtml;
 					},
 					textFormat: function(layerConfig) {
+						debugger;
+						var searchConfig = layerConfig.searchField;
 						var numHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + 
 						+ searchConfig.fieldName +'">' + searchConfig.fieldlabel + '：</label><div class="col-sm-offset-3 col-sm-9">';
-						numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
-						numHtml += '</div></div>';
+						numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="' 
+						+ searchConfig.fieldlabel + '搜索">' + '</div></div>';
 						return numHtml;
 					},
 					numFormat: function(layerConfig) {
+						debugger;
+						var searchConfig = layerConfig.searchField;
 						var numHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + 
 						+ searchConfig.fieldName +'">' + searchConfig.fieldlabel + '：</label><div class="col-sm-offset-3 col-sm-9">';
-						numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="名称搜索">';
-						numHtml += '</div></div>';
+						numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="' 
+						+ searchConfig.fieldlabel + '搜索">' + '</div></div>';
 						return numHtml;
 					},
 					buttonFormat: function(buttonClass,btnLabel) {
@@ -623,7 +628,7 @@
 			}
 
 			function setSearchBlock() {
-				$(".cljz").setSearchBlock(searchConfigs[3], function(configStr) {
+				$(".cljz").setSearchBlock(layerConfigs[1], function(configStr) {
 					console.log(configStr);
 				})
 			}
