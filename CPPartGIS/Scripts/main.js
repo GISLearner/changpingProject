@@ -50,6 +50,8 @@ var app = {
 						$("#searchPage").hide();
 						$("#drawEndPanel").show();
 						app.drawStart(drawClass);
+					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
+					    app.drawStart();
 					},function(layerId,qWhere,searchConfig){
 							//清楚图层
 							layerConfigs.forEach(function(info) {
@@ -167,6 +169,7 @@ var app = {
 
 		    }
 		})
+	})
 	},
 	//设置搜索条件
 	setCondition() {
@@ -548,10 +551,11 @@ var app = {
     //绘制范围
 	drawStart(drawBtnclass) {
 	    $("#searchPage").hide();
-			$.common.mapDraw(map,mapAPI.Draw.RECTANGLE,function(e){
-				var geo = e.geometry;
-				app.drawGeo = geo;
-			})
+	    $("#drawPanel").show();
+	    $("#drawPanel").load("page/draw.html", function () {
+// 				var geo = e.geometry;
+// 				app.drawGeo = geo;
+	    });
 	}
 }
 
