@@ -12,6 +12,12 @@ var app = {
 				id: lId
 			});
 			map.addLayer(gLayer);
+			gLayer.on("click",function(e){
+				var att = e.graphic.attributes;
+				var fields = att.fields;//字段信息
+				console.log(att);
+				console.log(fields);
+			})
 		})
 		//高亮图层
 		var hLayer = new mapAPI.GraphicsLayer({
@@ -179,15 +185,23 @@ var app = {
 		var i = 0;
 		var resultul = '<ul class="resultUI">';
 		features.forEach(function(fea) {
-			var gra = new mapAPI.Graphic(fea.geometry, fms, fea.attributes, infoWin);
 			var att = fea.attributes;
+			att.fields = fields;
+			var gra = new mapAPI.Graphic(fea.geometry, fms, att, infoWin);
 			var resultName = att[feaConfig.nameField];
-			resultul += '<li data-target="' + att.OBJECTID + '">' +  resultName + '</li>';
+			var attJson = JSON.stringify(att);
+			resultul += '<li data-target=\'' + attJson + '\'>' +  resultName + '</li>';
 			gLayer.add(gra);
 			i++;
 		})
 		resultul += "</ul>"; 
 		$(".resultUI").html(resultul);
+		$(".resultUI li").click(function(){
+			var attStr = $(this).attr("data-target");
+			var attInfo = JSON.parse(attStr);
+			console.log(attInfo);
+			console.log(attInfo.fields);//字段信息
+		})
 		app.layerZoom(features);
 	},
 	//获取气泡信息
