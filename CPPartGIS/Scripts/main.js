@@ -17,6 +17,7 @@ var app = {
 				var fields = att.fields;//字段信息
 				console.log(att);
 				console.log(fields);
+				app.showDeatilInfo(att, fields);
 			})
 		})
 		//高亮图层
@@ -181,9 +182,10 @@ var app = {
 			new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_DASHDOT,    
 			new mapAPI.Color([0,255,0]), 2),new mapAPI.Color([255,255,0,0.25]));
 		}
-		var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
+		//var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
+		var infoWin = null;
 		var i = 0;
-		var resultul = '<ul class="resultUI">';
+		var resultul = "";// '<ul class="resultUI">';
 		features.forEach(function(fea) {
 			var att = fea.attributes;
 			att.fields = fields;
@@ -194,13 +196,14 @@ var app = {
 			gLayer.add(gra);
 			i++;
 		})
-		resultul += "</ul>"; 
+		//resultul += "</ul>"; 
 		$(".resultUI").html(resultul);
 		$(".resultUI li").click(function(){
 			var attStr = $(this).attr("data-target");
 			var attInfo = JSON.parse(attStr);
 			console.log(attInfo);
 			console.log(attInfo.fields);//字段信息
+			app.showDeatilInfo(attInfo, fields);
 		})
 		app.layerZoom(features);
 	},
@@ -273,11 +276,16 @@ var app = {
 	    })
 	},
     //详细信息
-	showDeatilInfo(id) {
+	showDeatilInfo(attrs, fields) {
+        //显示面板
 	    $("#detailPanel").show();
-	    var html = "查询结果：" + id;
-	    $("#infoPanel").html(html);
-
+	    //生成详情界面
+	    var strhtml = ""; 
+	    for (var i = 0; i < fields.length; i++) {
+	        strhtml += "<b>" + fields[i].alias + "</b>：" + attrs[fields[i].name] + "<br/>";
+	    } 
+	    $("#infoPanel").html(strhtml);
+        //绑定关闭
 	    $('#detailPanel img').click(function () {
 	        $("#detailPanel").hide();
 	    })
