@@ -35,7 +35,7 @@ var app = {
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
-					    //app.drawStart();
+					    app.drawStart();
 					},function(layerId,qWhere,searchConfig){
 							//清楚图层
 							layerConfigs.forEach(function(info) {
@@ -534,8 +534,11 @@ var app = {
 	},
     //绘制范围
 	drawStart() {
-	    $("#searchPage").hide();
+	    //$("#searchPage").hide();
+	    $("#drawPanel").show();
+	    $("#drawPanel").load("page/draw.html", function () {
 
+	    });
 	}
 }
 
