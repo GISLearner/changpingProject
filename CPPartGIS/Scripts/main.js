@@ -153,6 +153,21 @@ var app = {
 
 		    }
 		})
+
+	    //多媒体按钮事件
+		$("#btnMedia").click(function () {
+		    $("#mediaPanel").show();
+		    $("#mediaPanel").load("page/media.html", function () {
+
+		    });
+		})
+	    //周边环境按钮事件
+		$("#btnRound").click(function () {
+		    $("#roundPanel").show();
+		    $("#roundPanel").load("page/round.html", function () {
+
+		    });
+		})
 	},
 	//设置搜索条件
 	setCondition() {

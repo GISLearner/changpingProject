@@ -1,226 +1,231 @@
 .entSearch {
-	height: 36px;
+    height: 36px;
 }
 
-.entSearch div {
-	float: left;
-}
+    .entSearch div {
+        float: left;
+    }
 
 .entSearch_btn {
-	width: 80px;
-	height: 40px;
-	background: #0C9DF6;
-	/*border-radius: 2px;*/
-	line-height: 40px;
-	text-align: center;
-	color: white;
-	cursor: pointer;
-	border-left: solid 1px #ccc;
+    width: 80px;
+    height: 40px;
+    background: #0C9DF6;
+    /*border-radius: 2px;*/
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    border-left: solid 1px #ccc;
 }
 
-.entSearch_btn img {
-	width: 18px;
-}
+    .entSearch_btn img {
+        width: 18px;
+    }
 
-.entSearch_btn:hover {
-	background: #075fe8;
-}
+    .entSearch_btn:hover {
+        background: #075fe8;
+    }
 
 .entContent {
-	background-color: white;
-	border-radius: 2px;
-	margin-top: 5px;
+    background-color: white;
+    border-radius: 2px;
+    margin-top: 5px;
 }
 
 .entContent_list {
-	margin-left: 15px;
+    margin-left: 15px;
 }
 
-.entContent_list li {
-	height: 30px;
-	line-height: 30px;
-	cursor: pointer;
-	text-align: left;
-	font-size: 13px;
-}
+    .entContent_list li {
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+        text-align: left;
+        font-size: 13px;
+    }
 
-.entContent_list li:hover {
-	background-color: #D5D5D5;
-}
+        .entContent_list li:hover {
+            background-color: #D5D5D5;
+        }
 
 .zoomTo {
-	display: none;
+    display: none;
 }
 
 
 .panel {
-	width: 413px;
-	margin-top: 10px;
-	padding: 10px 0px;
-	background: white;
-	display: none;
-	box-shadow: 2px 2px 10px 1px #545454;
-	/*max-height: 400px;*/
-	overflow-y: auto;
+    width: 413px;
+    margin-top: 10px;
+    padding: 10px 0px;
+    background: white;
+    display: none;
+    box-shadow: 2px 2px 10px 1px #545454;
+    /*max-height: 400px;*/
+    overflow-y: auto;
     overflow-x: hidden;
-    border-radius:2px;
+    border-radius: 2px;
 }
 
 .cond_select {
-	font-weight: 600;
-	border-bottom: solid 1px #2861EB;
+    font-weight: 600;
+    border-bottom: solid 1px #2861EB;
 }
 
 .menuUl {
-	list-style: none;
-	height: 36px;
-	margin: 0px;
-	padding: 0px;
-	padding-bottom: 5px;
-	height: 45px;
-	line-height: 45px;
-	background: #0C9DF6;
-	color: white;
+    list-style: none;
+    height: 36px;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 5px;
+    height: 45px;
+    line-height: 45px;
+    background: #0C9DF6;
+    color: white;
 }
 
-.menuUl li {
-	float: left;
-	cursor: pointer;
-	padding-bottom: 5px;
-	margin: 0px 10px 0px 10px;
-}
+    .menuUl li {
+        float: left;
+        cursor: pointer;
+        padding-bottom: 5px;
+        margin: 0px 10px 0px 10px;
+    }
 
 .panel_menu {
-	display: none;
-	background: white;
-	margin-top: 10px;
-	box-shadow: 2px 2px 10px 1px #545454;
-	border-radius: 2px;
+    display: none;
+    background: white;
+    margin-top: 10px;
+    box-shadow: 2px 2px 10px 1px #545454;
+    border-radius: 2px;
 }
 
 /*主题列表*/
 .themeUl {
-	list-style: none;
-	height: 90px;
-	margin: 0px;
-	padding: 0px;
+    list-style: none;
+    height: 90px;
+    margin: 0px;
+    padding: 0px;
 }
 
-.themeUl li { 
-	cursor: pointer;
-	margin: 0px 10px 0px 10px;
-	text-align: center;
-	margin-top: 10px;
-}
+    .themeUl li {
+        cursor: pointer;
+        margin: 0px 10px 0px 10px;
+        text-align: center;
+        margin-top: 10px;
+    }
 
-.themeUl li img {
-	width: 90px;
-	height: 50px;
-	border-radius: 3px;
-}
+        .themeUl li img {
+            width: 90px;
+            height: 50px;
+            border-radius: 3px;
+        }
 
-.themeUl li img:hover {
-	border: solid 2px #0C9DF6;
-}
+            .themeUl li img:hover {
+                border: solid 2px #0C9DF6;
+            }
 
 /*专题类别*/
 .specialUl {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
 }
 
-.specialUl li {
-	padding: 20px 5px;
-	border-bottom: solid 1px #ccc;
-	border-right: solid 1px #ccc;
-	cursor: pointer;
-}
+    .specialUl li {
+        padding: 20px 5px;
+        border-bottom: solid 1px #ccc;
+        border-right: solid 1px #ccc;
+        cursor: pointer;
+    }
 
 .special_select {
-	background: #ddecfb;
+    background: #ddecfb;
 }
 
 .special_itmes {
-	width: 100%;
-	height: 200px;
+    width: 100%;
+    height: 200px;
 }
 
 .special_title {
-	width: 100%;
-	background: #f8f9fa;
-	border-bottom: 1px solid #dadada;
+    width: 100%;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dadada;
 }
 
 /*专题图层*/
 .speciallayerUl {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	width: 400px;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: 400px;
 }
 
-.speciallayerUl li {
-	float: left;
-	cursor: pointer;
-	width: 90px;
-	margin-left: 10px;
-	margin-top: 20px;
-	text-align: center;
-}
-
-.speciallayerUl li img {
-	background: #0a9df6;
-	border-radius: 20px;
-	padding: 5px;
-	width: 40px;
-	margin-bottom: 5px;
-}
-    .speciallayerUl li:hover {
-        font-weight:600;
+    .speciallayerUl li {
+        float: left;
+        cursor: pointer;
+        width: 90px;
+        margin-left: 10px;
+        margin-top: 20px;
+        text-align: center;
     }
 
+        .speciallayerUl li img {
+            background: #0a9df6;
+            border-radius: 20px;
+            padding: 5px;
+            width: 40px;
+            margin-bottom: 5px;
+        }
+
+        .speciallayerUl li:hover {
+            font-weight: 600;
+        }
+
 .speciallayer_select {
-    font-weight:600;
+    font-weight: 600;
 }
+
     .speciallayer_select img {
         background: #d9534f !important;
     }
 
 /*工具菜单*/
 .toolUl {
-	margin-left: 195px;
-	background: white;
-	width: 110px;
-	list-style: none;
-	padding: 0px;
-	text-align: center;
-	box-shadow: 2px 2px 10px 1px #545454;
+    margin-left: 195px;
+    background: white;
+    width: 110px;
+    list-style: none;
+    padding: 0px;
+    text-align: center;
+    box-shadow: 2px 2px 10px 1px #545454;
 }
 
-.toolUl li {
-	cursor: pointer;
-	padding: 5px 0px;
-	border-bottom: solid 1px #fff;
-}
+    .toolUl li {
+        cursor: pointer;
+        padding: 5px 0px;
+        border-bottom: solid 1px #fff;
+    }
 
-.toolUl li:hover {
-	/*background:#ddecfb;*/
-	border-bottom: solid 1px #ccc;
-}
+        .toolUl li:hover {
+            /*background:#ddecfb;*/
+            border-bottom: solid 1px #ccc;
+        }
 
 .jsPanel-content {
-    overflow:auto !important;
+    overflow: auto !important;
 }
 
 .resultUI {
-    margin:0px;
-    padding:1em; 
-    width:100%;
-    list-style:none;
+    margin: 0px;
+    padding: 0em 1em;
+    width: 100%;
+    list-style: none;
+    height: 85%;
+    overflow-y: auto;
 }
+
     .resultUI li {
-        border-bottom:solid 1px #ccc;
+        border-bottom: solid 1px #ccc;
         height: 2em;
         line-height: 2em;
     }
