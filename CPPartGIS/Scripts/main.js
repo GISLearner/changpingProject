@@ -54,8 +54,7 @@ var app = {
 			$("#searchPage").load("page/search.html", function() {
 				app.setCondition();
 				layerConfigs.forEach(function(searchItem) {
-					$("#" + searchItem.divContentClass).setSearchBlock(searchItem, function(drawClass) {
-						$("#panelCondition").hide();
+					$("#" + searchItem.divContentClass).setSearchBlock(searchItem, function(drawClass) { 
 						app.drawStart(drawClass);
 					}, function(layerId, qWhere, searchConfig) {
 						//清楚图层
@@ -620,7 +619,7 @@ var app = {
 	},
 	//绘制范围
 	drawStart(drawBtnclass) {
-		$("#panelCondition").hide();
+	    $("#drawPanel").show();
 		$("#drawPanel").load("page/draw.html", function() {
 			// $("#drawPanelContent").show();
 			$(".drawUl_item").click(function(){
