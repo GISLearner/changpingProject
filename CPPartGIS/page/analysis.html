@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div style="position:absolute;top:0px;height:50px;width:100%;padding:10px 0;margin-bottom: 1em;background:white;">
+        <div style="width:10%;float:left;" id="back_analys">
+            <img src="img/icon/back.png" style="width:30px;" />
+        </div>
+        <div style="height:30px;line-height:30px;font-weight:600;">
+            周边环境
+        </div>
+    </div>
+    <div style="width:100%;height:100%;background:#eee;padding:5em;" id="analysisMap">
+        地图
+    </div>
+
+    <script>
+        //返回
+        $("#back_analys").click(function () {
+            $("#analysPanel").hide();
+        })
+
+        var analys = {
+            init(layerId) {
+                $("#analysisMap").html("loading ... " + layerId);
+            }
+        }
+    </script>
+</body>
+</html>

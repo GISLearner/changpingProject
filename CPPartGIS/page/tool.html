@@ -17,6 +17,7 @@
                 float: left;
                 text-align: center;
                 margin-right: 2em;
+                padding-bottom: 0.3em;
             }
 
         p {
@@ -48,25 +49,33 @@
         </ul>
         <p>统计</p>
         <ul class="toolerUl">
+            <li data-target="entArea"> 
+                存量土地统计
+            </li>
+            <li data-target="buildArea"> 
+                存量建筑统计
+            </li> 
             <li data-target="entArea">
-                <img src="img/icon/icon_03.png" /><br />
-                企业用地面积
+                拟续建项目统计
             </li>
             <li data-target="buildArea">
-                <img src="img/icon/icon_01.png" /><br />
-                建筑用地面积
+                土地供应统计
             </li> 
         </ul>
         <p>分析</p>
         <ul class="toolerUl">
-            <li data-target="landPark">
-                <img src="img/icon/icon_03.png" /><br />
-                地块配套设施
+            <li data-target="16">
+                存量土地分析
             </li>
-            <li data-target="landUse">
-                <img src="img/icon/icon_01.png" /><br />
-                土地利用情况
-            </li> 
+            <li data-target="17">
+                存量建筑分析
+            </li>
+            <li data-target="18">
+                拟续建项目分析
+            </li>
+            <li data-target="19">
+                土地供应分析
+            </li>  
         </ul>
 
     </div>
@@ -76,22 +85,24 @@
         //工具菜单
         $(".toolerUl li").click(function (e) {
             $("#rightPage").hide();
+            debugger;
             var tool = e.currentTarget.dataset.target;
+            var name = e.currentTarget.innerHTML.trim();
             switch (tool) {
-                case "area":
-                    btn_measure(1);
-                    break;
-                case "dist":
-                    btn_measure(0);
-                    break;
-                case "mark":
-                    alert('地图标注');
-                    break;
-                case "park":
-                    app.showTree();
-                    break;
+                case "16":
+                case "17":
+                case "18":
+                case "19":
+                    $("#analysPanel").show();
+                    $("#analysPanel").load("page/analysis.html", function () {
+                        analys.init(tool);
+                    });
+                    break; 
                 default:
-                    alert(tool);
+                    $("#statPanel").show();
+                    $("#statPanel").load("page/stat.html", function () {
+                        stat.init(name);
+                    });
                     break;
             }
             $("#panel_tool").hide();
