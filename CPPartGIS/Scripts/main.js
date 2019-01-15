@@ -6,13 +6,7 @@ var app = {
 	drawGeo: null,
 	searchStatus: "fyq",
 	init() {
-
-
-		var dLayer = new mapAPI.ArcGISDynamicMapServiceLayer(mapconfig.vectorMapServerUrl, {
-			id: "baseMap_Map"
-		});
-		map.addLayer(dLayer);
-
+		$.common.addBaseMap(map,"baseMap_Map");
 		var drawLayer = new mapAPI.GraphicsLayer({id:"drawGeoLayer"});
 		map.addLayer(drawLayer);
 		//查询结果图层
@@ -39,17 +33,11 @@ var app = {
 		});
 		map.addLayer(hLayer);
 
-		$("#drawFinishBtn").click(function() {
-			$("#drawEndPanel").hide();
-			$("#panelCondition").show();
-		})
-
 		//点击搜索
 		$("#homeSearch li").click(function(e) {
 			app.curCod = e.currentTarget.dataset.target;
 			$("#searchPage").show();
 			$("#resultPanel").hide();
-			$("#drawEndPanel").hide();
 			app.drawGeo = null;
 			$("#searchPage").load("page/search.html", function() {
 				app.setCondition();
@@ -622,15 +610,20 @@ var app = {
 	    $("#drawPanel").show();
 		$("#drawPanel").load("page/draw.html", function() {
 			// $("#drawPanelContent").show();
+			var mapDraw = $.common.initMap("map2");
+			$.common.addTDTBaseMap(mapDraw,"baseMap_VEC");
+			$.common.addBaseMap(mapDraw,"baseMap_DrawMap");
+			//返回
+			$(".cltd_draw").click(function() {
+				$("#drawPanel").hide();
+			})
 			$(".drawUl_item").click(function(){
-				$("#drawPanelContent").hide();
 				var drawType = $(this).attr("type");
 				if(drawType == "cExtent"){
-					app.drawGeo = map.getExtent();
+					app.drawGeo = map.extent;
 					$("#panelCondition").show();
 				}else{
-					$("#drawEndPanel").show();
-					$.mapDraw(map,Draw[drawType],function(e){
+					$.common.mapDraw(mapDraw,mapAPI.Draw[drawType],function(e){
 						app.drawGeo = e.geometry;
 					})
 				}

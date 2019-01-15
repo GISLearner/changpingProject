@@ -91,6 +91,9 @@ mugis.mapInit = {
 				mapAPI.IdentifyParameters = IdentifyParameters;
 				mapAPI.Font = Font;
 				mapAPI.LegendLayer = LegendLayer;
+				mapAPI.Popup = Popup;
+				mapAPI.domConstruct=domConstruct;
+				mapAPI.domClass=domClass;
 				mapAPI.isLoad = true;
 
 				//esriConfig默认参数配置
@@ -107,24 +110,10 @@ mugis.mapInit = {
 // 				var spatialReference = new esri.SpatialReference({
 // 					wkid: 3857
 // 				});
-				//Popup
-				var popup = new Popup({
-					titleInBody: false,
-					highlight: false
-				}, domConstruct.create("div"));
-				domClass.add(popup.domNode, "light");
 
-				//默认地图范围
-				mapinfo.initExtent = new esri.geometry.Extent(mapconfig.extent);
-				// mapinfo.initExtent.setSpatialReference(spatialReference);
-				// mapinfo.initExtent = new esri.geometry.Extent(-20037508.342787, -20037508.342787, 20037508.342787, 20037508.342787,spatialReference)
-				//加载天地图
-				mapinfo.map = map = new esri.Map("map", {
-					logo: false,
-					slider: false,
-					extent: mapinfo.initExtent
-				});
-				_this.addTDTBaseMap("baseMap_VEC");
+				mapinfo.map = map = $.common.initMap("map");
+				
+				$.common.addTDTBaseMap(map,"baseMap_VEC");
 
 				/*显示经纬度*/
 				dojo.connect(map, "onMouseMove", function(event) {
@@ -150,44 +139,7 @@ mugis.mapInit = {
 					}
 				}, 0);
 			});
-	},
-
-	/**
-	 * 加载天地图.
-	 * @param {string} type - 天地图类型参数(baseMap_VEC,baseMap_DEM,baseMap_IMG).
-	 */
-	addTDTBaseMap: function(type) {
-		//矢量（baseMap_VEC）、地形（baseMap_DEM）、影像图（baseMap_IMG）
-		var tdt; //地图
-		var tdlt; //地图标注
-		require([
-			"widgets/TDTLayer"
-		], function(TDTLayer) {
-			if (type == "baseMap_VEC") {
-				//矢量
-				var tdt = new TDTLayer("http://t0.tianditu.com/vec_c/wmts", {
-					noteType: "vec_c"
-				});
-				tdt.id = type;
-			} else if (type == "baseMap_DEM") {
-				//地形图（不显示）
-				var tdt = new TDTLayer("http://t0.tianditu.cn/ter_c/wmts", {
-					noteType: "ter_c"
-				});
-				tdt.id = type;
-			} else if (type == "baseMap_IMG") {
-				//影像  
-				var tdt = new TDTLayer("http://t0.tianditu.com/img_c/wmts", {
-					noteType: "img_c"
-				});
-				tdt.id = type;
-			}
-			var tdlt = new TDTLayer("http://t0.tianditu.com/cva_c/wmts", {
-				noteType: "cva_c"
-			});
-			tdlt.id = type + "_labelmark";
-			map.addLayer(tdt, 0);
-			map.addLayer(tdlt, 1);
-		});
 	}
+
+	
 };
