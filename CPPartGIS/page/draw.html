@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -27,43 +27,46 @@
     </style>
 </head>
 <body>
-    <div style="position:absolute;top:0px;height:50px;width:100%;padding:10px 0;margin-bottom: 1em;background:white;">
-        <div style="width:10%;float:left;" id="back_draw">
-            <img src="img/icon/back.png" style="width:30px;" />
-        </div>
-        <div style="height:30px;line-height:30px;font-weight:600;">
-            设置地图范围
-        </div>
-    </div>
-    <div style="height:100%;width:100%;background:#eee;">
-    </div>
-    <div style="position:absolute;top:50px;width:100%;">
-        <ul class="drawUl">
-            <li>
-                <div>
-                    当前视图<br />范围
-                </div>
-            </li>
-            <li>
-                <div>
-                    圆形
-                </div>
-            </li>
-            <li>
-                <div>
-                    矩形
-                </div>
-            </li>
-            <li>
-                <div>
-                    自定义<br/>多边形
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div style="position:absolute;bottom:50px;width:100%;">
-        <input type="button" class="btn btn-primary cltd_draw" value="绘制完成" style="width:100%;">
-    </div>
+	<div id="drawPanelContent">
+		<div style="position:absolute;top:0px;height:50px;width:100%;padding:10px 0;margin-bottom: 1em;background:white;">
+			<div style="width:10%;float:left;" id="back_draw">
+				<img src="img/icon/back.png" style="width:30px;" />
+			</div>
+			<div style="height:30px;line-height:30px;font-weight:600;">
+				设置地图范围
+			</div>
+		</div>
+		<div style="height:100%;width:100%;background:#eee;">
+		</div>
+		<div style="position:absolute;top:50px;width:100%;">
+			<ul class="drawUl">
+				<li>
+					<div type="cExtent" class="drawUl_item drawUl_current">
+						当前视图<br />范围
+					</div>
+				</li>
+				<li>
+					<div type="CIRCLE" class="drawUl_item drawUl_circle">
+						圆形
+					</div>
+				</li>
+				<li>
+					<div type="RECTANGLE" class="drawUl_item drawUl_rect">
+						矩形
+					</div>
+				</li>
+				<li>
+					<div type="POLYGON" class="drawUl_item drawUl_mulPolygon">
+						自定义<br/>多边形
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div style="position:absolute;bottom:50px;width:100%;">
+			<input type="button" class="btn btn-primary cltd_draw" value="绘制完成" style="width:100%;">
+		</div>
+	</div>
+    
 
 
     <script>

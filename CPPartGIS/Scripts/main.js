@@ -41,8 +41,7 @@ var app = {
 
 		$("#drawFinishBtn").click(function() {
 			$("#drawEndPanel").hide();
-			$("#searchPage").show();
-			$("#searchPage").load("page/search.html");
+			$("#panelCondition").show();
 		})
 
 		//点击搜索
@@ -56,8 +55,7 @@ var app = {
 				app.setCondition();
 				layerConfigs.forEach(function(searchItem) {
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem, function(drawClass) {
-						$("#searchPage").hide();
-						$("#drawEndPanel").show();
+						$("#panelCondition").hide();
 						app.drawStart(drawClass);
 					}, function(layerId, qWhere, searchConfig) {
 						//清楚图层
@@ -74,7 +72,6 @@ var app = {
 						}, searchConfig)
 						$("#searchPage").hide();
 						app.showAdvanceResult1();
-						app.drawStart(drawClass); 
 					})
 				})
 			});
@@ -614,11 +611,22 @@ var app = {
 	},
 	//绘制范围
 	drawStart(drawBtnclass) {
-		$("#searchPage").hide();
-		$("#drawPanel").show();
+		$("#panelCondition").hide();
 		$("#drawPanel").load("page/draw.html", function() {
-			// 				var geo = e.geometry;
-			// 				app.drawGeo = geo;
+			// $("#drawPanelContent").show();
+			$(".drawUl_item").click(function(){
+				$("#drawPanelContent").hide();
+				var drawType = $(this).attr("type");
+				if(drawType == "cExtent"){
+					app.drawGeo = map.getExtent();
+					$("#panelCondition").show();
+				}else{
+					$("#drawEndPanel").show();
+					$.mapDraw(map,Draw[drawType],function(e){
+						app.drawGeo = e.geometry;
+					})
+				}
+			})
 		});
 	}
 }
