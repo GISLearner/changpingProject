@@ -188,8 +188,12 @@ var app = {
 	    //周边环境按钮事件
 		$("#btnRound").click(function () {
 		    $("#roundPanel").show();
-		    $("#roundPanel").load("page/round.html", function () {
-
+		    $("#roundPanel").load("page/round.html", function () { 
+		        setTimeout(function () {
+		            var frm = document.getElementById("ifmSingle").contentWindow;
+		            frm.init(app.curPoint);
+		        }, 500)
+		        
 		    });
 		})
 	},
@@ -326,6 +330,10 @@ var app = {
 			strhtml += "<b>" + fields[i].alias + "</b>：" + attrs[fields[i].name] + "<br/>";
 		}
 		$("#infoPanel").html(strhtml);
+		app.curPoint = {
+		    x: 116.2330116663629,
+		    y: 40.198106077646965,
+		}
 		//绑定关闭
 		$('#detailPanel img').click(function() {
 			$("#detailPanel").hide();

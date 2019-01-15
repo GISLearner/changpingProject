@@ -34,240 +34,293 @@
         var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/%E6%98%8C%E5%B9%B3%E5%9B%AD%E6%8B%9B%E5%95%86%E5%BC%95%E8%B5%84/MapServer/9";
         //配置--层数字段
         var csFeild = "JZGD";
+        var target;
 
+        function init(target1) {
+            target = target1;
+            require([
+             "esri/Map",
+             "esri/views/SceneView",
+             "esri/layers/FeatureLayer",
+             "esri/widgets/Legend",
+             "esri/geometry/Polygon",
+             "esri/tasks/support/Query",
+             "esri/Graphic",
+             "esri/geometry/Point",
+             "dojo/domReady!"
+            ], function (  Map, SceneView, FeatureLayer, Legend, Polygon, Query, Graphic, Point) {
 
-        require([
-          "esri/Map",
-          "esri/views/SceneView",
-          "esri/layers/FeatureLayer",
-          "esri/widgets/Legend",
-          "esri/geometry/Polygon",
-          "esri/tasks/support/Query",
-          "dojo/domReady!"
-        ], function (
-          Map, SceneView, FeatureLayer, Legend, Polygon, Query
-        ) {
+                const blayer = new FeatureLayer({
+                    url: layerURL
+                });
 
-            const blayer = new FeatureLayer({ 
-                url: layerURL
-            });
+                var map = new Map({
+                    basemap: "hybrid",
+                    ground: "world-elevation",
+                    //layers: [blayer]
+                });
 
-            var map = new Map({
-                basemap: "hybrid",
-                ground: "world-elevation",
-                //layers: [blayer]
-            });
+                var view = new SceneView({
+                    container: "viewDiv",
+                    map: map,
+                    camera: {
+                        position: {
+                            x: target.x,
+                            y: target.y - 0.001,
+                            z: 120,
+                            spatialReference: {
+                                wkid: 4326
+                            }
+                        },
+                        heading: 0,
+                        tilt: 60
+                    }
+                });
 
-            var view = new SceneView({
-                container: "viewDiv",
-                map: map,
-                camera: {
-                    position: {
-                        x: 116.2390116663629,
-                        y: 40.198606077646965,
-                        z: 120,
-                        spatialReference: {
-                            wkid: 4326
-                        }
-                    },
-                    heading: 0,
-                    tilt: 60
+                view.when(function () {
+                    queryBuild();
+                    addPoint();
+                })
+                //view.on('pointer-up', function (evt) {
+                //    queryBuild();
+                //});
+
+                function queryBuild() {
+                    var center = view.center;
+                    const x = center.longitude;
+                    const y = center.latitude;
+                    const rings = [
+                         [
+                              [x - 0.01, y - 0.01],
+                              [x - 0.01, y + 0.01],
+                              [x + 0.01, y + 0.01],
+                              [x + 0.01, y - 0.01],
+                         ]
+                    ];
+                    const polygon = new Polygon({
+                        rings: rings,
+                        spatialReference: { wkid: 4326 }
+                    });
+
+                    var layer = new FeatureLayer({
+                        url: layerURL,
+                    });
+                    const query = new Query();
+                    query.where = "1=1";
+                    query.returnGeometry = true;
+                    query.outFields = ["*"];
+                    query.geometry = polygon;
+
+                    layer.queryFeatures(query).then(function (results) {
+                        showBuild(results.features, results.fields);
+                    });
                 }
-            });
-
-            view.when(function () {
-                queryBuild();
-            })
-            view.on('pointer-up', function (evt) { 
-                queryBuild();
-            });
-
-            function queryBuild() {  
-                var center = view.center;
-                const x = center.longitude;
-                const y = center.latitude;
-                const rings = [
-                     [
-                          [x - 0.001, y - 0.001],
-                          [x - 0.001, y + 0.001],
-                          [x + 0.001, y + 0.001],
-                          [x + 0.001, y - 0.001],
-                     ]
-                ];
-                const polygon = new Polygon({ 
-                    rings: rings,
-                    spatialReference: { wkid: 4326 }
-                });
-
-                var layer = new FeatureLayer({
-                    url: layerURL,
-                });
-                const query = new Query();
-                query.where = "1=1";
-                query.returnGeometry = true;
-                query.outFields = ["*"];
-                query.geometry = polygon;
-
-                layer.queryFeatures(query).then(function (results) { 
-                    showBuild(results.features, results.fields);
-                });
-            }
-            var buildingsLayer;
-            function showBuild(features, fields) {
-                var resSym = {
-                    type: "polygon-3d", // autocasts as new PolygonSymbol3D()
-                    symbolLayers: [{
-                        type: "extrude", // autocasts as new ExtrudeSymbol3DLayer()
-                        material: {
-                            color: "#FC921F"
-                        },
-                        edges: {
-                            type: "solid",
-                            color: "#72420d",
-                            size: 1.5
-                        }
-                    }]
-                };
-
-                var condoSym = {
-                    type: "polygon-3d", // autocasts as new PolygonSymbol3D()
-                    symbolLayers: [{
-                        type: "extrude", // autocasts as new ExtrudeSymbol3DLayer()
-                        material: {
-                            color: "#9E559C"
-                        },
-                        edges: {
-                            type: "solid",
-                            color: "#4c294b",
-                            size: 1.5
-                        }
-                    }]
-                };
-
-                var renderer = {
-                    type: "unique-value", // autocasts as new UniqueValueRenderer()
-                    defaultSymbol: {
+                var buildingsLayer;
+                function showBuild(features, fields) {
+                    var resSym = {
                         type: "polygon-3d", // autocasts as new PolygonSymbol3D()
                         symbolLayers: [{
                             type: "extrude", // autocasts as new ExtrudeSymbol3DLayer()
                             material: {
-                                color: "#fff"
+                                color: "#FC921F"
                             },
                             edges: {
                                 type: "solid",
-                                color: "#ccc",
+                                color: "#72420d",
                                 size: 1.5
                             }
                         }]
-                    },
-                    defaultLabel: "Other",
-                    field: "DESCLU",
-                    uniqueValueInfos: [
-                        {
-                            value: "Residential",
-                            symbol: resSym,
-                            label: "Residential"
+                    };
+
+                    var condoSym = {
+                        type: "polygon-3d", // autocasts as new PolygonSymbol3D()
+                        symbolLayers: [{
+                            type: "extrude", // autocasts as new ExtrudeSymbol3DLayer()
+                            material: {
+                                color: "#9E559C"
+                            },
+                            edges: {
+                                type: "solid",
+                                color: "#4c294b",
+                                size: 1.5
+                            }
+                        }]
+                    };
+
+                    var renderer = {
+                        type: "unique-value", // autocasts as new UniqueValueRenderer()
+                        defaultSymbol: {
+                            type: "polygon-3d", // autocasts as new PolygonSymbol3D()
+                            symbolLayers: [{
+                                type: "extrude", // autocasts as new ExtrudeSymbol3DLayer()
+                                material: {
+                                    color: "#fff"
+                                },
+                                edges: {
+                                    type: "solid",
+                                    color: "#ccc",
+                                    size: 1.5
+                                }
+                            }]
                         },
-                        {
-                            value: "Residential Condominium",
-                            symbol: condoSym,
-                            label: "Condominium"
-                        }
-                    ],
-                    visualVariables: [
-                        //{
-                        //  type: "size",
-                        //  field: "cs",
-                        //  valueUnit: "feet" // Converts and extrudes all data values in feet
-                        //},
-                        {
-                            type: "size",  // indicates this is a size visual variable
-                            field: csFeild,  // total population in poverty
-                            stops: [
+                        defaultLabel: "Other",
+                        field: "DESCLU",
+                        uniqueValueInfos: [
                             {
-                                value: 1,  // features where < 10% of the pop in poverty
-                                size: 1  // will be extruded by this height in meters
+                                value: "Residential",
+                                symbol: resSym,
+                                label: "Residential"
                             },
                             {
-                                value: 100,  // features where > 50% of the pop in poverty
-                                size: 100  // will be extruded by this height in meters
+                                value: "Residential Condominium",
+                                symbol: condoSym,
+                                label: "Condominium"
+                            }
+                        ],
+                        visualVariables: [
+                            //{
+                            //  type: "size",
+                            //  field: "cs",
+                            //  valueUnit: "feet" // Converts and extrudes all data values in feet
+                            //},
+                            {
+                                type: "size",  // indicates this is a size visual variable
+                                field: csFeild,  // total population in poverty
+                                stops: [
+                                {
+                                    value: 1,  // features where < 10% of the pop in poverty
+                                    size: 1  // will be extruded by this height in meters
+                                },
+                                {
+                                    value: 100,  // features where > 50% of the pop in poverty
+                                    size: 100  // will be extruded by this height in meters
+                                }]
+                            }
+                        ]
+                    };
+
+                    map.remove(buildingsLayer);
+                    buildingsLayer = null;
+
+                    buildingsLayer = new FeatureLayer({
+                        renderer: renderer,
+                        popupTemplate: { // autocasts as new PopupTemplate()
+                            title: "{JZWMC}",
+                            content: [{
+                                type: "fields",
+                                fieldInfos: [
+                                    {
+                                        fieldName: "JZGD",
+                                        label: "建筑高度"
+                                    },
+                                    {
+                                        fieldName: "CQDW",
+                                        label: "产权单位"
+                                    },
+                                    {
+                                        fieldName: "ZDMJ",
+                                        label: "占地面积（平方米）"
+                                    },
+                                    {
+                                        fieldName: "ZJZMJ",
+                                        label: "总建筑面积（平方米）"
+                                    },
+                                    {
+                                        fieldName: "DSJZMJ",
+                                        label: "地上建筑面积（平方米）"
+                                    },
+                                    {
+                                        fieldName: "DXJZMJ",
+                                        label: "地下建筑面积（平方米）"
+                                    },
+                                    {
+                                        fieldName: "FWLX",
+                                        label: "房屋类型"
+                                    },
+                                    {
+                                        fieldName: "FWCS",
+                                        label: "房屋层数"
+                                    },
+                                    {
+                                        fieldName: "CQZS",
+                                        label: "产权证书"
+                                    },
+                                    {
+                                        fieldName: "FWGYQK",
+                                        label: "房屋共有情况"
+                                    },
+                                    {
+                                        fieldName: "FWGHYT",
+                                        label: "房屋规划用途"
+                                    }
+                                ]
                             }]
+                        },
+                        source: features,
+                        fields: fields,
+                        title: "build",
+                        id: "build",
+                        geometryType: "polygon",
+                        objectIdField: "ObjectID",
+                    });
+
+                    map.add(buildingsLayer);
+                }
+
+                function addPoint() {
+                    var geo = new Point({
+                        x: target.x,
+                        y: target.y,
+                    });
+                    var symbol = {
+                        type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+                        style: "square",
+                        color: "blue",
+                        size: "8px",  // pixels
+                        outline: {  // autocasts as new SimpleLineSymbol()
+                            color: [255, 255, 0],
+                            width: 3  // points
                         }
-                    ]
-                };
+                    };
+                    var symbol = {
+                        type: "point-3d",  // autocasts as new PointSymbol3D()
+                        symbolLayers: [{
+                            type: "object",  // autocasts as new ObjectSymbol3DLayer()
+                            width: 5,    // diameter of the object from east to west in meters
+                            height: 5,  // height of object in meters
+                            depth: 5,   // diameter of the object from north to south in meters
+                            resource: { primitive: "sphere" },
+                            material: { color: "red" }
+                        }], 
+                        verticalOffset: {
+                            screenLength: 30,
+                            maxWorldLength: 50,
+                            minWorldLength: 20
+                        },
 
-                map.remove(buildingsLayer);
-                buildingsLayer = null;
+                        callout: {
+                            type: "line", // autocasts as new LineCallout3D()
+                            color: "white",
+                            size: 2,
+                            border: {
+                                color: [50, 50, 50]
+                            }
+                        }
+                    };
+                    var point = new Graphic({
+                        geometry: geo,
+                        symbol: symbol,
+                        attributes: point
+                    });
+                    view.graphics.add(point);
+                }
+            });
+        }
 
-                buildingsLayer = new FeatureLayer({ 
-                    renderer: renderer,
-                    popupTemplate: { // autocasts as new PopupTemplate()
-                        title: "{JZWMC}",
-                        content: [{
-                            type: "fields",
-                            fieldInfos: [
-                                {
-                                    fieldName: "JZGD",
-                                    label: "建筑高度"
-                                },
-                                {
-                                    fieldName: "CQDW",
-                                    label: "产权单位"
-                                },
-                                {
-                                    fieldName: "ZDMJ",
-                                    label: "占地面积（平方米）"
-                                },
-                                {
-                                    fieldName: "ZJZMJ",
-                                    label: "总建筑面积（平方米）"
-                                },
-                                {
-                                    fieldName: "DSJZMJ",
-                                    label: "地上建筑面积（平方米）"
-                                },
-                                {
-                                    fieldName: "DXJZMJ",
-                                    label: "地下建筑面积（平方米）"
-                                },
-                                {
-                                    fieldName: "FWLX",
-                                    label: "房屋类型"
-                                },
-                                {
-                                    fieldName: "FWCS",
-                                    label: "房屋层数"
-                                },
-                                {
-                                    fieldName: "CQZS",
-                                    label: "产权证书"
-                                },
-                                {
-                                    fieldName: "FWGYQK",
-                                    label: "房屋共有情况"
-                                },
-                                {
-                                    fieldName: "FWGHYT",
-                                    label: "房屋规划用途"
-                                }
-                            ]
-                        }]
-                    }, 
-                    source: features,
-                    fields: fields,
-                    title: "build",
-                    id: "build",
-                    geometryType: "polygon",
-                    objectIdField: "ObjectID",
-                });
-                 
-                map.add(buildingsLayer);
-            }
-
-            function addLayer() {
-
-            }
-        });
+        //init({
+        //    x: 116.2330116663629,
+        //    y: 40.198106077646965,
+        //});
     </script>
 </head>
 
