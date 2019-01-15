@@ -84,8 +84,7 @@
          
         //工具菜单
         $(".toolerUl li").click(function (e) {
-            $("#rightPage").hide();
-            debugger;
+            $("#rightPage").hide(); 
             var tool = e.currentTarget.dataset.target;
             var name = e.currentTarget.innerHTML.trim();
             switch (tool) {
