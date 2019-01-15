@@ -49,9 +49,7 @@ var app = {
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawClass){
 						$("#searchPage").hide();
 						$("#drawEndPanel").show();
-						app.drawStart(drawClass);
-					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
-					    app.drawStart();
+						app.drawStart(drawClass); 
 					},function(layerId,qWhere,searchConfig){
 							//清楚图层
 							layerConfigs.forEach(function(info) {
