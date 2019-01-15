@@ -28,15 +28,15 @@
 <body>
     <div style="margin-top:1em;"> 
         <ul class="themeUl">
-            <li data-target="normal">
+            <li data-target="normal" id="user_out">
                 <img src="img/maptoolbar/user.png" style="width:30px;height:30px;"/><br />
                 退出登录
             </li>
-            <li data-target="solid">
+            <li data-target="solid" id="user_set">
                 <img src="img/maptoolbar/set.png" style="width:30px;height:30px;" /><br />
                 安全设置
             </li>
-            <li data-target="pano">
+            <li data-target="pano" id="user_pwd">
                 <img src="img/maptoolbar/tool.png" style="width:30px;height:30px;" /><br />
                 修改密码
             </li> 
@@ -44,30 +44,16 @@
     </div>
 
     <script>
-         
-        //工具菜单
-        $(".toolerUl li").click(function (e) {
-            $("#rightPage").hide();
-            var tool = e.currentTarget.dataset.target;
-            switch (tool) {
-                case "area":
-                    btn_measure(1);
-                    break;
-                case "dist":
-                    btn_measure(0);
-                    break;
-                case "mark":
-                    alert('地图标注');
-                    break;
-                case "park":
-                    app.showTree();
-                    break;
-                default:
-                    alert(tool);
-                    break;
-            }
-            $("#panel_tool").hide();
-            app.curMenu = null;
+        $("#user_out").click(function () {
+            window.location.href = "login.html";
+        })
+        $("#user_set").click(function () {
+            $("#nonePanel").show();
+            $("#nonePanel").load("page/none.html");
+        })
+        $("#user_pwd").click(function () {
+            $("#nonePanel").show();
+            $("#nonePanel").load("page/none.html");
         })
     </script>
 </body>

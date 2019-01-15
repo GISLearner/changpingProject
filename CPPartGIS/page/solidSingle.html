@@ -47,8 +47,9 @@
              "esri/tasks/support/Query",
              "esri/Graphic",
              "esri/geometry/Point",
+             "esri/layers/support/LabelClass",
              "dojo/domReady!"
-            ], function (  Map, SceneView, FeatureLayer, Legend, Polygon, Query, Graphic, Point) {
+            ], function (Map, SceneView, FeatureLayer, Legend, Polygon, Query, Graphic, Point, LabelClass) {
 
                 const blayer = new FeatureLayer({
                     url: layerURL
@@ -79,7 +80,7 @@
 
                 view.when(function () {
                     queryBuild();
-                    addPoint();
+                    addPoint(); 
                 })
                 //view.on('pointer-up', function (evt) {
                 //    queryBuild();
@@ -268,6 +269,7 @@
                 }
 
                 function addPoint() {
+                    target.ObjectID = 0; 
                     var geo = new Point({
                         x: target.x,
                         y: target.y,
@@ -285,13 +287,11 @@
                     var symbol = {
                         type: "point-3d",  // autocasts as new PointSymbol3D()
                         symbolLayers: [{
-                            type: "object",  // autocasts as new ObjectSymbol3DLayer()
-                            width: 5,    // diameter of the object from east to west in meters
-                            height: 5,  // height of object in meters
-                            depth: 5,   // diameter of the object from north to south in meters
-                            resource: { primitive: "sphere" },
+                            type: "icon",  // autocasts as new IconSymbol3DLayer()
+                            size: 15,  // points
+                            resource: { primitive: "circle" },
                             material: { color: "red" }
-                        }], 
+                        }],
                         verticalOffset: {
                             screenLength: 30,
                             maxWorldLength: 50,
@@ -300,26 +300,64 @@
 
                         callout: {
                             type: "line", // autocasts as new LineCallout3D()
-                            color: "white",
-                            size: 2,
+                            color: [204, 204, 204],
+                            size: 1,
                             border: {
-                                color: [50, 50, 50]
+                                color: [204, 204, 204]
                             }
                         }
                     };
                     var point = new Graphic({
                         geometry: geo,
                         symbol: symbol,
-                        attributes: point
+                        attributes: target
                     });
-                    view.graphics.add(point);
+                    //view.graphics.add(point);
+                    var fields = {
+                        name: "ObjectID",
+                        alias: "ObjectID",
+                        type: "oid"
+                    }
+                    var renderer = {
+                        type: "unique-value", // autocasts as new UniqueValueRenderer()
+                        defaultSymbol: symbol, 
+                        field: "ObjectID",
+                    };
+                    var labelClass = new LabelClass({
+                        labelExpressionInfo: {
+                            expression: "$feature.name" // Text for labels comes from COUNTY field
+                        },
+                        symbol: {
+                            type: "label-3d",  // autocasts as new LabelSymbol3D()
+                            symbolLayers: [{
+                                type: "text",  // autocasts as new TextSymbol3DLayer()
+                                material: { color: [232, 124, 13] },
+                                size: 14 , // points 
+                            }]
+                        }
+                    }); 
+
+                    targetLayer = new FeatureLayer({
+                        renderer: renderer, 
+                        source: [point],
+                        fields: fields,
+                        title: "target",
+                        id: "target",
+                        geometryType: "point",
+                        objectIdField: "ObjectID",
+                        labelsVisible: true,
+                        labelingInfo: [labelClass],
+                    }); 
+                    map.add(targetLayer);
                 }
+                 
             });
         }
 
         //init({
         //    x: 116.2330116663629,
         //    y: 40.198106077646965,
+        //    name:"xxx",
         //});
     </script>
 </head>

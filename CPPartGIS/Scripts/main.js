@@ -329,10 +329,11 @@ var app = {
 		for (var i = 0; i < fields.length; i++) {
 			strhtml += "<b>" + fields[i].alias + "</b>：" + attrs[fields[i].name] + "<br/>";
 		}
-		$("#infoPanel").html(strhtml);
+		$("#infoPanel").html(strhtml); 
 		app.curPoint = {
 		    x: 116.2330116663629,
 		    y: 40.198106077646965,
+            name:"地块名称",
 		}
 		//绑定关闭
 		$('#detailPanel img').click(function() {
