@@ -29,8 +29,8 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		defaultImageUrl: rootPath + "IMG",
 
 		/*地图服务地址(矢量、栅格DEM，影像)*/
-		vectorMapServerUrl: "http://39.105.40.172:6080/arcgis/rest/services/昌平园招商引资/MapServer",
-		// vectorMapServerUrl: "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer",
+		// vectorMapServerUrl: "http://39.105.40.172:6080/arcgis/rest/services/昌平园招商引资/MapServer",
+		vectorMapServerUrl: "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84_L/MapServer",
 		rasterMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 		imgMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 
@@ -40,11 +40,18 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		mapPrintServerUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",
 
 		//地图范围
+// 		extent: {
+// 			"xmin": 473417.7160750002,
+// 			"ymin": 322911.70690729236,
+// 			"xmax": 512964.8352250002,
+// 			"ymax": 340393.00539728464
+// 		},
+
 		extent: {
-			"xmin": 473417.7160750002,
-			"ymin": 322911.70690729236,
-			"xmax": 512964.8352250002,
-			"ymax": 340393.00539728464
+			"xmin": 115.75248382757904,
+			"ymin": 40.0088338055052,
+			"xmax": 116.59831500748614,
+			"ymax": 40.33236893436515
 		},
 
 		//地图加载

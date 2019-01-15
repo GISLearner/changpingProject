@@ -123,7 +123,7 @@ var layerConfigs = [{
 	divContentClass:"content_cltd",
 	btnClass:"cltd_btn",
 	drawClass:"cltd_draw",
-	layerId:"5",
+	layerId:"6",
 	lId:"layer_cltd",
 	nameField:"XMMC",
 	group:[
@@ -254,7 +254,7 @@ var layerConfigs = [{
 	divContentClass:"content_njxm",
 	btnClass:"njxm_btn",
 	drawClass:"njxm_draw",
-	layerId:"6",
+	layerId:"8",
 	lId:"layer_njxm",
 	nameField:"XMMC",
 	group:[
@@ -377,7 +377,7 @@ var layerConfigs = [{
 	divContentClass:"content_tdgy",
 	btnClass:"tdgy_btn",
 	drawClass:"tdgy_draw",
-	layerId:"7",
+	layerId:"10",
 	lId:"layer_tdgy",
 	nameField:"XMMC",
 	group:[
