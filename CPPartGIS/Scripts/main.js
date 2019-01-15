@@ -3,15 +3,18 @@ var app = {
 	resultPanel: null,
 	curMenu: null,
 	curSearch: null,
+	drawGeo:null,
 	searchStatus:"fyq",
 	init() {
+		var drawLayer = new mapAPI.GraphicsLayer("drawGeoLayer");
+		map.addLayer(drawLayer);
 		//查询结果图层
 		layerConfigs.forEach(function(info) {
 			var lId = info.lId;
 			var gLayer = new mapAPI.GraphicsLayer({
 				id: lId
 			});
-			map.addLayer(gLayer);
+			map.addLayers(gLayer);
 			gLayer.on("click",function(e){
 				var att = e.graphic.attributes;
 				var fields = att.fields;//字段信息
@@ -20,20 +23,33 @@ var app = {
 				app.showDeatilInfo(att, fields);
 			})
 		})
+		
 		//高亮图层
 		var hLayer = new mapAPI.GraphicsLayer({
 				id: "highLightLayer"
 		});
 		map.addLayer(hLayer);
+		
+		$("#drawFinishBtn").click(function(){
+			$("#drawEndPanel").hide();
+			$("#searchPage").show();
+			$("#searchPage").load("page/search.html");
+		})
 
 	    //点击搜索
 		$("#homeSearch li").click(function (e) {
 		    app.curCod = e.currentTarget.dataset.target; 
 		    $("#searchPage").show();
 		    $("#resultPanel").hide();
+				$("#drawEndPanel").hide();
+				app.drawGeo = null;
 		    $("#searchPage").load("page/search.html", function () { 
 		        app.setCondition(); 
 				layerConfigs.forEach(function(searchItem){
+					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawClass){
+						$("#searchPage").hide();
+						$("#drawEndPanel").show();
+						app.drawStart(drawClass);
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem,function(drawEvent){
 					    app.drawStart();
 					},function(layerId,qWhere,searchConfig){
@@ -45,7 +61,7 @@ var app = {
 								});
 								gLayer.clear();
 							})
-							$.common.layerAttSearch(layerId,qWhere,null,function(e,params){
+							$.common.layerAttSearch(layerId,qWhere,app.drawGeo,function(e,params){
 								app.addFeaToMap(e,params);
 								console.log(e);
 							},searchConfig)
@@ -168,6 +184,7 @@ var app = {
 
 		    });
 		})
+	})
 	},
 	//设置搜索条件
 	setCondition() {
@@ -273,7 +290,6 @@ var app = {
 			}
 		})
 		var spatialReference = new mapAPI.SpatialReference({wkt:'PROJCS["北京地方坐标系",GEOGCS["GCS_Beijing_1954",DATUM["D_Beijing_1954",SPHEROID["Krasovsky_1940",6378245.0,298.3]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",300000.0],PARAMETER["Central_Meridian",116.3502518],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",39.86576603],UNIT["Meter",1.0]]'});
-
 		var newExtent = new mapAPI.Extent(xmin,ymin,xmax,ymax);
 		newExtent.setSpatialReference(spatialReference);
 		map.setExtent(newExtent);
@@ -548,11 +564,12 @@ var app = {
 	     
 	},
     //绘制范围
-	drawStart() {
-	    //$("#searchPage").hide();
+	drawStart(drawBtnclass) {
+	    $("#searchPage").hide();
 	    $("#drawPanel").show();
 	    $("#drawPanel").load("page/draw.html", function () {
-
+// 				var geo = e.geometry;
+// 				app.drawGeo = geo;
 	    });
 	}
 }

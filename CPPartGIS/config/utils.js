@@ -154,6 +154,48 @@
 				}, function(error) {
 					console.log(error);
 				})
+			},
+			/*
+			接口名称：画图(李艳斌添加)
+			功能描述：地图画图功能
+			方法名称：mapDraw
+			必选参数：
+				1.map        	地图
+				2.drawType   	画图的类型
+				3.resultFun  	画完图的回调函数
+				4.resultParam 	画完图返回的临时参数
+				5.endBtnClass 	绘制完成按钮的class选择器
+			*/
+			mapDraw:function (map, drawType, resultFun, resultParam,endBtnClass) {
+// 				var dlayer = map.getLayer("drawGeoLayer");
+// 				if(dlayer) layer.clear();
+				map.graphics.clear();
+				var drawToolBar = new mapAPI.Draw(map);
+				drawToolBar.activate(drawType);
+				map.setMapCursor("pointer");
+				drawToolBar.on("draw-end", function (e) {
+					map.setMapCursor("default");
+					drawToolBar.deactivate();
+					var fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,    
+					new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_DASHDOT,    
+					new mapAPI.Color([100,100,0]), 1),new mapAPI.Color([255,255,0,0.25]));
+					console.log(e);
+					var gra = new mapAPI.Graphic(e.geometry,fms);
+					map.graphics.add(gra);
+					if (resultParam) {
+						resultFun(e, resultParam);
+					} else {
+						resultFun(e);
+					}
+				});
+				if(endBtnClass){
+					$(endBtnClass).click(function(){
+						drawToolBar.finishDrawing();
+					})
+				}
+				$(".drawClearBtn").click(function(){
+					map.graphics.clear();
+				})
 			}
 		}
 	})
