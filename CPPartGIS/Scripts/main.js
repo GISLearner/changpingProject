@@ -18,6 +18,9 @@ var app = {
 				var att = e.graphic.attributes;
 				var fields = att.fields; //字段信息
 				app.showDeatilInfo(att, fields);
+				setTimeout(function(){
+					map.infoWindow.hide();
+				},500)  
 			})
 		})
 
@@ -31,10 +34,16 @@ var app = {
 
 		//点击搜索
 		$("#homeSearch li").click(function(e) {
+			$("#homeSearch li").removeClass("searchactive");
+			$(this).addClass("searchactive");
 			app.curCod = e.currentTarget.dataset.target;
 			$("#searchPage").show();
+			$("#map_normal").show();
 			$("#resultPanel").hide();
 			$("#detailPanel").hide();
+			$("#map_three").hide();
+			$("#map_solid").hide();
+			$("#map_pano").hide();
 			app.drawGeo = null;
 			$("#searchPage").load("page/search.html", function() {
 				app.setCondition();
@@ -135,7 +144,6 @@ var app = {
 
 		//专题点击事件
 		$(".speciallayerUl li").click(function(e) {
-			debugger;
 			var special = e.currentTarget.dataset.target.split('_')[1];
 			$(".speciallayerUl li").removeClass("speciallayer_select");
 			$(e.currentTarget).addClass("speciallayer_select");
@@ -201,7 +209,6 @@ var app = {
 				newFields.push(field);
 			}
 		})
-		debugger;
 		var lId = feaConfig.lId;
 		var gLayer = map.getLayer(lId);
 		if (e.geometryType == "esriGeometryPoint") {

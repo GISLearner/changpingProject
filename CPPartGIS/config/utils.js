@@ -257,7 +257,7 @@
 				}, mapAPI.domConstruct.create(divClass));
 				mapAPI.domClass.add(popup.domNode, "light");
 				//默认地图范围
-				var initExtent = new mapAPI.Extent(mapconfig.extent);
+				var initExtent = mapinfo.initExtent = new mapAPI.Extent(mapconfig.extent);
 				// mapinfo.initExtent.setSpatialReference(spatialReference);
 				// mapinfo.initExtent = new esri.geometry.Extent(-20037508.342787, -20037508.342787, 20037508.342787, 20037508.342787,spatialReference)
 				//加载天地图
@@ -293,47 +293,7 @@
 						infoTemplates[layerId] = templateObj;
 					})
 				})
-				dLayer.setInfoTemplates(infoTemplates);
-
-// 				var infoTemplate1 = new mapAPI.InfoTemplate("${LYMC}", "<div>名称：${LYMC}</div><div>地址：${LYMC}</div><div>街道名称：${LYMC}</div>");
-// 				var infoTemplate2 = new mapAPI.InfoTemplate("${XMMC}", "<div>名称：${XMMC}</div>");
-// 				var infoTemplate3 = new mapAPI.InfoTemplate("${XMMC}", "<div>企业名称：${XMMC}</div><div>土地性质：${XMMC}</div><div>类别代码名称：${XMMC}</div>");
-// 				var infoTemplate4 = new mapAPI.InfoTemplate("${XMMC}", "<div>名称：${XMMC}<div>地址：${XMMC}</div><div>街道名称：${XMMC}</div>");
-// 				var infoTemplates = {
-// 					4: {
-// 						infoTemplate: infoTemplate1,
-// 						layerUrl: null
-// 					},
-// 					5: {
-// 						infoTemplate: infoTemplate1,
-// 						layerUrl: null
-// 					},
-// 					6: {
-// 						infoTemplate: infoTemplate2,
-// 						layerUrl: null
-// 					},
-// 					7: {
-// 						infoTemplate: infoTemplate2,
-// 						layerUrl: null
-// 					},
-// 					6: {
-// 						infoTemplate: infoTemplate3,
-// 						layerUrl: null
-// 					},
-// 					9: {
-// 						infoTemplate: infoTemplate3,
-// 						layerUrl: null
-// 					},
-// 					10: {
-// 						infoTemplate: infoTemplate4,
-// 						layerUrl: null
-// 					},
-// 					11: {
-// 						infoTemplate: infoTemplate4,
-// 						layerUrl: null
-// 					}
-// 				};
-// 				dLayer.setInfoTemplates(infoTemplates);
+				// dLayer.setInfoTemplates(infoTemplates);
 				map.addLayer(dLayer);
 			}
 		}

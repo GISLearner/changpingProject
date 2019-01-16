@@ -22,7 +22,11 @@ function initMapCallback() {
     ////初始化mark权限遮盖层
     //mapRegion.hightLightUserMarkRegion(regionCodeSub_QX);
 	app.init();
-    //initToolBar();
+	document.getElementById("toolFullExtent").onclick = function () {
+	    // mugis.mapZoom.setFullExtent();
+		map.setExtent(mapinfo.initExtent);
+	};
+    // initToolBar();
 }
 
 
@@ -58,7 +62,7 @@ function initToolBar() {
     };
     //全图
     document.getElementById("toolFullExtent").onclick = function () {
-        //mugis.mapZoom.setFullExtent();
+        // mugis.mapZoom.setFullExtent();
 		map.setExtent(mapinfo.initExtent);
     };
     //清除

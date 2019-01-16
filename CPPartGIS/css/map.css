@@ -87,3 +87,8 @@ html, body {
 .esriPopup .titlePane .title{
 	max-width: 230px;
 }
+
+.searchBar .searchactive{
+	background-color: cyan;
+    border: 1px solid red;
+}

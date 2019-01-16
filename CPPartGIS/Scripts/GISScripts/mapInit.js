@@ -118,7 +118,7 @@ mugis.mapInit = {
 				/*显示经纬度*/
 				dojo.connect(map, "onMouseMove", function(event) {
 					if (event.mapPoint.x && event.mapPoint.y) {
-						$("#PositionBar").html("经度:" + event.mapPoint.x.toFixed(3) + "     维度:" + event.mapPoint.y.toFixed(3));
+						$("#PositionBar").html("经度:" + event.mapPoint.x.toFixed(3) + "     纬度:" + event.mapPoint.y.toFixed(3));
 					}
 				});
 
