@@ -83,3 +83,7 @@ html, body {
     font-size: 0.8rem;
     line-height: 20px;
 }
+
+.esriPopup .titlePane .title{
+	max-width: 230px;
+}

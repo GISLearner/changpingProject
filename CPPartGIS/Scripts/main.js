@@ -7,8 +7,6 @@ var app = {
 	searchStatus: "fyq",
 	init() {
 		$.common.addBaseMap(map,"baseMap_Map");
-		var drawLayer = new mapAPI.GraphicsLayer({id:"drawGeoLayer"});
-		map.addLayer(drawLayer);
 		//查询结果图层
 		layerConfigs.forEach(function(info) {
 			var lId = info.lId;
@@ -36,6 +34,7 @@ var app = {
 			app.curCod = e.currentTarget.dataset.target;
 			$("#searchPage").show();
 			$("#resultPanel").hide();
+			$("#detailPanel").hide();
 			app.drawGeo = null;
 			$("#searchPage").load("page/search.html", function() {
 				app.setCondition();
@@ -46,9 +45,7 @@ var app = {
 						//清楚图层
 						layerConfigs.forEach(function(info) {
 							var lId = info.lId;
-							var gLayer = new mapAPI.GraphicsLayer({
-								id: lId
-							});
+							var gLayer = map.getLayer(lId);
 							gLayer.clear();
 						})
 						$.common.layerAttSearch(layerId, qWhere, app.drawGeo, function(e, params) {
@@ -204,6 +201,7 @@ var app = {
 				newFields.push(field);
 			}
 		})
+		debugger;
 		var lId = feaConfig.lId;
 		var gLayer = map.getLayer(lId);
 		if (e.geometryType == "esriGeometryPoint") {
@@ -313,6 +311,11 @@ var app = {
 		})
 		$('#resultPanel img').click(function() {
 			$("#resultPanel").hide();
+			layerConfigs.forEach(function(info) {
+				var lId = info.lId;
+				var gLayer = map.getLayer(lId);
+				gLayer.clear();
+			})
 		})
 	},
 	//详细信息

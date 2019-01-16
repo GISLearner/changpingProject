@@ -81,6 +81,8 @@
 						if(searchItem.searchType == "numList"){
 							var searchValues = seachValue.split("-");
 							qWhere += " and " + searchField + ">" + searchValues[0] + " and " + searchField + " < " + searchValues[1];
+						}else if(searchItem.searchType == "number"){
+							qWhere += " and " + searchField + " = " + seachValue;
 						}else{
 							qWhere += " and " + searchField + " like '%" + seachValue + "%'";
 						}
@@ -123,7 +125,7 @@
 				var searchConfig = layerConfig.searchField;
 				var numHtml = '<div class="form-group"><label class="col-sm-3 control-label" fieldName="' + 
 				+ searchConfig.fieldName +'">' + searchConfig.fieldlabel + '：</label><div class="col-sm-offset-3 col-sm-9">';
-				numHtml += '<input type="text" class="form-control ' + layerConfig.divClass + '" value="" placeholder="' 
+				numHtml += '<input type="text" onkeyup="value=value.replace(/\D/g,\'\')" class="form-control ' + layerConfig.divClass + '" value="" placeholder="' 
 				+ searchConfig.fieldlabel + '搜索">' + '</div></div>';
 				return numHtml;
 			},
@@ -212,23 +214,35 @@
 						//矢量
 						var tdt = new TDTLayer("http://t0.tianditu.com/vec_c/wmts", {
 							noteType: "vec_c"
+// 						var tdt = new TDTLayer("http://t0.tianditu.gov.cn/vec_w/wmts", {
+// 							noteType: "vec_c",
+// 							spatialReType:"webMercator"
 						});
 						tdt.id = type;
 					} else if (type == "baseMap_DEM") {
 						//地形图（不显示）
 						var tdt = new TDTLayer("http://t0.tianditu.cn/ter_c/wmts", {
 							noteType: "ter_c"
+// 						var tdt = new TDTLayer("http://t0.tianditu.gov.cn/ter_w/wmts", {
+// 							noteType: "ter_w",
+// 							spatialReType:"webMercator"
 						});
 						tdt.id = type;
 					} else if (type == "baseMap_IMG") {
 						//影像  
 						var tdt = new TDTLayer("http://t0.tianditu.com/img_c/wmts", {
 							noteType: "img_c"
+// 						var tdt = new TDTLayer("http://t0.tianditu.gov.cn/img_w/wmts", {
+// 							noteType: "img_w",
+// 							spatialReType:"webMercator"
 						});
 						tdt.id = type;
 					}
 					var tdlt = new TDTLayer("http://t0.tianditu.com/cva_c/wmts", {
 						noteType: "cva_c"
+// 					var tdlt = new TDTLayer("http://t0.tianditu.gov.cn/cva_w/wmts", {
+// 						noteType: "cva_w",
+// 						spatialReType:"webMercator"
 					});
 					tdlt.id = type + "_labelmark";
 					map.addLayer(tdt, 0);
@@ -258,6 +272,68 @@
 				var dLayer = new mapAPI.ArcGISDynamicMapServiceLayer(mapconfig.vectorMapServerUrl, {
 					id: layerId
 				});
+				
+				var infoTemplates = {};
+				layerFieldConfigs.forEach(function(fieldConfig){
+					var layerIds = fieldConfig.layerId;
+					var layerIdAry = layerIds.split(",")
+					var titleFormatStr = "${" + fieldConfig.titleField + "}";
+					var infoFormatStr = "<table>";
+					var fields = fieldConfig.fieldInfo;
+					fields.forEach(function(field){
+						infoFormatStr += "<tr><td style='min-width:100px;'>" + field.fieldLabel + "：</td><td>${" + field.fieldName + "}</td></tr>";
+					})
+					infoFormatStr += "</table>";
+					var infoTemplate = new mapAPI.InfoTemplate(titleFormatStr,infoFormatStr);
+					var templateObj = {
+						infoTemplate:infoTemplate,
+						layerUrl: null
+					}
+					layerIdAry.forEach(function(layerId){
+						infoTemplates[layerId] = templateObj;
+					})
+				})
+				dLayer.setInfoTemplates(infoTemplates);
+
+// 				var infoTemplate1 = new mapAPI.InfoTemplate("${LYMC}", "<div>名称：${LYMC}</div><div>地址：${LYMC}</div><div>街道名称：${LYMC}</div>");
+// 				var infoTemplate2 = new mapAPI.InfoTemplate("${XMMC}", "<div>名称：${XMMC}</div>");
+// 				var infoTemplate3 = new mapAPI.InfoTemplate("${XMMC}", "<div>企业名称：${XMMC}</div><div>土地性质：${XMMC}</div><div>类别代码名称：${XMMC}</div>");
+// 				var infoTemplate4 = new mapAPI.InfoTemplate("${XMMC}", "<div>名称：${XMMC}<div>地址：${XMMC}</div><div>街道名称：${XMMC}</div>");
+// 				var infoTemplates = {
+// 					4: {
+// 						infoTemplate: infoTemplate1,
+// 						layerUrl: null
+// 					},
+// 					5: {
+// 						infoTemplate: infoTemplate1,
+// 						layerUrl: null
+// 					},
+// 					6: {
+// 						infoTemplate: infoTemplate2,
+// 						layerUrl: null
+// 					},
+// 					7: {
+// 						infoTemplate: infoTemplate2,
+// 						layerUrl: null
+// 					},
+// 					6: {
+// 						infoTemplate: infoTemplate3,
+// 						layerUrl: null
+// 					},
+// 					9: {
+// 						infoTemplate: infoTemplate3,
+// 						layerUrl: null
+// 					},
+// 					10: {
+// 						infoTemplate: infoTemplate4,
+// 						layerUrl: null
+// 					},
+// 					11: {
+// 						infoTemplate: infoTemplate4,
+// 						layerUrl: null
+// 					}
+// 				};
+// 				dLayer.setInfoTemplates(infoTemplates);
 				map.addLayer(dLayer);
 			}
 		}

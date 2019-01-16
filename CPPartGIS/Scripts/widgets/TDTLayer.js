@@ -127,6 +127,18 @@ define([
                 else {
                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
                 }
+// 				if (this.noteType === "vec_w") {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+//                 }
+//                 else if (this.noteType === "cva_w") {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TileMatrix=" + level + "&TileRow=" + row + "&TileCol=" + col + "&FORMAT=tiles";
+//                 }
+//                 else if (this.noteType === "ter_w") {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+//                 }
+//                 else {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+//                 }
                 return tileUrl;
             }
         });
