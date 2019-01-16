@@ -47,16 +47,16 @@
         </ul>
         <p>统计</p>
         <ul class="toolerUl">
-            <li data-target="entArea"> 
+            <li data-target="cltd"> 
                 存量土地统计
             </li>
-            <li data-target="buildArea"> 
+            <li data-target="cljz"> 
                 存量建筑统计
             </li> 
-            <li data-target="entArea">
+            <li data-target="nxjxm">
                 拟续建项目统计
             </li>
-            <li data-target="buildArea">
+            <li data-target="tdgy">
                 土地供应统计
             </li> 
         </ul>
@@ -97,8 +97,8 @@
                     break; 
                 default:
                     $("#statPanel").show();
-                    $("#statPanel").load("page/stat.html", function () {
-                        stat.init(name);
+                    $("#statPanel").load("page/stat.html", function () { 
+                        stat.init(name, tool);
                     });
                     break;
             }
