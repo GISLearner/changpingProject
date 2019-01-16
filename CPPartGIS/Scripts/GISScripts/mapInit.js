@@ -113,7 +113,7 @@ mugis.mapInit = {
 
 				mapinfo.map = map = $.common.initMap("map");
 				
-				$.common.addTDTBaseMap(map,"baseMap_VEC");
+				$.common.addTDTBaseMap(map,"baseMap_IMG");
 
 				/*显示经纬度*/
 				dojo.connect(map, "onMouseMove", function(event) {

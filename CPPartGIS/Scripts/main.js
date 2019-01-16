@@ -19,8 +19,6 @@ var app = {
 			gLayer.on("click", function(e) {
 				var att = e.graphic.attributes;
 				var fields = att.fields; //字段信息
-				console.log(att);
-				console.log(fields);
 				app.showDeatilInfo(att, fields);
 			})
 		})
@@ -54,8 +52,8 @@ var app = {
 							gLayer.clear();
 						})
 						$.common.layerAttSearch(layerId, qWhere, app.drawGeo, function(e, params) {
+							$(".resultUI").html("");
 							app.addFeaToMap(e, params);
-							console.log(e);
 						}, searchConfig)
 						$("#searchPage").hide();
 						app.showAdvanceResult1();
@@ -177,7 +175,6 @@ var app = {
 		            var frm = document.getElementById("ifmSingle").contentWindow;
 		            frm.init(app.curPoint);
 		        }, 500)
-		        
 		    });
 		})
 	},
@@ -200,6 +197,13 @@ var app = {
 		if (features.length == 0) return;
 		var fms;
 		var fields = e.fields;
+		var newFields = [];
+		fields.forEach(function(field){
+			var alias = field.alias;
+			if(alias.match(/[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi) != null){
+				newFields.push(field);
+			}
+		})
 		var lId = feaConfig.lId;
 		var gLayer = map.getLayer(lId);
 		if (e.geometryType == "esriGeometryPoint") {
@@ -215,9 +219,18 @@ var app = {
 		var resultul = ""; // '<ul class="resultUI">';
 		features.forEach(function(fea) {
 			var att = fea.attributes;
-			att.fields = fields;
-			var gra = new mapAPI.Graphic(fea.geometry, fms, att, infoWin);
+			att.fields = newFields;
+			var geo = fea.geometry;
+			if(geo.type == "polygon"){
+				geo.prototype = mapAPI.Polygon.prototype;
+				att.extent = geo.getExtent();
+				att.centerPoint = geo.getCentroid();
+			}else if(geo.type == "point"){
+				att.point = geo;
+			}
 			var resultName = att[feaConfig.nameField];
+			att.resultName = resultName;
+			var gra = new mapAPI.Graphic(geo, fms, att, infoWin);
 			var attJson = JSON.stringify(att);
 			resultul += '<li data-target=\'' + attJson + '\'>' + resultName + '</li>';
 			gLayer.add(gra);
@@ -228,9 +241,7 @@ var app = {
 		$(".resultUI li").click(function() {
 			var attStr = $(this).attr("data-target");
 			var attInfo = JSON.parse(attStr);
-			console.log(attInfo);
-			console.log(attInfo.fields); //字段信息
-			app.showDeatilInfo(attInfo, fields);
+			app.showDeatilInfo(attInfo, newFields);
 		})
 		app.layerZoom(features);
 	},
@@ -306,6 +317,19 @@ var app = {
 	},
 	//详细信息
 	showDeatilInfo(attrs, fields) {
+		if(attrs.extent){
+			var extent = attrs.extent;
+			map.setExtent(new mapAPI.Extent(extent.xmin-0.001,extent.ymin-0.001,extent.xmax+0.001,extent.ymax+0.001));
+			app.curPoint = {
+				x: attrs.centerPoint.x,
+				y: attrs.centerPoint.y,
+				name:attrs.resultName,
+			}
+		}else if(attrs.point){
+			map.centerAt(attrs.point);
+			map.setScale(1000);
+		}
+		
 		//显示面板
 		$("#detailPanel").show();
 		//生成详情界面
@@ -314,11 +338,6 @@ var app = {
 			strhtml += "<b>" + fields[i].alias + "</b>：" + attrs[fields[i].name] + "<br/>";
 		}
 		$("#infoPanel").html(strhtml); 
-		app.curPoint = {
-		    x: 116.2330116663629,
-		    y: 40.198106077646965,
-            name:"地块名称",
-		}
 		//绑定关闭
 		$('#detailPanel img').click(function() {
 			$("#detailPanel").hide();
