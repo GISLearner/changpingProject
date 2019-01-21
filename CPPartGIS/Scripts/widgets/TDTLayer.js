@@ -73,11 +73,11 @@ define([
                         "cols": 256,
                         "compressionQuality": 0,
                         "origin": {
-                            "x": -20037508.342787,
-                            "y": 20037508.342787
+                            "x": -20037508.342787 ,
+							"y": 20037508.342787
                         },
                         "spatialReference": {
-                            "wkid": 102100
+                            "wkid": 3857
                         },
                         "lods": [
 //                             { "level": 1, "resolution": 78271.51696402048, "scale": 2.958293554545656E8 },
@@ -115,30 +115,30 @@ define([
             getTileUrl: function (level, row, col) {
 
                 var tileUrl;
-                if (this.noteType === "vec_c") {
-                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
-                }
-                else if (this.noteType === "cva_c") {
-                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&Service=WMTS&Request=GetTile&Version=1.0.0&Style=Default&Format=tiles&serviceMode=KVP&layer=cva&TileMatrixSet=c&TileMatrix=" + level + "&TileRow=" + row + "&TileCol=" + col;
-                }
-                else if (this.noteType === "ter_c") {
-                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ter&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
-                }
-                else {
-                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
-                }
-// 				if (this.noteType === "vec_w") {
-//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+//                 if (this.noteType === "vec_c") {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
 //                 }
-//                 else if (this.noteType === "cva_w") {
-//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TileMatrix=" + level + "&TileRow=" + row + "&TileCol=" + col + "&FORMAT=tiles";
+//                 else if (this.noteType === "cva_c") {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&Service=WMTS&Request=GetTile&Version=1.0.0&Style=Default&Format=tiles&serviceMode=KVP&layer=cva&TileMatrixSet=c&TileMatrix=" + level + "&TileRow=" + row + "&TileCol=" + col;
 //                 }
-//                 else if (this.noteType === "ter_w") {
-//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+//                 else if (this.noteType === "ter_c") {
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ter&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
 //                 }
 //                 else {
-//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+//                     tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=c&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
 //                 }
+				if (this.noteType === "vec_w") {
+                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+                }
+                else if (this.noteType === "cva_w") {
+                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TileMatrix=" + level + "&TileRow=" + row + "&TileCol=" + col + "&FORMAT=tiles";
+                }
+                else if (this.noteType === "ter_w") {
+                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+                }
+                else {
+                    tileUrl = this._url + "?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&TILEMATRIX=" + level + "&TILEROW=" + row + "&TILECOL=" + col + "&FORMAT=tiles";
+                }
                 return tileUrl;
             }
         });

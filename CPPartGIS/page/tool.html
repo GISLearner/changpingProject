@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -85,23 +85,22 @@
             $("#rightPage").hide(); 
             var tool = e.currentTarget.dataset.target;
             var name = e.currentTarget.innerHTML.trim();
-            switch (tool) {
-                case "16":
-                case "17":
-                case "18":
-                case "19":
-                    $("#analysPanel").show();
-                    $("#analysPanel").load("page/analysis.html", function () {
-                        analys.init(tool);
-                    });
-                    break; 
-                default:
-                    $("#statPanel").show();
-                    $("#statPanel").load("page/stat.html", function () { 
-                        stat.init(name, tool);
-                    });
-                    break;
-            }
+			if(tool == "16" || tool == "17" || tool == "18" || tool == "19"){
+				$("#analysPanel").show();
+				$("#analysPanel").load("page/analysis.html", function () {
+					var mapDraw = $.common.initMap("analysisMap");
+					$.common.addTDTBaseMap(mapDraw,"baseMap_VEC");
+					var fLayer = $.common.addBaseMap(mapDraw,"baseMap_DrawMap");
+					var layerIds = [4,6,8,10,12,14,15,parseInt(tool)];
+					fLayer.setVisibleLayers(layerIds);
+					analys.init(tool,mapDraw);
+				});
+			}else{
+				$("#statPanel").show();
+				$("#statPanel").load("page/stat.html", function () { 
+				    stat.init(name, tool);
+				});
+			}
             $("#panel_tool").hide();
             app.curMenu = null;
         })

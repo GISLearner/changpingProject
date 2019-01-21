@@ -38,21 +38,21 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		geometryServer: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer",
 		//打印服务
 		mapPrintServerUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",
-
+ 
 		//地图范围
-// 		extent: {
-// 			"xmin": 473417.7160750002,
-// 			"ymin": 322911.70690729236,
-// 			"xmax": 512964.8352250002,
-// 			"ymax": 340393.00539728464
-// 		},
-
 		extent: {
-			"xmin": 115.75248382757904,
-			"ymin": 40.0088338055052,
-			"xmax": 116.59831500748614,
-			"ymax": 40.33236893436515
+			"xmin": 1832603316488.309,
+			"ymin": 4865483.342787,
+			"xmax": 1832603430575.342787,
+			"ymax": 4931831.278
 		},
+
+// 		extent: {
+// 			"xmin": 115.75248382757904,
+// 			"ymin": 40.0088338055052,
+// 			"xmax": 116.59831500748614,
+// 			"ymax": 40.33236893436515
+// 		},
 
 		//地图加载
 		baseMap: {

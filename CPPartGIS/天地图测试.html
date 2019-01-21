@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>天地图底图加载（墨卡托版本）</title>
+  <link rel="stylesheet" href="http://39.105.40.172/jsapi324/3.24compact/esri/css/esri.css">
+  <script src="http://39.105.40.172/jsapi324/3.24compact/init.js"></script>
+</head>
+<body>
+  <div id="map-container"></div>
+  <script type="text/javascript">
+
+  // ==========================================
+  // 测试版本：V3.11 - V3.21
+  // 作者：张凯强
+  // 邮箱：13002977506@126.com
+  // ==========================================
+
+  require(['esri/map','dojo/domReady!'],function(EsriMap){
+    // 创建地图，不设置底图，如果设置底图会造成坐标系无法被转换成 ESPG:4326 (WGS1984)
+    var map = new EsriMap('map-container',{
+      center: [109,34.5],
+      zoom: 8
+    })
+
+    // 我们是通过瓦片形式加载天地图的
+    // 天地图根据投影又分为两种：墨卡托和经纬度
+    // 墨卡托投影的瓦片加载比较简单，加载过程如下
+    require(['esri/layers/WebTiledLayer'],function(WebTiledLayer){
+
+      // 在加载墨卡托地图的时候我们需要使用 ${subDomain}, ${col}, ${row}, ${level}分别替换服务器列表，瓦片列编号，瓦片行编号，当前缩放(显示)级别
+      // 墨卡托矢量地图瓦片的URL:
+      // http://t4.tianditu.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=2&TILEROW=5&TILEMATRIX=4
+
+      // 分析上述 URL 我们知道，域名中的 t4 部分代表子域字段，参数列表中的TILECOL, TILEROW, TILEMATRIX 分别对应列编号， 行编号，缩放(显示)级别， 对这几个部分进行替换，得到 url 模板如下
+      // http://${subDomain}.tianditu.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+      // 经过查询资料天地图瓦片可用子域分别有 t0,t1,t2,t3,t4,t5,t6,t7 八个子域
+      // 根据现有信息新建 WebTiledLayer 如下
+
+      var layer = WebTiledLayer('http://${subDomain}.tianditu.cn/vec_w/wmts?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}',{
+        subDomains: ['t0','t1','t2','t3','t4','t5','t6','t7']
+      })
+
+      map.addLayer(layer)
+
+      // 下面提供几个天地图墨卡托投影的图层地址以及转换后的URL模板
+
+      // ============================================================================================================================================================================================
+
+      // 墨卡托矢量图层
+      // http://t4.tianditu.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=2&TILEROW=5&TILEMATRIX=4
+      // http://${subDomain}.tianditu.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托中文矢量注记图层
+      // http://t5.tianditu.cn/cva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=3&TILEROW=1&TILEMATRIX=3
+      // http://${subDomain}.tianditu.cn/cva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托英文矢量注记图层
+      // http://t2.tianditu.cn/eva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=eva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=4&TILEROW=3&TILEMATRIX=3
+      // http://${subDomain}.tianditu.cn/eva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=eva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托蒙古文矢量注记图层
+      // http://t6.tianditu.cn/mva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=mva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=0&TILEROW=2&TILEMATRIX=3
+      // http://${subDomain}.tianditu.cn/mva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=mva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托维吾尔文矢量注记图层
+      // http://t5.tianditu.cn/wva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=wva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=101&TILEROW=50&TILEMATRIX=7
+      // http://${subDomain}.tianditu.cn/wva_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=wva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // ============================================================================================================================================================================================
+
+      // 墨卡托影像图层
+      // http://t1.tianditu.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=30&TILEROW=13&TILEMATRIX=5
+      // http://${subDomain}.tianditu.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}0&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托行政边界图层（配合墨卡托影像使用）
+      // http://t1.tianditu.cn/ibo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ibo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=200&TILEROW=99&TILEMATRIX=8
+      // http://${subDomain}.tianditu.cn/ibo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ibo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托中文注记图层（配合墨卡托影像底图使用）
+      // http://t5.tianditu.cn/ibo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ibo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=209&TILEROW=100&TILEMATRIX=8
+      // http://${subDomain}.tianditu.cn/ibo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ibo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托英文注记图层（配合墨卡托影像底图使用）
+      // http://t2.tianditu.cn/eia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=eia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=205&TILEROW=102&TILEMATRIX=8
+      // http://${subDomain}.tianditu.cn/eia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=eia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托蒙古文注记图层（配合墨卡托影像底图使用）
+      // http://t4.tianditu.cn/mia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=mia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=1&TILEROW=3&TILEMATRIX=3
+      // http://${subDomain}.tianditu.cn/mia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=mia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托维吾尔文注记图层（配合墨卡托影像底图使用）
+      // http://t5.tianditu.cn/wia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=wia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=26&TILEROW=13&TILEMATRIX=5
+      // http://${subDomain}.tianditu.cn/wia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=wia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // ============================================================================================================================================================================================
+
+      // 墨卡托地形晕染图层
+      // http://t1.tianditu.cn/ter_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ter&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=29&TILEROW=11&TILEMATRIX=5
+      // http://${subDomain}.tianditu.cn/ter_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ter&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托行政边界图层（配合墨卡托地形晕染底图使用）
+      // http://t0.tianditu.cn/tbo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tbo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=205&TILEROW=101&TILEMATRIX=8
+      // http://${subDomain}.tianditu.cn/tbo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=tbo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}1&TILEMATRIX=${level}
+
+      // 墨卡托中文注记图层（配合墨卡托地形晕染底图使用）
+      // http://t3.tianditu.cn/cta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=50&TILEROW=24&TILEMATRIX=6
+      // http://${subDomain}.tianditu.cn/cta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托英文注记图层（配合墨卡托地形晕染底图使用）
+      // http://t5.tianditu.cn/eta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=eta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=54&TILEROW=24&TILEMATRIX=6
+      // http://${subDomain}.tianditu.cn/eta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=eta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托蒙古文注记图层（配合墨卡托地形晕染底图使用）
+      // http://t2.tianditu.cn/mta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=mta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=52&TILEROW=25&TILEMATRIX=6
+      // http://${subDomain}.tianditu.cn/mta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=mta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+      // 墨卡托维吾尔文注记图层（配合墨卡托地形晕染底图使用）
+      // http://t3.tianditu.cn/wta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=wta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=50&TILEROW=24&TILEMATRIX=6
+      // http://${subDomain}.tianditu.cn/wta_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=wta&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=${col}&TILEROW=${row}&TILEMATRIX=${level}
+
+
+      // 总结一下：
+      //
+      // 1. 对于墨卡托切片的加载直接使用 WebTiledLayer 就可以直接加载，设置或者不设置底图都行，都不会进行偏差
+      // 2. 对于URL模板的替换需要注意使用的是 ${subDomain}, ${col}, ${row}, ${level} 进行对应字段的替换，不要相信文档中的 ${X}, ${Y} ,${Z} 等
+      // 3. 天地图目前的子域为 t0,t1,t2,t3,t4,t5,t6,t7
+    })
+  })
+  </script>
+</body>
+</html>
