@@ -190,6 +190,14 @@ var app = {
 
 		$(".former").hide();
 		$("#content_" + app.curCod).show();
+
+		$("#homeSearch li").removeClass("searchactive");
+		for (var i = 0; i < $("#homeSearch li").length; i++) {
+		    var tg = $("#homeSearch li")[i].dataset.target;
+		    if (tg == app.curCod) {
+		        $($("#homeSearch li")[i]).addClass("searchactive");
+		    }
+		} 
 	},
 	//切换地图
 	switchMap(type) {
