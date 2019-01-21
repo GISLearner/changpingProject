@@ -400,7 +400,6 @@
 				var spatialReference = new mapAPI.SpatialReference({
 					wkid: 3857
 				});
-				debugger;
 				var initExtent = mapinfo.initExtent = new mapAPI.Extent(mapconfig.extent);
 				mapinfo.initExtent.setSpatialReference(spatialReference);
 				// mapinfo.initExtent = new esri.geometry.Extent(-20037508.342787, -20037508.342787, 20037508.342787, 20037508.342787,spatialReference)

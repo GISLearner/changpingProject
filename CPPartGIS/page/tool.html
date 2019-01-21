@@ -83,6 +83,7 @@
         //工具菜单
         $(".toolerUl li").click(function (e) {
             $("#rightPage").hide(); 
+			var titleName = e.currentTarget.innerText;
             var tool = e.currentTarget.dataset.target;
             var name = e.currentTarget.innerHTML.trim();
 			if(tool == "16" || tool == "17" || tool == "18" || tool == "19"){
@@ -91,6 +92,7 @@
 					var mapDraw = $.common.initMap("analysisMap");
 					$.common.addTDTBaseMap(mapDraw,"baseMap_VEC");
 					var fLayer = $.common.addBaseMap(mapDraw,"baseMap_DrawMap");
+					$(".analysisTitle").html(titleName);
 					var layerIds = [4,6,8,10,12,14,15,parseInt(tool)];
 					fLayer.setVisibleLayers(layerIds);
 					analys.init(tool,mapDraw);
