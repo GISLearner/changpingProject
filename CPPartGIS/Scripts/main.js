@@ -662,7 +662,7 @@ var app = {
 					$("#panelCondition").show();
 				}else{
 					$.common.mapDraw(mapDraw,mapAPI.Draw[drawType],function(e){
-						app.drawGeo = e.geometry;
+						app.drawGeo = mapAPI.webMercatorUtils.webMercatorToGeographic(e.geometry);
 					})
 				}
 			})

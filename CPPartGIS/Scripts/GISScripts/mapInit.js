@@ -33,7 +33,7 @@ mugis.mapInit = {
 				"esri/symbols/PictureFillSymbol", "esri/symbols/PictureMarkerSymbol", "esri/symbols/SimpleLineSymbol",
 				"esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleFillSymbol", "esri/tasks/FindTask",
 				"esri/tasks/FindParameters", "esri/tasks/BufferParameters", "esri/geometry/normalizeUtils",
-				"esri/layers/GraphicsLayer", "esri/symbols/Font", "esri/tasks/LegendLayer", "dojo/domReady!"
+				"esri/layers/GraphicsLayer", "esri/symbols/Font", "esri/tasks/LegendLayer","esri/geometry/webMercatorUtils", "dojo/domReady!"
 			],
 			function(request, on, dom, query, topic, parser, registry,
 				lang, domConstruct, Script, arrayUtils, Basemap, Popup, domClass,
@@ -46,7 +46,7 @@ mugis.mapInit = {
 				Print, PrintTask, PrintParameters, PrintTemplate,
 				QueryTask, Query, IdentifyTask, IdentifyParameters,
 				PictureFillSymbol, PictureMarkerSymbol, SimpleLineSymbol, SimpleMarkerSymbol, SimpleFillSymbol,
-				FindTask, FindParameters, BufferParameters, NormalizeUtils, GraphicsLayer, Font, LegendLayer
+				FindTask, FindParameters, BufferParameters, NormalizeUtils, GraphicsLayer, Font, LegendLayer,webMercatorUtils
 			) {
 				parser.parse();
 				mapAPI.InfoWindow = InfoWindow;
@@ -94,6 +94,7 @@ mugis.mapInit = {
 				mapAPI.Popup = Popup;
 				mapAPI.domConstruct=domConstruct;
 				mapAPI.domClass=domClass;
+				mapAPI.webMercatorUtils=webMercatorUtils;
 				mapAPI.isLoad = true;
 
 				//esriConfig默认参数配置
