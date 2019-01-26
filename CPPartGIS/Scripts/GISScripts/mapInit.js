@@ -108,7 +108,7 @@ mugis.mapInit = {
 				esriConfig.defaults.extent = mapconfig.extent;
 				esriConfig.defaults.hotLayerList = mapconfig.hotLayerList;
 				// var spatialReference = new SpatialReference({wkt:'PROJCS["北京地方坐标系",GEOGCS["GCS_Beijing_1954",DATUM["D_Beijing_1954",SPHEROID["Krasovsky_1940",6378245.0,298.3]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",300000.0],PARAMETER["Central_Meridian",116.3502518],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",39.86576603],UNIT["Meter",1.0]]'});
-				var spatialReference = new esri.SpatialReference({
+				mapinfo.spatialReference = spatialReference = new esri.SpatialReference({
 					wkid: 3857
 				});
 
@@ -117,11 +117,11 @@ mugis.mapInit = {
 				$.common.addTDTBaseMap(map,"baseMap_IMG");
 
 				/*显示经纬度*/
-				dojo.connect(map, "onMouseMove", function(event) {
-					if (event.mapPoint.x && event.mapPoint.y) {
-						$("#PositionBar").html("经度:" + event.mapPoint.x.toFixed(3) + "     纬度:" + event.mapPoint.y.toFixed(3));
-					}
-				});
+// 				dojo.connect(map, "onMouseMove", function(event) {
+// 					if (event.mapPoint.x && event.mapPoint.y) {
+// 						$("#PositionBar").html("经度:" + event.mapPoint.x.toFixed(3) + "     纬度:" + event.mapPoint.y.toFixed(3));
+// 					}
+// 				});
 
 				/*地图比例尺*/
 				require(["esri/dijit/Scalebar"], function(Scalebar) {

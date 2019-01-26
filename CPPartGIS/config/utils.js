@@ -383,10 +383,20 @@
 						}else if(this._type == "c"){
 							return 'http://t0.tianditu.gov.cn/cva_w/wmts?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=' +
 								col + '&TILEROW=' + row + '&TILEMATRIX=' + level;
+						}else if(this._type == "v"){
+							return 'http://t0.tianditu.gov.cn/vec_w/wmts?tk=96d757dfaf417c8a032b36e81db1b79c&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL=' +
+								col + '&TILEROW=' + row + '&TILEMATRIX=' + level;
 						}
 					}
 				});
-				map.addLayer(new WebTileLayer("t"));
+				var imgTdtLayer = new WebTileLayer("t");
+				imgTdtLayer.id = "imgTdtLayer";
+				imgTdtLayer.setVisibility(false);
+				var vecTdtLayer = new WebTileLayer("v");
+				vecTdtLayer.id = "vecTdtLayer";
+				vecTdtLayer.setVisibility(true);
+				map.addLayer(imgTdtLayer);
+				map.addLayer(vecTdtLayer);
 				map.addLayer(new WebTileLayer("c"));
 			},
 			initMap: function(divClass) {
@@ -396,18 +406,11 @@
 					highlight: false
 				}, mapAPI.domConstruct.create(divClass));
 				mapAPI.domClass.add(popup.domNode, "light");
-				//默认地图范围
-				var spatialReference = new mapAPI.SpatialReference({
-					wkid: 3857
-				});
-				var initExtent = mapinfo.initExtent = new mapAPI.Extent(mapconfig.extent);
-				mapinfo.initExtent.setSpatialReference(spatialReference);
 				// mapinfo.initExtent = new esri.geometry.Extent(-20037508.342787, -20037508.342787, 20037508.342787, 20037508.342787,spatialReference)
 				//加载天地图
 				var map = new mapAPI.Map(divClass, {
 					logo: false,
-					slider: false,
-					extent: initExtent
+					slider: false
 				});
 				return map;
 			},
@@ -415,30 +418,16 @@
 				var dLayer = new mapAPI.ArcGISDynamicMapServiceLayer(mapconfig.vectorMapServerUrl, {
 					id: layerId
 				});
-
-				var infoTemplates = {};
-				layerFieldConfigs.forEach(function(fieldConfig) {
-					var layerIds = fieldConfig.layerId;
-					var layerIdAry = layerIds.split(",")
-					var titleFormatStr = "${" + fieldConfig.titleField + "}";
-					var infoFormatStr = "<table>";
-					var fields = fieldConfig.fieldInfo;
-					fields.forEach(function(field) {
-						infoFormatStr += "<tr><td style='min-width:100px;'>" + field.fieldLabel + "：</td><td>${" + field.fieldName +
-							"}</td></tr>";
-					})
-					infoFormatStr += "</table>";
-					var infoTemplate = new mapAPI.InfoTemplate(titleFormatStr, infoFormatStr);
-					var templateObj = {
-						infoTemplate: infoTemplate,
-						layerUrl: null
-					}
-					layerIdAry.forEach(function(layerId) {
-						infoTemplates[layerId] = templateObj;
-					})
-				})
-				// dLayer.setInfoTemplates(infoTemplates);
 				map.addLayer(dLayer);
+				//默认地图范围
+				var spatialReference = new mapAPI.SpatialReference({
+					wkid: 3857
+				});
+				var initExtent = mapinfo.initExtent = new mapAPI.Extent(mapconfig.extent);
+				// var initExtent = mapinfo.initExtent = new mapAPI.Extent(12848116.944046713,4873810.2488809675,13026506.989269175,4904907.791233301);
+				initExtent.setSpatialReference(spatialReference);
+				map.setExtent(initExtent);
+				
 				return dLayer;
 			}
 		}

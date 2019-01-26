@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -8,9 +8,13 @@
 <body>
     <div id="panel_theme" style="margin-top:1em;">
         <ul class="themeUl">
-            <li data-target="normal">
+            <li data-target="normal" type="vecTdtLayer">
                 <img src="img/icon/t_map.png" /><br />
                 标准地图
+            </li>
+            <li data-target="normal" type="imgTdtLayer">
+                <img src="img/icon/t_img.png" /><br />
+                影像地图
             </li>
             <li data-target="solid">
                 <img src="img/icon/t_3d.png" /><br />
@@ -31,6 +35,16 @@
         //地图主题切换
         $(".themeUl li").click(function (e) {
             var theme = e.currentTarget.dataset.target;
+			var type = e.currentTarget.type;
+			var layer1 = map.getLayer("imgTdtLayer");
+			var layer2 = map.getLayer("vecTdtLayer");
+			if(type == "imgTdtLayer"){
+				layer1.setVisibility(true);
+				layer2.setVisibility(false);
+			}else if(type == "vecTdtLayer"){
+				layer1.setVisibility(false);
+				layer2.setVisibility(true);
+			}
             app.switchMap(theme);
             $("#rightPage").hide();
         })
