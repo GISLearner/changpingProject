@@ -235,8 +235,8 @@ var app = {
 			fms = new mapAPI.PictureMarkerSymbol(feaConfig.pointIcon, 24, 24);
 		} else if (e.geometryType == "esriGeometryPolygon") {
 			fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,
-				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_DASHDOT,
-					new mapAPI.Color([0, 255, 0]), 2), new mapAPI.Color([255, 255, 0, 0.25]));
+				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_SOLID,
+					new mapAPI.Color([0,191,255]), 2), new mapAPI.Color([250,128,114, 0.25]));
 		}
 		//var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
 		var infoWin = null;
