@@ -4,6 +4,7 @@ var app = {
 	curMenu: null,
 	curSearch: null,
 	drawGeo: null,
+	DMTXX:null,
 	searchStatus: "fyq",
 	init() {
 		$.common.addBaseMap(map,"baseMap_Map");
@@ -169,7 +170,18 @@ var app = {
 		$("#btnMedia").click(function () {
 		    $("#mediaPanel").show();
 		    $("#mediaPanel").load("page/media.html", function () {
-
+				var DMTXX = app.DMTXX;
+				if(DMTXX != null){
+					var picBaseUrl = mapconfig.picUrl;
+					var pathAry = DMTXX.split(",");
+					var picHtml = '<ul class="mediaUl">';
+					pathAry.forEach(function(path){
+						var realUrl = picBaseUrl + path + ".png";
+						picHtml += '<li><img src="' + realUrl + '" /></li>';
+					})
+					picHtml += "</ul>";
+				}
+				$(".mediPicture").html(picHtml);
 		    });
 		})
 	    //周边环境按钮事件
@@ -312,9 +324,12 @@ var app = {
 			}
 		})
 		// var spatialReference = new mapAPI.SpatialReference({wkt:'PROJCS["北京地方坐标系",GEOGCS["GCS_Beijing_1954",DATUM["D_Beijing_1954",SPHEROID["Krasovsky_1940",6378245.0,298.3]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",300000.0],PARAMETER["Central_Meridian",116.3502518],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",39.86576603],UNIT["Meter",1.0]]'});
-		
+// 		var spatialReference = new esri.SpatialReference({
+// 			wkid: 3857
+// 		});
+
 		var newExtent = new mapAPI.Extent(xmin, ymin, xmax, ymax);
-		// newExtent.setSpatialReference(spatialReference);
+		newExtent.setSpatialReference(spatialReference);
 		map.setExtent(newExtent);
 	},
 
@@ -336,17 +351,20 @@ var app = {
 	},
 	//详细信息
 	showDeatilInfo(attrs, fields) {
+		app.DMTXX = attrs.attrs;
 		if(attrs.extent){
 			var extent = attrs.extent;
-			map.setExtent(new mapAPI.Extent(extent.xmin-0.001,extent.ymin-0.001,extent.xmax+0.001,extent.ymax+0.001));
+			map.setExtent(new mapAPI.Extent(extent.xmin-0.001,extent.ymin-0.001,extent.xmax+0.001,extent.ymax+0.001,spatialReference));
+			var point = new mapAPI.Point(attrs.centerPoint.x,attrs.centerPoint.y);
+			var newPt = mapAPI.webMercatorUtils.webMercatorToGeographic(point);
 			app.curPoint = {
-				x: attrs.centerPoint.x,
-				y: attrs.centerPoint.y,
+				x: newPt.x,
+				y: newPt.y,
 				name:attrs.resultName,
 			}
 		}else if(attrs.point){
 			map.centerAt(attrs.point);
-			map.setScale(1000);
+			map.setScale(800);
 		}
 		
 		//显示面板
@@ -662,7 +680,8 @@ var app = {
 					$("#panelCondition").show();
 				}else{
 					$.common.mapDraw(mapDraw,mapAPI.Draw[drawType],function(e){
-						app.drawGeo = mapAPI.webMercatorUtils.webMercatorToGeographic(e.geometry);
+						// app.drawGeo = mapAPI.webMercatorUtils.webMercatorToGeographic(e.geometry);
+						app.drawGeo = e.geometry;
 					})
 				}
 			})
