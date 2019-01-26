@@ -89,7 +89,9 @@ html, body {
 	max-width: 230px;
 }
 
-.searchBar .searchactive{
-	background-color: cyan;
-    border: 1px solid red;
+.searchBar .searchactive{ 
+    background-color: #0e41d0; 
+    color: white;
+    box-shadow: rgb(255, 255, 255) 0px 0px 10px inset;
+}
 }

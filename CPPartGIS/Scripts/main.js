@@ -34,10 +34,9 @@ var app = {
 		map.addLayer(hLayer);
 
 		//点击搜索
-		$("#homeSearch li").click(function(e) {
-			$("#homeSearch li").removeClass("searchactive");
-			$(this).addClass("searchactive");
-			app.curCod = e.currentTarget.dataset.target;
+		$("#homeSearch li").click(function (e) {  
+		    app.curCod = e.currentTarget.dataset.target;
+		    //this.setSearchActive();
 			$("#searchPage").show();
 			$("#map_normal").show();
 			$("#resultPanel").hide();
@@ -203,13 +202,24 @@ var app = {
 		$(".former").hide();
 		$("#content_" + app.curCod).show();
 
-		$("#homeSearch li").removeClass("searchactive");
-		for (var i = 0; i < $("#homeSearch li").length; i++) {
-		    var tg = $("#homeSearch li")[i].dataset.target;
-		    if (tg == app.curCod) {
-		        $($("#homeSearch li")[i]).addClass("searchactive");
-		    }
-		} 
+		this.setSearchActive();
+		//$("#homeSearch li").removeClass("searchactive");
+		//for (var i = 0; i < $("#homeSearch li").length; i++) {
+		//    var tg = $("#homeSearch li")[i].dataset.target;
+		//    if (tg == app.curCod) {
+		//        $($("#homeSearch li")[i]).addClass("searchactive");
+		//    }
+		//} 
+	},
+    //更新首页搜索项目选中样式
+	setSearchActive() { 
+	    for (var i = 0; i < $("#homeSearch li").length; i++) {
+	        var tg = $("#homeSearch li")[i].dataset.target;
+	        $($("#homeSearch li")[i]).removeClass("search_" + tg + "_active");
+	        if (tg == app.curCod) {
+	            $($("#homeSearch li")[i]).addClass("search_" + app.curCod + "_active");
+	        }
+	    }
 	},
 	//切换地图
 	switchMap(type) {

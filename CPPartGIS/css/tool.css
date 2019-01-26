@@ -121,9 +121,40 @@
     margin:0px;
 }
     .searchBar li {
-        border-bottom:solid 1px #ccc;
+        /*border:solid 1px #737272;*/
         padding:0.4em 0.2em;
+        /*box-shadow: rgb(40, 121, 243) 0px 0px 10px inset;*/ 
+        margin-top:1px;
+        width:68px;
+        height:72px; 
+        background-size:68px 72px;
     }
         .searchBar li img {
             width:30px;
         }
+
+.search_cltd {
+    background:url(../img/search/CLTD1.png);
+}
+.search_cljz {
+    background:url(../img/search/CLJZ1.png);
+}
+.search_njxm {
+    background:url(../img/search/NJXM1.png);
+}
+.search_tdgy {
+    background:url(../img/search/TDGY1.png);
+}
+
+.search_cltd_active {
+    background:url(../img/search/CLTD.png);
+}
+.search_cljz_active {
+    background:url(../img/search/CLJZ.png);
+}
+.search_njxm_active {
+    background:url(../img/search/NJXM.png);
+}
+.search_tdgy_active {
+    background:url(../img/search/TDGY.png);
+}
