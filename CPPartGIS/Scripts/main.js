@@ -351,7 +351,7 @@ var app = {
 	},
 	//详细信息
 	showDeatilInfo(attrs, fields) {
-		app.DMTXX = attrs.attrs;
+		app.DMTXX = attrs.DMTXX;
 		if(attrs.extent){
 			var extent = attrs.extent;
 			map.setExtent(new mapAPI.Extent(extent.xmin-0.001,extent.ymin-0.001,extent.xmax+0.001,extent.ymax+0.001,spatialReference));

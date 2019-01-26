@@ -22,7 +22,7 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		//页面起始根路径
 		rootPath: rootPath,
 		
-		picUrl:"http://39.105.40.172/parkPic",
+		picUrl:"http://39.105.40.172/parkPic/",
 
 		//跨域文件
 		proxyUrl: rootPath + "proxy/proxy.ashx",
