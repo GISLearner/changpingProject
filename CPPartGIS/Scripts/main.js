@@ -202,14 +202,7 @@ var app = {
 		$(".former").hide();
 		$("#content_" + app.curCod).show();
 
-		this.setSearchActive();
-		//$("#homeSearch li").removeClass("searchactive");
-		//for (var i = 0; i < $("#homeSearch li").length; i++) {
-		//    var tg = $("#homeSearch li")[i].dataset.target;
-		//    if (tg == app.curCod) {
-		//        $($("#homeSearch li")[i]).addClass("searchactive");
-		//    }
-		//} 
+		this.setSearchActive(); 
 	},
     //更新首页搜索项目选中样式
 	setSearchActive() { 
