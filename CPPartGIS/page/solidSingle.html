@@ -31,7 +31,7 @@
 
     <script>
         //配置--建筑物图层
-        var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/%E6%98%8C%E5%B9%B3%E5%9B%AD%E6%8B%9B%E5%95%86%E5%BC%95%E8%B5%84/MapServer/9";
+        var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84_L/MapServer/13";
         //配置--层数字段
         var csFeild = "JZGD";
         var target;
@@ -67,7 +67,7 @@
                     camera: {
                         position: {
                             x: target.x,
-                            y: target.y - 0.001,
+                            y: target.y - 0.002,
                             z: 160,
                             spatialReference: {
                                 wkid: 4326
