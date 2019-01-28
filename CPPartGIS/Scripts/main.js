@@ -24,9 +24,7 @@ var app = {
 				},500)  
 			})
 		})
-
-
-
+		
 		//高亮图层
 		var hLayer = new mapAPI.GraphicsLayer({
 			id: "highLightLayer"
@@ -179,8 +177,14 @@ var app = {
 						picHtml += '<li><img src="' + realUrl + '" /></li>';
 					})
 					picHtml += "</ul>";
+					$(".mediPicture").html(picHtml);
+					//多媒体图片点击事件
+					$(".mediaUl li img").click(function(e){
+						var imgUrl = $(this).attr("src");
+						$("#bigPic img").attr("src",imgUrl);
+						$("#bigPic").show();
+					})
 				}
-				$(".mediPicture").html(picHtml);
 		    });
 		})
 	    //周边环境按钮事件
