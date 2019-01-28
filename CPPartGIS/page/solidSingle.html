@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>Extrude building footprints based on real world heights - 4.8</title>
-    <script>
-        var lgis_API = "http://61.50.135.114:4057/arcgis_js_v48_api/";
-    </script>
+
+    <script src="../config/widgetConfig.js"></script>
     <link rel="stylesheet" href="http://39.105.40.172/jsapi407/esri/css/main.css">
     <script src="http://39.105.40.172/jsapi407/init.js"></script>
 
@@ -36,7 +35,7 @@
         var csFeild = "JZGD";
         var target;
 
-        function init(target1) {
+        function init(target1,searchItem) {
             target = target1;
             require([
              "esri/Map",
@@ -68,7 +67,7 @@
                         position: {
                             x: target.x,
                             y: target.y - 0.002,
-                            z: 160,
+                            z: 200,
                             spatialReference: {
                                 wkid: 4326
                             }
@@ -80,7 +79,8 @@
 
                 view.when(function () {
                     queryBuild();
-                    addPoint(); 
+                    addPoint();
+                    showLayer();
                 })
                 //view.on('pointer-up', function (evt) {
                 //    queryBuild();
@@ -155,7 +155,7 @@
                             symbolLayers: [{
                                 type: "extrude", // autocasts as new ExtrudeSymbol3DLayer()
                                 material: {
-                                    color: "#fff"
+                                    color: [255,255,255,0.9]
                                 },
                                 edges: {
                                     type: "solid",
@@ -351,6 +351,33 @@
                     map.add(targetLayer);
                 }
                  
+                function showLayer() {
+                    var config;
+                    for (var i = 0; i <layerConfigs.length; i++) {
+                        if (layerConfigs[i].divContentClass.indexOf(searchItem) > -1) {
+                            config = layerConfigs[i];
+                        }
+                    }
+                    var index = config.layerId;
+                    var url = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84_L/MapServer/" + index;
+                    var citiesRenderer = {
+                        type: "simple",
+                        symbol: {
+                            type: "simple-fill",
+                            color: [255, 0, 0, 0.6],
+                            outline: {
+                                color: [255, 0, 0, 1],
+                                width: "5px"
+                            }
+                        },
+                    };
+                    var featureLayer = new FeatureLayer({
+                        url: url,
+                        renderer: citiesRenderer,
+                        definitionExpression: config.nameField + " = '" + target.name + "'"
+                    }); 
+                    map.add(featureLayer);
+                }
             });
         }
 

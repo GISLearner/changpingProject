@@ -189,7 +189,7 @@ var app = {
 		    $("#roundPanel").load("page/round.html", function () { 
 		        setTimeout(function () {
 		            var frm = document.getElementById("ifmSingle").contentWindow;
-		            frm.init(app.curPoint);
+		            frm.init(app.curPoint,app.curCod);
 		        }, 500)
 		    });
 		})
