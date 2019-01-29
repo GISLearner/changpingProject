@@ -302,16 +302,16 @@ var layerConfigs = [{
 				label:"全部",
 				value:""
 			},{
-				label:"科技园区",
+				label:"昌平园东西区组团",
 				value:"科技园区"
 			},{
-				label:"未来科学城",
+				label:"未来科学城组团",
 				value:"未来科学城"
 			},{
-				label:"生命科学园",
+				label:"生命科学园组团",
 				value:"生命科学园"
 			},{
-				label:"昌发展",
+				label:"昌发展组团",
 				value:"昌发展"
 			}]
 		},
@@ -421,19 +421,19 @@ var layerConfigs = [{
 			},
 			selectOptions:[{
 				label:"全部",
-				value:"",
+				value:""
 			},{
-				label:"科技园区",
-				value:"科技园区",
+				label:"昌平园东西区组团",
+				value:"科技园区"
 			},{
-				label:"未来科学城",
-				value:"未来科学城",
+				label:"未来科学城组团",
+				value:"未来科学城"
 			},{
-				label:"生命科学园",
-				value:"生命科学园",
+				label:"生命科学园组团",
+				value:"生命科学园"
 			},{
-				label:"昌发展",
-				value:"昌发展",
+				label:"昌发展组团",
+				value:"昌发展"
 			}]
 		},{
 			searchType:"numList",
@@ -552,19 +552,19 @@ var layerConfigs = [{
 			},
 			selectOptions:[{
 				label:"全部",
-				value:"",
+				value:""
 			},{
-				label:"科技园区",
-				value:"科技园区",
+				label:"昌平园东西区组团",
+				value:"科技园区"
 			},{
-				label:"未来科学城",
-				value:"未来科学城",
+				label:"未来科学城组团",
+				value:"未来科学城"
 			},{
-				label:"生命科学园",
-				value:"生命科学园",
+				label:"生命科学园组团",
+				value:"生命科学园"
 			},{
-				label:"昌发展",
-				value:"昌发展",
+				label:"昌发展组团",
+				value:"昌发展"
 			}]
 		},{
 			searchType:"numList",
@@ -675,19 +675,19 @@ var layerConfigs = [{
 			},
 			selectOptions:[{
 				label:"全部",
-				value:"",
+				value:""
 			},{
-				label:"科技园区",
-				value:"科技园区",
+				label:"昌平园东西区组团",
+				value:"科技园区"
 			},{
-				label:"未来科学城",
-				value:"未来科学城",
+				label:"未来科学城组团",
+				value:"未来科学城"
 			},{
-				label:"生命科学园",
-				value:"生命科学园",
+				label:"生命科学园组团",
+				value:"生命科学园"
 			},{
-				label:"昌发展",
-				value:"昌发展",
+				label:"昌发展组团",
+				value:"昌发展"
 			}]
 		},
 		{
@@ -706,13 +706,13 @@ var layerConfigs = [{
 				label:"＜2",
 				value:"0-2"
 			},{
-				label:"0-2",
-				value:"0-2"
+				label:"2-5",
+				value:"2-5"
 			},{
 				label:"5-10",
 				value:"5-10"
 			},{
-				label:"'＞10",
+				label:"＞10",
 				value:"10-999999"
 			}]
 		},
