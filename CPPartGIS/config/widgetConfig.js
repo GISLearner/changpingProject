@@ -286,7 +286,8 @@ var layerConfigs = [{
 	btnClass:"cljz_btn",
 	drawClass:"cljz_draw",
 	layerId:"4",
-	nameField:"LYMC",
+	nameField: "LYMC",
+	areaField: "KLYMJ",
 	lId:"layer_cljz",
 	group:[
 		{
@@ -408,7 +409,8 @@ var layerConfigs = [{
 	drawClass:"cltd_draw",
 	layerId:"6",
 	lId:"layer_cltd",
-	nameField:"XMMC",
+	nameField: "XMMC",
+	areaField: "YDMJ",
 	group:[
 		{
 			searchType:"list",
@@ -539,7 +541,8 @@ var layerConfigs = [{
 	drawClass:"njxm_draw",
 	layerId:"8",
 	lId:"layer_njxm",
-	nameField:"XMMC",
+	nameField: "XMMC",
+	areaField: "KZSMJ",
 	group:[
 		{
 			searchType:"list",
@@ -662,7 +665,8 @@ var layerConfigs = [{
 	drawClass:"tdgy_draw",
 	layerId:"10",
 	lId:"layer_tdgy",
-	nameField:"XMMC",
+	nameField: "XMMC",
+	areaField: "TDMJ",
 	group:[
 		{
 			searchType:"list",

@@ -19,8 +19,14 @@
             width: 100%;
         }
 
-        .esri-ui-top-left, .esri-ui-corner {
+        /*.esri-ui-top-left, .esri-ui-corner {
             display: none !important;
+        }*/
+        .esri-ui-top-left {
+            top:50px;
+        }
+        .esri-navigation-toggle {
+            display:none !important;
         }
 
         .esri-attribution {
@@ -81,6 +87,7 @@
                     queryBuild();
                     addPoint();
                     showLayer();
+                    showBasLabel();
                 })
                 //view.on('pointer-up', function (evt) {
                 //    queryBuild();
@@ -359,12 +366,12 @@
                         }
                     }
                     var index = config.layerId;
-                    var url = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84_L/MapServer/" + index;
+                    var url = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer/" + index;
                     var citiesRenderer = {
                         type: "simple",
                         symbol: {
                             type: "simple-fill",
-                            color: [255, 0, 0, 0.6],
+                            color: [255, 0, 0, 0.4],
                             outline: {
                                 color: [255, 0, 0, 1],
                                 width: "5px"
@@ -376,6 +383,55 @@
                         renderer: citiesRenderer,
                         definitionExpression: config.nameField + " = '" + target.name + "'"
                     }); 
+                    map.add(featureLayer);
+                }
+
+                function showBasLabel() { 
+                    var url = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer/0";
+                    var citiesRenderer = {
+                        type: "simple",
+                        symbol: {
+                            type: "point-3d",  // autocasts as new PointSymbol3D()
+                            symbolLayers: [{
+                                type: "icon",  // autocasts as new IconSymbol3DLayer()
+                                size: 10,  // points
+                                resource: { primitive: "circle" },
+                                material: { color: "red" }
+                            }],
+                            verticalOffset: {
+                                screenLength: 100,
+                                maxWorldLength: 50,
+                                minWorldLength: 20
+                            },
+                            callout: {
+                                type: "line", // autocasts as new LineCallout3D()
+                                color: [204, 204, 204],
+                                size: 1,
+                                border: {
+                                    color: [204, 204, 204]
+                                }
+                            }
+                        },
+                    };
+                    var labelClass = new LabelClass({
+                        labelExpressionInfo: {
+                            expression: "$feature.MC" // Text for labels comes from COUNTY field
+                        },
+                        symbol: {
+                            type: "label-3d",  // autocasts as new LabelSymbol3D()
+                            symbolLayers: [{
+                                type: "text",  // autocasts as new TextSymbol3DLayer()
+                                material: { color: [50, 50, 50] },
+                                size: 14, // points 
+                            }]
+                        }
+                    });
+                    var featureLayer = new FeatureLayer({
+                        url: url,
+                        renderer: citiesRenderer,
+                        labelsVisible: true,
+                        labelingInfo: [labelClass],
+                    });
                     map.add(featureLayer);
                 }
             });

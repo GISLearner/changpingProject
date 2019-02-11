@@ -30,9 +30,14 @@
             $("#statPanel").hide();
         })
         var chartData;
+        var areaField;
 
-        function chartBar(domId) {
+        function chartBar(domId,xdata,ydata) {
             var option = {
+                title: {
+                    text: '项目数量', 
+                    x: 'center'
+                },
                 color: ['#3398DB'],
                 tooltip: {
                     trigger: 'axis',
@@ -44,13 +49,13 @@
                     left: '3%',
                     right: '4%',
                     bottom: '3%',
-                    top: '2%',
+                    top: '10%',
                     containLabel: true
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: chartData.x,
+                        data: xdata,
                         axisTick: {
                             alignWithLabel: true
                         }
@@ -66,20 +71,20 @@
                         name: '项目数量',
                         type: 'bar',
                         barWidth: '60%',
-                        data: chartData.y1
+                        data: ydata
                     }
                 ]
             };
             var myChart = echarts.init(document.getElementById(domId));
             myChart.setOption(option);
         }
-        function chartPie(domId) {
+        function chartPie(domId, series) {
             var option = {
-                //title: {
-                //    text: '某站点用户访问来源',
-                //    subtext: '纯属虚构',
-                //    x: 'center'
-                //},
+                title: {
+                    text: '项目面积',
+                    //subtext: '纯属虚构',
+                    x: 'center'
+                },
                 tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -102,7 +107,7 @@
                         type: 'pie',
                         radius: '55%',
                         center: ['50%', '50%'],
-                        data: chartData.y2,
+                        data: series,
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
@@ -120,9 +125,59 @@
         var stat = {
             init(title, item) {
                 $("#title_stat").html(title);
-                chartData = this.data[item];
-                chartBar("chartBar");
-                chartPie("chartPie");
+                var _this = this; 
+                var config;
+                for (var i = 0; i < layerConfigs.length; i++) {
+                    if (layerConfigs[i].divContentClass.indexOf(item) > -1) {
+                        config = layerConfigs[i];
+                    }
+                }
+                var index = config.layerId;
+                areaField = config.areaField;
+                var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer/" + index;
+                //var layer = new FeatureLayer({
+                //    url: layerURL,
+                //});
+                //const query = new Query();
+                //query.where = "1=1";
+                //query.returnGeometry = false;
+                //query.outFields = ["*"];
+                //layer.queryFeatures(query).then(function (results) {
+                //    _this.statData(results);
+                //});
+                var url = layerURL + "/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=json"
+                $.get(url, function (result) { 
+                    _this.statData(eval("(" + result + ")"));
+                });
+
+
+                //chartData = this.data[item];
+                //chartBar("chartBar");
+                //chartPie("chartPie");
+            },
+            statData(results) {
+                var features = results.features;
+                var num = [], cate = [], area = []; 
+                for (var i = 0; i < features.length; i++) {
+                    if (cate.indexOf(features[i].attributes.SBDW) == -1) {
+                        cate.push(features[i].attributes.SBDW);
+                        num.push(0);
+                        area.push(0);
+                    }
+                    var index = cate.indexOf(features[i].attributes.SBDW);
+                    num[index]++;
+                    area[index] += features[i].attributes[areaField];
+                }
+                
+                var series=[];
+                for (var i = 0; i < area.length; i++) {
+                    series.push({
+                        value: area[i],
+                        name: cate[i]
+                    });
+                }
+                chartBar("chartBar", cate, num);
+                chartPie("chartPie", series);
             },
             data: {
                 cltd: {

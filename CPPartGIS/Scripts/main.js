@@ -264,7 +264,7 @@ var app = {
 			att.resultName = resultName;
 			var gra = new mapAPI.Graphic(geo, fms, att, infoWin);
 			var attJson = JSON.stringify(att);
-			resultul += '<li data-target=\'' + attJson + '\'>' + resultName + '</li>';
+			resultul += '<li data-target=\'' + attJson + '\'>' + (i+1) + "&nbsp;&nbsp;" + resultName + '</li>';
 			gLayer.add(gra);
 			i++;
 		})
