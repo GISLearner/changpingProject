@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
-    <meta charset="utf-8" />
-    <style>
-        .mediaUl {
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<meta charset="utf-8" />
+		<style>
+			.mediaUl {
             margin: 0px;
             padding: 0px;
             list-style: none;
@@ -23,45 +23,132 @@
 			max-width: 100px;
 			cursor: pointer;
 		}
-    </style>
-</head>
-<body>
-    <div style="position:absolute;top:0px;height:50px;width:100%;padding:10px 0;margin-bottom: 1em;background:white;">
-        <div style="width:10%;float:left;" id="back_media">
-            <img src="img/icon/back.png" style="width:30px;" />
-        </div>
-        <div style="height:30px;line-height:30px;font-weight:600;">
-            现状图片
-        </div>
-    </div>
-    <div id="mediPicture" class="mediPicture" style="margin-top:60px;">
-        当前没有现状图片
-    </div>
-    <div style="position:absolute; width:100%;bottom: 5em;">
-        <input id="btnBack_media" type="button" class="btn btn-primary" value="返回" style="width:100%;">
-    </div>
-	
-	
-	<div id="bigPic" style="width: 100%;height: 100%;max-height: 38em;position: absolute;display: none;">
-		<span class="closeBtn" style="font-size: 2em;right: 0.5em;cursor: pointer;position: fixed;color: red;">X</span>
-		<img/>
-	</div>
-    <script>
-        //返回
-        $("#back_media").click(function () {
-            $("#mediaPanel").hide();
-        })
-
-        $(" .drawUl li").click(function (e) {
-        })
-
-        $("#btnBack_media").click(function () {
-            $("#mediaPanel").hide();
-        })
 		
-		$("#bigPic").click(function(){
-			$(this).hide();
-		})
-    </script>
-</body>
+		.imgOpera{
+			position: fixed;
+			height: 1em;
+			width: 0.6em;
+			margin-left: 0.1em;
+			font-size: 5em;
+			top: 40%;
+			cursor: pointer;
+			color:black;
+			text-shadow: #eee 3px 3px 3px;
+			line-height: 1em;
+			opacity: 0.5;
+		}
+		
+		.imgOpera:hover{
+			background: dimgray;
+			text-shadow: dimgray 3px 3px 3px;
+			color: white;
+			opacity: 0.7;
+		}
+		
+		.imgzoom_img{
+			margin-left: 0.2em;
+		}
+		
+    </style>
+	</head>
+	<body>
+		<div style="position:absolute;top:0px;height:50px;width:100%;padding:10px 0;margin-bottom: 1em;background:white;">
+			<div style="width:10%;float:left;" id="back_media">
+				<img src="img/icon/back.png" style="width:30px;" />
+			</div>
+			<div style="height:30px;line-height:30px;font-weight:600;">
+				现状图片<span class="picTooltip" style="color:red;display: none;">（单机放大图片，双击缩小图片）</span>
+			</div>
+		</div>
+		<div id="mediPicture" class="mediPicture" style="margin-top:60px;">
+			当前没有现状图片
+		</div>
+		<div style="position:absolute; width:100%;bottom: 5em;">
+			<input id="btnBack_media" type="button" class="btn btn-primary" value="返回" style="width:100%;">
+		</div>
+
+		<div id="bigPic" align="center" class="imgzoom_pack" style="width: 100%;height: 100%;justify-content: center; max-height: 38em;position: absolute;display: none;">
+			<span class="closeBtn" style="font-size: 2em;right: 0.5em;cursor: pointer;position: fixed;color: red;">X</span>
+			<span class="imgOpera imgLeft" style="left:0.2em;"><</span> 
+			<span class="imgOpera imgRight" style="right:0.2em;">></span>
+			<img class="imgzoom_img" alt="建筑图片" onclick="maxPic(event)" ondblclick="minPic(event)"/>
+		</div>
+
+		<script>
+			//返回
+			$("#back_media").click(function() {
+				$("#mediaPanel").hide();
+			})
+
+			$(" .drawUl li").click(function(e) {})
+
+			$("#btnBack_media").click(function() {
+				$("#mediaPanel").hide();
+			})
+
+			$(".closeBtn").click(function() {
+				$("#bigPic").hide();
+				$(".picTooltip").hide();
+			})
+
+			// 		$("#bigPic").click(function(){
+			// 			$(this).hide();
+			// 		})
+
+			var clickTimer = null;
+			var minWidth = 100;
+			var maxWidth = 1500;
+			
+			//单击放大照片
+			function maxPic(event) {
+				var event = window.event || event;
+				var img = event.target || event.srcElement;
+				if (clickTimer) {
+					window.clearTimeout(clickTimer);
+					clickTimer = null;
+				}
+				clickTimer = window.setTimeout(function() {
+					var endWidth = img.width * 1.3; //每次点击后的宽度
+					var endHeight = img.height * 1.3; //每次点击后的高度
+					var maxTimer = setInterval(function() {
+						if (img.width < endWidth) {
+							if (img.width < maxWidth) {
+								img.width = img.width * 1.05;
+								img.height = img.height * 1.05;
+							} else {
+								alert("已经放大到最大值了！");
+								clearInterval(maxTimer);
+							}
+						} else {
+							clearInterval(maxTimer);
+						}
+					}, 20);
+				}, 300);
+			}
+			// 双击缩小照片
+			function minPic(event) {
+				var event = window.event || event;
+				var img = event.target || event.srcElement;
+				if (clickTimer) {
+					window.clearTimeout(clickTimer);
+					clickTimer = null;
+				}
+				var endWidth = img.width * 0.7; //每次点击后的宽度
+				var endHeight = img.height * 0.7; //每次点击后的高度
+				var maxTimer = setInterval(function() {
+					if (img.width > endWidth) {
+						if (img.width > minWidth) {
+							img.width = img.width * 0.95;
+							img.height = img.height * 0.95;
+						} else {
+							alert("已经缩小到最小值了！");
+							clearInterval(maxTimer);
+						}
+					} else {
+						clearInterval(maxTimer);
+					}
+				}, 20);
+			}
+		</script>
+	</body>
 </html>

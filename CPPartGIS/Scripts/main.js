@@ -5,6 +5,7 @@ var app = {
 	curSearch: null,
 	drawGeo: null,
 	DMTXX:null,
+	imgAry:null,
 	searchStatus: "fyq",
 	init() {
 		$.common.addBaseMap(map,"baseMap_Map");
@@ -168,22 +169,58 @@ var app = {
 		    $("#mediaPanel").show();
 		    $("#mediaPanel").load("page/media.html", function () {
 				var DMTXX = app.DMTXX;
+				app.imgAry = [];
 				if(DMTXX != null){
 					var picBaseUrl = mapconfig.picUrl;
 					var pathAry = DMTXX.split(",");
 					var picHtml = '<ul class="mediaUl">';
+					var imgIndex = 0;
 					pathAry.forEach(function(path){
 						var realUrl = picBaseUrl + path + ".png";
-						picHtml += '<li><img src="' + realUrl + '" /></li>';
+						picHtml += '<li><img src="' + realUrl + '" imgIndex="' + imgIndex + '" /></li>';
+						var imgObj = {
+							imgIndex:imgIndex,
+							imgUrl:realUrl
+						}
+						app.imgAry.push(imgObj);
+						imgIndex ++;
 					})
 					picHtml += "</ul>";
 					$(".mediPicture").html(picHtml);
 					//多媒体图片点击事件
 					$(".mediaUl li img").click(function(e){
 						var imgUrl = $(this).attr("src");
+						var imgIndex = $(this).attr("imgIndex");
 						$("#bigPic img").attr("src",imgUrl);
+						$("#bigPic img").attr("imgIndex",imgIndex);
 						$("#bigPic").show();
+						$(".picTooltip").show();
 					})
+					//左侧图片切换按钮
+					$(".imgLeft").click(function(e){
+						var imgIndex = parseInt($("#bigPic img").attr("imgIndex"));
+						if(imgIndex == 0){
+							imgIndex = app.imgAry.length - 1;
+						}else{
+							imgIndex -= 1;
+						}
+						var imgItem = app.imgAry[imgIndex];
+						$("#bigPic img").attr("src",imgItem.imgUrl);
+						$("#bigPic img").attr("imgIndex",imgIndex);
+					})
+					//右侧图片切换按钮
+					$(".imgRight").click(function(e){
+						var imgIndex = parseInt($("#bigPic img").attr("imgIndex"));
+						if(imgIndex == app.imgAry.length - 1){
+							imgIndex = 0;
+						}else{
+							imgIndex += 1;
+						}
+						var imgItem = app.imgAry[imgIndex];
+						$("#bigPic img").attr("src",imgItem.imgUrl);
+						$("#bigPic img").attr("imgIndex",imgIndex);
+					})
+					
 				}
 		    });
 		})
