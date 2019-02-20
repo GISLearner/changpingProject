@@ -576,7 +576,7 @@ var layerConfigs = [{
 			divClass:"njxm_kzsmj",
 			searchField:{
 				fieldlabel:"可租售面积（平方米）",
-				fieldName:"KLYMJ"
+				fieldName:"KZSMJ"
 			},
 			selectOptions:[{
 				label:"全部",
