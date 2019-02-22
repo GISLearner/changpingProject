@@ -50,7 +50,7 @@ var app = {
 					$("#" + searchItem.divContentClass).setSearchBlock(searchItem, function(drawClass) { 
 						app.drawStart(drawClass);
 					}, function(layerId, qWhere, searchConfig) {
-						//清楚图层
+						//清除图层
 						layerConfigs.forEach(function(info) {
 							var lId = info.lId;
 							var gLayer = map.getLayer(lId);
@@ -66,6 +66,25 @@ var app = {
 				})
 			});
 		})
+		
+		//点查属性
+		map.on("click",function(e){
+			layerConfigs.forEach(function(searchItem) {
+				$.common.layerAttSearch(searchItem.layerId, "1=1", e.mapPoint, function(e, params) {
+					$(".resultUI").html("");
+					if(e.features.length > 0){
+						var fields = e.fields;
+						var newFields = app.getNewFields(fields);
+						var feature = e.features[0];
+						var att = feature.attributes;
+						var resultName = att[params.nameField]; 
+						att.resultName = resultName;
+						app.showDeatilInfo(att, newFields);
+					}
+				}, searchItem)
+			})
+		})
+		
 		//点击右侧工具栏
 		$("#toolUser").click(function(e) {
 			$("#rightPage").show();
@@ -137,8 +156,6 @@ var app = {
 			$(".special_itmes").hide();
 			$("#special_" + item).show();
 		})
-
-
 
 
 		//专题点击事件
@@ -234,6 +251,7 @@ var app = {
 		        }, 500)
 		    });
 		})
+		
 	},
 	//设置搜索条件
 	setCondition() {
@@ -266,13 +284,7 @@ var app = {
 		if (features.length == 0) return;
 		var fms;
 		var fields = e.fields;
-		var newFields = [];
-		fields.forEach(function(field){
-			var alias = field.alias;
-			if(alias.match(/[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi) != null){
-				newFields.push(field);
-			}
-		})
+		var newFields = app.getNewFields(fields);
 		var lId = feaConfig.lId;
 		var gLayer = map.getLayer(lId);
 		if (e.geometryType == "esriGeometryPoint") {
@@ -313,6 +325,16 @@ var app = {
 			app.showDeatilInfo(attInfo, newFields);
 		})
 		app.layerZoom(features);
+	},
+	getNewFields(fields){
+		var newFields = [];
+		fields.forEach(function(field){
+			var alias = field.alias;
+			if(alias.match(/[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi) != null){
+				newFields.push(field);
+			}
+		})
+		return newFields;
 	},
 	//获取气泡信息
 	getInfoContent(fields) {
