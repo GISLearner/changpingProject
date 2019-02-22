@@ -410,7 +410,8 @@
 				//加载天地图
 				var map = new mapAPI.Map(divClass, {
 					logo: false,
-					slider: false
+					slider: false,
+					minZoom:9,//最小空间等级
 				});
 				return map;
 			},
@@ -427,7 +428,6 @@
 				// var initExtent = mapinfo.initExtent = new mapAPI.Extent(12848116.944046713,4873810.2488809675,13026506.989269175,4904907.791233301);
 				initExtent.setSpatialReference(spatialReference);
 				map.setExtent(initExtent);
-				
 				return dLayer;
 			}
 		}

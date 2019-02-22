@@ -16,14 +16,14 @@ var app = {
 				id: lId
 			});
 			map.addLayer(gLayer);
-			gLayer.on("click", function(e) {
+			/* gLayer.on("click", function(e) {
 				var att = e.graphic.attributes;
 				var fields = att.fields; //字段信息
 				app.showDeatilInfo(att, fields);
 				setTimeout(function(){
 					map.infoWindow.hide();
 				},500)  
-			})
+			}) */
 		})
 		
 		//高亮图层
@@ -71,12 +71,19 @@ var app = {
 		map.on("click",function(e){
 			layerConfigs.forEach(function(searchItem) {
 				$.common.layerAttSearch(searchItem.layerId, "1=1", e.mapPoint, function(e, params) {
-					$(".resultUI").html("");
 					if(e.features.length > 0){
 						var fields = e.fields;
 						var newFields = app.getNewFields(fields);
 						var feature = e.features[0];
 						var att = feature.attributes;
+						var geo = feature.geometry;
+						if(geo.type == "polygon"){
+							geo.prototype = mapAPI.Polygon.prototype;
+							att.extent = geo.getExtent();
+							att.centerPoint = geo.getCentroid();
+						}else if(geo.type == "point"){
+							att.point = geo;
+						}
 						var resultName = att[params.nameField]; 
 						att.resultName = resultName;
 						app.showDeatilInfo(att, newFields);
@@ -311,7 +318,7 @@ var app = {
 			}
 			var resultName = att[feaConfig.nameField];
 			att.resultName = resultName;
-			var gra = new mapAPI.Graphic(geo, fms, att, infoWin);
+			var gra = new mapAPI.Graphic(geo, fms, att, null);
 			var attJson = JSON.stringify(att);
 			resultul += '<li data-target=\'' + attJson + '\'>' + (i+1) + "&nbsp;&nbsp;" + resultName + '</li>';
 			gLayer.add(gra);
@@ -430,6 +437,11 @@ var app = {
 			}
 		}else if(attrs.point){
 			map.centerAt(attrs.point);
+			app.curPoint = {
+				x: attrs.point.x,
+				y: attrs.point.y,
+				name:attrs.resultName,
+			}
 			map.setScale(800);
 		}
 		
