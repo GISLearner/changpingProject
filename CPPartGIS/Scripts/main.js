@@ -433,13 +433,13 @@ var app = {
 			app.curPoint = attrs;
 			app.curPoint.x = newPt.x;
 			app.curPoint.y = newPt.y;
-			app.curPoint.name = newPt.resultName; 
+			app.curPoint.name = attrs.resultName;
 		}else if(attrs.point){
 		    map.centerAt(attrs.point);
 		    app.curPoint = attrs;
 		    app.curPoint.x = newPt.x;
 		    app.curPoint.y = newPt.y;
-		    app.curPoint.name = newPt.resultName; 
+		    app.curPoint.name = attrs.resultName;
 			map.setScale(800);
 		}
 		
