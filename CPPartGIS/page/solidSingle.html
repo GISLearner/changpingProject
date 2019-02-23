@@ -36,7 +36,7 @@
 
     <script>
         //配置--建筑物图层
-        var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84_L/MapServer/13";
+        var layerURL = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer/13";
         //配置--层数字段
         var csFeild = "JZGD";
         var target;
@@ -86,8 +86,9 @@
                 view.when(function () {
                     queryBuild();
                     addPoint();
-                    showLayer();
+                    showLayer(); 
                     showBasLabel();
+                    showRoundLayer();
                 })
                 //view.on('pointer-up', function (evt) {
                 //    queryBuild();
@@ -297,7 +298,11 @@
                             type: "icon",  // autocasts as new IconSymbol3DLayer()
                             size: 15,  // points
                             resource: { primitive: "circle" },
-                            material: { color: "red" }
+                            material: { color: "red" },
+                            halo: {
+                                color: [255, 0, 0], // autocasts as Color
+                                size: 2
+                            }
                         }],
                         verticalOffset: {
                             screenLength: 100,
@@ -338,7 +343,7 @@
                             type: "label-3d",  // autocasts as new LabelSymbol3D()
                             symbolLayers: [{
                                 type: "text",  // autocasts as new TextSymbol3DLayer()
-                                material: { color: [232, 124, 13] },
+                                material: { color: [255,0,0,255] },
                                 size: 14 , // points 
                             }]
                         }
@@ -371,11 +376,11 @@
                         type: "simple",
                         symbol: {
                             type: "simple-fill",
-                            color: [255, 0, 0, 0.4],
+                            color: [0, 0, 255, 0.3],
                             outline: {
-                                color: [255, 0, 0, 1],
+                                color: [0, 0, 255, 1],
                                 width: "5px"
-                            }
+                            } 
                         },
                     };
                     var featureLayer = new FeatureLayer({
@@ -394,7 +399,7 @@
                             type: "point-3d",  // autocasts as new PointSymbol3D()
                             symbolLayers: [{
                                 type: "icon",  // autocasts as new IconSymbol3DLayer()
-                                size: 10,  // points
+                                size: 0,  // points
                                 resource: { primitive: "circle" },
                                 material: { color: "red" }
                             }],
@@ -405,10 +410,10 @@
                             },
                             callout: {
                                 type: "line", // autocasts as new LineCallout3D()
-                                color: [204, 204, 204],
+                                color: [232, 124, 13],
                                 size: 1,
                                 border: {
-                                    color: [204, 204, 204]
+                                    color: [232, 124, 13]
                                 }
                             }
                         },
@@ -421,7 +426,7 @@
                             type: "label-3d",  // autocasts as new LabelSymbol3D()
                             symbolLayers: [{
                                 type: "text",  // autocasts as new TextSymbol3DLayer()
-                                material: { color: [50, 50, 50] },
+                                material: { color: [232, 124, 13] },
                                 size: 14, // points 
                             }]
                         }
@@ -431,6 +436,31 @@
                         renderer: citiesRenderer,
                         labelsVisible: true,
                         labelingInfo: [labelClass],
+                    });
+                    map.add(featureLayer);
+                }
+
+                function showRoundLayer() {
+                    debugger;
+                    var url = "http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer/21";
+                    var citiesRenderer = {
+                        type: "simple",
+                        symbol: {
+                            type: "simple-fill",
+                            color: [255, 255, 0, 0.3],
+                            style: "solid",
+                            outline: {
+                                color: [0, 255, 0, 1],
+                                width: 5
+                            }
+                        },
+                    };
+                    var featureLayer = new FeatureLayer({
+                        url: url,
+                        renderer: citiesRenderer,
+                        definitionExpression: "QLR = '" + target.QLR + "'",
+                        //offset: 100,
+                        //elevationInfo: "relative-to-scene"
                     });
                     map.add(featureLayer);
                 }

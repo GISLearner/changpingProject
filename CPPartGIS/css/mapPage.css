@@ -68,7 +68,8 @@
 
 .cond_select {
     font-weight: 600;
-    border-bottom: solid 1px #2861EB;
+    /*border-bottom: solid 1px #2861EB;*/
+    display:block !important;
 }
 
 .menuUl {

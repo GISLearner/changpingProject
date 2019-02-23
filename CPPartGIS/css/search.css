@@ -10,21 +10,26 @@
 	padding: 0px;
 	border-bottom: solid 1px #ccc;
 	padding-bottom: 5px;
+    background: #7cb1de;
+    margin: 10px 30px;
+    border-radius:2px;
+    color:white;
 }
 
 .conditionUl li {
 	float: left; 
 	cursor: pointer;
 	padding-bottom: 5px; 
-    width:75px;
+    width:90%;
     text-align:center;
     height: 36px;
     line-height: 36px;
+    display:none;
 }
 
 .conditionUl li:hover {
 	font-weight: 600;
-	border-bottom: solid 1px #2861EB;
+	/*border-bottom: solid 1px #2861EB;*/
 }
 
 .conditionUl li img {

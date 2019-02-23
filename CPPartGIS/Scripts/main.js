@@ -424,24 +424,22 @@ var app = {
 	},
 	//详细信息
 	showDeatilInfo(attrs, fields) {
-		app.DMTXX = attrs.DMTXX;
+	    app.DMTXX = attrs.DMTXX; 
 		if(attrs.extent){
 			var extent = attrs.extent;
 			map.setExtent(new mapAPI.Extent(extent.xmin-0.001,extent.ymin-0.001,extent.xmax+0.001,extent.ymax+0.001,spatialReference));
 			var point = new mapAPI.Point(attrs.centerPoint.x,attrs.centerPoint.y);
 			var newPt = mapAPI.webMercatorUtils.webMercatorToGeographic(point);
-			app.curPoint = {
-				x: newPt.x,
-				y: newPt.y,
-				name:attrs.resultName,
-			}
+			app.curPoint = attrs;
+			app.curPoint.x = newPt.x;
+			app.curPoint.y = newPt.y;
+			app.curPoint.name = newPt.resultName; 
 		}else if(attrs.point){
-			map.centerAt(attrs.point);
-			app.curPoint = {
-				x: attrs.point.x,
-				y: attrs.point.y,
-				name:attrs.resultName,
-			}
+		    map.centerAt(attrs.point);
+		    app.curPoint = attrs;
+		    app.curPoint.x = newPt.x;
+		    app.curPoint.y = newPt.y;
+		    app.curPoint.name = newPt.resultName; 
 			map.setScale(800);
 		}
 		
