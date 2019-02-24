@@ -69,6 +69,8 @@ var app = {
 		
 		//点查属性
 		map.on("click",function(e){
+			var hLayer = map.getLayer("highLightLayer");
+			hLayer.clear();
 			layerConfigs.forEach(function(searchItem) {
 				$.common.layerAttSearch(searchItem.layerId, "1=1", e.mapPoint, function(e, params) {
 					if(e.features.length > 0){
@@ -86,7 +88,7 @@ var app = {
 						}
 						var resultName = att[params.nameField]; 
 						att.resultName = resultName;
-						app.showDeatilInfo(att, newFields);
+						app.showDeatilInfo(geo,att, newFields);
 					}
 				}, searchItem)
 			})
@@ -299,7 +301,7 @@ var app = {
 		} else if (e.geometryType == "esriGeometryPolygon") {
 			fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,
 				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_SOLID,
-					new mapAPI.Color([0,191,255]), 2), new mapAPI.Color([250,128,114, 0.25]));
+					new mapAPI.Color([65,105,225]), 2), new mapAPI.Color([0,191,255, 0.25]));
 		}
 		//var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
 		var infoWin = null;
@@ -320,7 +322,8 @@ var app = {
 			att.resultName = resultName;
 			var gra = new mapAPI.Graphic(geo, fms, att, null);
 			var attJson = JSON.stringify(att);
-			resultul += '<li data-target=\'' + attJson + '\'>' + (i+1) + "&nbsp;&nbsp;" + resultName + '</li>';
+			var geoJson = JSON.stringify(geo);
+			resultul += '<li data-geometry=\'' + geoJson + '\' data-target=\'' + attJson + '\'>' + (i+1) + "&nbsp;&nbsp;" + resultName + '</li>';
 			gLayer.add(gra);
 			i++;
 		})
@@ -328,8 +331,14 @@ var app = {
 		$(".resultUI").html(resultul);
 		$(".resultUI li").click(function() {
 			var attStr = $(this).attr("data-target");
+			var geoStr = $(this).attr("data-geometry");
 			var attInfo = JSON.parse(attStr);
-			app.showDeatilInfo(attInfo, newFields);
+			var geoInfo = JSON.parse(geoStr);
+			var spatialReference = geoInfo.spatialReference;
+			var rings = geoInfo.rings;
+			var polygon = new mapAPI.Polygon(spatialReference);
+			polygon.rings = rings;
+			app.showDeatilInfo(polygon,attInfo, newFields);
 		})
 		app.layerZoom(features);
 	},
@@ -423,11 +432,20 @@ var app = {
 		})
 	},
 	//详细信息
-	showDeatilInfo(attrs, fields) {
-	    app.DMTXX = attrs.DMTXX; 
+	showDeatilInfo(geo,attrs, fields) {
+		var hLayer = map.getLayer("highLightLayer");
+		hLayer.clear();
+	    app.DMTXX = attrs.DMTXX;
+		if(geo){
+			var fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,
+				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_SOLID,
+				new mapAPI.Color([255,215,0]), 3), new mapAPI.Color([0,191,255, 0]));
+			var gra = new mapAPI.Graphic(geo, fms, attrs, null);
+			hLayer.add(gra);
+		}
 		if(attrs.extent){
 			var extent = attrs.extent;
-			map.setExtent(new mapAPI.Extent(extent.xmin-0.001,extent.ymin-0.001,extent.xmax+0.001,extent.ymax+0.001,spatialReference));
+			map.setExtent(new mapAPI.Extent(extent.xmin-100,extent.ymin-140,extent.xmax+100,extent.ymax+60,spatialReference));
 			var point = new mapAPI.Point(attrs.centerPoint.x,attrs.centerPoint.y);
 			var newPt = mapAPI.webMercatorUtils.webMercatorToGeographic(point);
 			app.curPoint = attrs;
