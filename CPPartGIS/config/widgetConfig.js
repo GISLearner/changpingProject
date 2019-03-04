@@ -398,8 +398,8 @@ var layerConfigs = [{
 			divClass:"cljz_xmmc",
 			itemFunction:"textFormat",
 			searchField:{
-				fieldlabel:"项目名称",
-				fieldName:"XMMC"
+				fieldlabel:"楼宇名称",
+				fieldName:"LYMC"
 			}
 		}
 	]

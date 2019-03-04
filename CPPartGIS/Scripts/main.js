@@ -301,7 +301,7 @@ var app = {
 		} else if (e.geometryType == "esriGeometryPolygon") {
 			fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,
 				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_SOLID,
-					new mapAPI.Color([65,105,225]), 2), new mapAPI.Color([0,191,255, 0.25]));
+					new mapAPI.Color([255,215,0,0]), 2), new mapAPI.Color([0,191,255, 0.25]));
 		}
 		//var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
 		var infoWin = null;
@@ -439,7 +439,7 @@ var app = {
 		if(geo){
 			var fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,
 				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_SOLID,
-				new mapAPI.Color([255,215,0]), 3), new mapAPI.Color([0,191,255, 0]));
+				new mapAPI.Color([65,105,225]), 3), new mapAPI.Color([0,191,255, 0]));
 			var gra = new mapAPI.Graphic(geo, fms, attrs, null);
 			hLayer.add(gra);
 		}
