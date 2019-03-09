@@ -94,6 +94,19 @@ var app = {
 			})
 		})
 		
+		//地图缩放隐藏聚合图
+		map.on("extent-change",function(){
+			var clusterLayer = map.getLayer("clusterLayer");
+			if(clusterLayer){
+				var level = map.getLevel();
+				if(level > 14){
+					clusterLayer.setVisibility(false);
+				}else{
+					clusterLayer.setVisibility(true);
+				}
+			}
+		})
+		
 		//点击右侧工具栏
 		$("#toolUser").click(function(e) {
 			$("#rightPage").show();
@@ -301,12 +314,13 @@ var app = {
 		} else if (e.geometryType == "esriGeometryPolygon") {
 			fms = new mapAPI.SimpleFillSymbol(mapAPI.SimpleFillSymbol.STYLE_SOLID,
 				new mapAPI.SimpleLineSymbol(mapAPI.SimpleLineSymbol.STYLE_SOLID,
-					new mapAPI.Color([255,215,0,0]), 2), new mapAPI.Color([0,191,255, 0.25]));
+					new mapAPI.Color([255,215,0,0]), 2), new mapAPI.Color([0,191,255, 0.5]));
 		}
 		//var infoWin = mapAPI.InfoTemplate("${" + feaConfig.nameField + "}", app.getInfoContent(fields));
 		var infoWin = null;
 		var i = 0;
 		var resultul = ""; // '<ul class="resultUI">';
+		var pointAry = [];//聚合点位
 		features.forEach(function(fea) {
 			var att = fea.attributes;
 			att.fields = newFields;
@@ -315,8 +329,10 @@ var app = {
 				geo.prototype = mapAPI.Polygon.prototype;
 				att.extent = geo.getExtent();
 				att.centerPoint = geo.getCentroid();
+				pointAry.push(att.centerPoint);
 			}else if(geo.type == "point"){
 				att.point = geo;
+				pointAry.push(geo);
 			}
 			var resultName = att[feaConfig.nameField];
 			att.resultName = resultName;
@@ -327,6 +343,13 @@ var app = {
 			gLayer.add(gra);
 			i++;
 		})
+		var options = { 
+			pointArr: pointAry, 
+			id: "clusterLayer", 
+			icon: mapconfig.pointIcon ,
+			distance:30
+		};
+		$.common.addClusterLayer(map,options);
 		//resultul += "</ul>"; 
 		$(".resultUI").html(resultul);
 		$(".resultUI li").click(function() {
@@ -410,7 +433,7 @@ var app = {
 // 			wkid: 3857
 // 		});
 
-		var newExtent = new mapAPI.Extent(xmin, ymin, xmax, ymax);
+		var newExtent = new mapAPI.Extent(xmin-20000, ymin-20000, xmax+20000, ymax+20000);
 		newExtent.setSpatialReference(spatialReference);
 		map.setExtent(newExtent);
 	},

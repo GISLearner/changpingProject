@@ -21,12 +21,11 @@ mugis.mapInit = {
 				"esri/dijit/Basemap", "esri/dijit/Popup", "dojo/dom-class",
 				"dijit/form/VerticalSlider", "esri/dijit/InfoWindow", "esri/map", "esri/dijit/OverviewMap",
 				"esri/dijit/Scalebar", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/ArcGISTiledMapServiceLayer",
-				"esri/layers/FeatureLayer", "widgets/TDTLayer", "esri/dijit/Legend", "esri/toolbars/navigation",
-				"esri/toolbars/draw",
-				"esri/toolbars/edit",
+				"esri/layers/FeatureLayer", "widgets/TDTLayer", "GISScripts/ClusterLayer","esri/dijit/Legend", 
+				"esri/toolbars/navigation","esri/toolbars/draw","esri/toolbars/edit",
 				"esri/tasks/GeometryService", "esri/tasks/LengthsParameters", "esri/tasks/AreasAndLengthsParameters",
 				"esri/geometry/Geometry", "esri/geometry/Point", "esri/geometry/Polyline", "esri/geometry/Polygon",
-				"esri/geometry/Extent",
+				"esri/geometry/Extent","esri/renderers/ClassBreaksRenderer",
 				"esri/InfoTemplate", "esri/SpatialReference", "esri/symbols/TextSymbol", "esri/graphic", "esri/Color",
 				"esri/dijit/Print", "esri/tasks/PrintTask", "esri/tasks/PrintParameters", "esri/tasks/PrintTemplate",
 				"esri/tasks/QueryTask", "esri/tasks/query", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
@@ -38,10 +37,10 @@ mugis.mapInit = {
 			function(request, on, dom, query, topic, parser, registry,
 				lang, domConstruct, Script, arrayUtils, Basemap, Popup, domClass,
 				VerticalSlider, InfoWindow, Map, OverviewMap, Scalebar,
-				ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, FeatureLayer, TDTLayer,
+				ArcGISDynamicMapServiceLayer, ArcGISTiledMapServiceLayer, FeatureLayer, TDTLayer,ClusterLayer,
 				Legend, Navigation, Draw, Edit,
 				GeometryService, LengthsParameters, AreasAndLengthsParameters,
-				Geometry, Point, Polyline, Polygon, Extent, InfoTemplate,
+				Geometry, Point, Polyline, Polygon, Extent, ClassBreaksRenderer,InfoTemplate,
 				SpatialReference, TextSymbol, Graphic, Color,
 				Print, PrintTask, PrintParameters, PrintTemplate,
 				QueryTask, Query, IdentifyTask, IdentifyParameters,
@@ -52,6 +51,7 @@ mugis.mapInit = {
 				mapAPI.InfoWindow = InfoWindow;
 				mapAPI.Map = Map;
 				mapAPI.OverviewMap = OverviewMap;
+				mapAPI.ClusterLayer = ClusterLayer;
 				mapAPI.Scalebar = Scalebar;
 				mapAPI.ArcGISDynamicMapServiceLayer = ArcGISDynamicMapServiceLayer;
 				mapAPI.ArcGISTiledMapServiceLayer = ArcGISTiledMapServiceLayer;
@@ -77,6 +77,7 @@ mugis.mapInit = {
 				mapAPI.SimpleLineSymbol = SimpleLineSymbol;
 				mapAPI.SimpleMarkerSymbol = SimpleMarkerSymbol;
 				mapAPI.TextSymbol = TextSymbol;
+				mapAPI.ClassBreaksRenderer = ClassBreaksRenderer;
 				mapAPI.PrintTask = PrintTask;
 				mapAPI.PrintParameters = PrintParameters;
 				mapAPI.PrintTemplate = PrintTemplate;

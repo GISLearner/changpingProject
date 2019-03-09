@@ -429,6 +429,46 @@
 				initExtent.setSpatialReference(spatialReference);
 				map.setExtent(initExtent);
 				return dLayer;
+			},
+			addClusterLayer:function(map,options){
+				var clusterLayer = map.getLayer(options.id);
+				if(clusterLayer){
+					map.removeLayer(clusterLayer);
+					clusterLayer = null;
+				}
+				var cluster = new mapAPI.ClusterLayer({
+				    "data": options.pointArr,
+				    "distance": options.distance || 10,
+				    "id": options.id || "cluster",
+				    "labelColor": "#fff",
+				    "labelOffset": "10",
+				    "resolution": map.extent.getWidth() / map.width,
+				    "singleColor": "#888",
+				    "spatialReference": map.spatialReference,
+				    "maxSingles": options.maxSingles || 100
+				});
+				//使用默认的分级渲染
+				if (options.render == null) {
+				    var defaultSym = new mapAPI.SimpleMarkerSymbol().setSize(4);
+				    var renderer = new mapAPI.ClassBreaksRenderer(defaultSym, "clusterCount");
+				    var single = options.icon;
+				    // var pointPms = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,10,null,new mapAPI.Color([255,255,0,0.6])).setOffset(0, 0);
+					var pointPms = new mapAPI.PictureMarkerSymbol(mapconfig.pointIcon,18,24);
+				    var blue = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,30,null,new mapAPI.Color([0,0,255,0.8])).setOffset(0, 13);
+				    var green = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,40,null,new mapAPI.Color([0,200,0,0.8])).setOffset(0, 13);
+				    var red = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,50,null,new mapAPI.Color([255,0,0,0.8])).setOffset(0, 13);
+				    var red1 = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,60,null,new mapAPI.Color([128,42,42,0.8])).setOffset(0, 13);
+				    renderer.addBreak(0, 1, pointPms);
+				    renderer.addBreak(1, 5, blue);
+				    renderer.addBreak(5, 10, green);
+				    renderer.addBreak(10, 20, red);
+				    renderer.addBreak(20, 300, red1);
+				    cluster.setRenderer(renderer);
+				}
+				else {
+				    cluster.setRenderer(options.render);
+				}
+				map.addLayer(cluster);
 			}
 		}
 	})

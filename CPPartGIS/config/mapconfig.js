@@ -36,7 +36,7 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		vectorMapServerUrl:"http://39.105.40.172:6080/arcgis/rest/services/CPparks_WGS84/MapServer",
 		rasterMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 		imgMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
-
+		pointIcon:"img/points/point.png",
 		//几何服务地址
 		geometryServer: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer",
 		//打印服务
