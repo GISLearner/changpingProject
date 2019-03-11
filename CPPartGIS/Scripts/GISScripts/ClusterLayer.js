@@ -9,12 +9,13 @@ define([
   "esri/graphic",
   "esri/symbols/SimpleMarkerSymbol",
   "esri/symbols/TextSymbol",
+  "esri/symbols/Font", 
 
   "esri/dijit/PopupTemplate",
   "esri/layers/GraphicsLayer"
 ], function (
   declare, arrayUtils, Color, connect,
-  SpatialReference, Point, Graphic, SimpleMarkerSymbol, TextSymbol,
+  SpatialReference, Point, Graphic, SimpleMarkerSymbol, TextSymbol,Font,
   PopupTemplate, GraphicsLayer
 ) {
     return declare([GraphicsLayer], {
@@ -258,9 +259,14 @@ define([
             }
 
             // show number of points in the cluster
+			var font  = new Font();  
+			font.setSize("10pt");  
+			font.setWeight(Font.WEIGHT_BOLD);
             var label = new TextSymbol(c.attributes.clusterCount.toString())
               .setColor(new Color(this._clusterLabelColor))
-              .setOffset(0, this._clusterLabelOffset);
+              .setOffset(0, this._clusterLabelOffset)
+			  .setHaloColor("#fff")
+			  .setFont(font);
             this.add(
               new Graphic(
                 point,

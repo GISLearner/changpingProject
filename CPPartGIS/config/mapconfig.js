@@ -37,6 +37,7 @@ if (window.location.href.lastIndexOf("?token=") != -1) {
 		rasterMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 		imgMapServerUrl: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
 		pointIcon:"img/points/point.png",
+		clusterIcon:"img/points/location.png",
 		//几何服务地址
 		geometryServer: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer",
 		//打印服务
