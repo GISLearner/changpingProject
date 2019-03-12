@@ -441,7 +441,7 @@
 				    "distance": options.distance || 10,
 				    "id": options.id || "cluster",
 				    "labelColor": options.labelColor || "#fff",
-				    "labelOffset": "10",
+				    "labelOffset": options.labelOffset || "10",
 				    "resolution": map.extent.getWidth() / map.width,
 				    "singleColor": "#888",
 				    "spatialReference": map.spatialReference,
@@ -453,9 +453,9 @@
 				    var renderer = new mapAPI.ClassBreaksRenderer(defaultSym, "clusterCount");
 				    var single = options.icon;
 				    // var pointPms = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,10,null,new mapAPI.Color([255,255,0,0.6])).setOffset(0, 0);
-					var pointPms = new mapAPI.PictureMarkerSymbol(mapconfig.clusterIcon,24,24);
+					var pointPms = new mapAPI.PictureMarkerSymbol(mapconfig.clusterMinIcon,24,24);
 					var blue = new mapAPI.PictureMarkerSymbol(mapconfig.clusterIcon,40,40);
-					blue.setOffset(0, 9);
+					// blue.setOffset(0, 9);
 				    // var blue = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,30,null,new mapAPI.Color([0,0,255,0.8])).setOffset(0, 13);
 // 				    var green = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,40,null,new mapAPI.Color([0,200,0,0.8])).setOffset(0, 13);
 // 				    var red = new mapAPI.SimpleMarkerSymbol(mapAPI.SimpleMarkerSymbol.STYLE_CIRCLE,50,null,new mapAPI.Color([255,0,0,0.8])).setOffset(0, 13);

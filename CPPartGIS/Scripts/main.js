@@ -347,7 +347,8 @@ var app = {
 			pointArr: pointAry, 
 			id: "clusterLayer", 
 			icon: mapconfig.pointIcon ,
-			labelColor:"#000",
+			labelColor:"#fff",
+			labelOffset:5,
 			distance:50
 		};
 		$.common.addClusterLayer(map,options);
