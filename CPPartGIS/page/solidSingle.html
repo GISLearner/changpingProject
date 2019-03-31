@@ -44,24 +44,27 @@
         function init(target1,searchItem) {
             target = target1;
             require([
-             "esri/Map",
-             "esri/views/SceneView",
-             "esri/layers/FeatureLayer",
-             "esri/widgets/Legend",
-             "esri/geometry/Polygon",
-             "esri/tasks/support/Query",
-             "esri/Graphic",
-             "esri/geometry/Point",
-             "esri/layers/support/LabelClass",
-             "dojo/domReady!"
-            ], function (Map, SceneView, FeatureLayer, Legend, Polygon, Query, Graphic, Point, LabelClass) {
+                "esri/config",
+                 "esri/Map",
+                 "esri/views/SceneView",
+                 "esri/layers/FeatureLayer",
+                 "esri/widgets/Legend",
+                 "esri/geometry/Polygon",
+                 "esri/tasks/support/Query",
+                 "esri/Graphic",
+                 "esri/geometry/Point",
+                 "esri/layers/WebTileLayer",
+                 "esri/layers/support/LabelClass", 
+                 'esri/layers/support/TileInfo',
+                 "dojo/domReady!"
+            ], function (esriConfig, Map, SceneView, FeatureLayer, Legend, Polygon, Query, Graphic, Point, WebTileLayer, LabelClass, TileInfo) {
 
                 const blayer = new FeatureLayer({
                     url: layerURL
                 });
 
                 var map = new Map({
-                    basemap: "hybrid",
+                    basemap: "satellite",
                     ground: "world-elevation",
                     //layers: [blayer]
                 });
@@ -84,6 +87,7 @@
                 });
 
                 view.when(function () {
+                    addTDT();
                     queryBuild();
                     addPoint();
                     showLayer(); 
@@ -93,6 +97,26 @@
                 //view.on('pointer-up', function (evt) {
                 //    queryBuild();
                 //});
+
+                function addTDT() {
+                    var corsEnabledServers = ["t0.tianditu.com", "t1.tianditu.com", "t2.tianditu.com",
+                                                "t3.tianditu.com", "t4.tianditu.com", "t5.tianditu.com",
+                                                "t6.tianditu.com", "t7.tianditu.com"] 
+
+                    var layer = new WebTileLayer({
+                        urlTemplate: 'http://t{subDomain}.tianditu.com/DataServer?T=img_w&x={col}&y={row}&l={level}&tk=619944c64ea5110052ab50df192eb202',
+                        subDomains: ["0", "1", "2", "3", "4", "5", "6", "7"], 
+                    })
+                    var layer_anno = new WebTileLayer({
+                        urlTemplate: 'http://t{subDomain}.tianditu.com/DataServer?T=cia_w&x={col}&y={row}&l={level}&tk=619944c64ea5110052ab50df192eb202',
+                        subDomains: ["0", "1", "2", "3", "4", "5", "6", "7"], 
+                    })
+                    for (var i = 0; i < corsEnabledServers.length; i++) {
+                        esriConfig.request.corsEnabledServers.push(corsEnabledServers[i]);
+                    }
+                    map.add(layer);
+                    map.add(layer_anno);
+                }
 
                 function queryBuild() {
                     var center = view.center;
@@ -299,10 +323,6 @@
                             size: 15,  // points
                             resource: { primitive: "circle" },
                             material: { color: "red" },
-                            halo: {
-                                color: [255, 0, 0], // autocasts as Color
-                                size: 2
-                            }
                         }],
                         verticalOffset: {
                             screenLength: 100,
@@ -344,7 +364,11 @@
                             symbolLayers: [{
                                 type: "text",  // autocasts as new TextSymbol3DLayer()
                                 material: { color: [255,0,0,255] },
-                                size: 14 , // points 
+                                size: 13, // points 
+                                halo: {
+                                    color: [255, 255, 255], // autocasts as Color
+                                    size: 2
+                                }
                             }]
                         }
                     }); 
@@ -427,7 +451,11 @@
                             symbolLayers: [{
                                 type: "text",  // autocasts as new TextSymbol3DLayer()
                                 material: { color: [232, 124, 13] },
-                                size: 14, // points 
+                                size: 13, // points 
+                                halo:{
+                                    color: [255, 255, 255], // autocasts as Color
+                                    size: 2
+                                }
                             }]
                         }
                     });
